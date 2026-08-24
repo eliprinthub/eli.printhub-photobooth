@@ -53,6 +53,17 @@ footer{text-align:center;padding:22px;background:#fff3f8;color:#777;font-size:13
 </div>
 
 <div class="card templates" id="templates">
+  <div class="card">
+<h2 style="text-align:center;color:var(--pink)">CHOOSE PRINT SIZE</h2>
+
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+<button class="btn primary sizeBtn" onclick="selectSize('2x6',this)">2×6</button>
+<button class="btn outline sizeBtn" onclick="selectSize('4x6',this)">4×6</button>
+<button class="btn outline sizeBtn" onclick="selectSize('5x7',this)">5×7</button>
+</div>
+
+<p class="hint" id="sizeHint">Photostrip · 2 × 6 inches</p>
+</div>
 <h2 style="text-align:center;color:var(--pink)">CHOOSE TEMPLATE</h2>
 <div class="filters">
 <button class="filter active" onclick="filterTemplates('all',this)">All</button>
@@ -93,7 +104,28 @@ footer{text-align:center;padding:22px;background:#fff3f8;color:#777;font-size:13
 
 <script>
 let photos=[], stream=null, facing='user', timer=3, selected='kawaii';
+let printSize='2x6';
 
+const printSizes={
+  '2x6':{
+    width:600,
+    height:1800,
+    label:'2 × 6 inches',
+    filename:'Eli-PrintHub-2x6.png'
+  },
+  '4x6':{
+    width:1200,
+    height:1800,
+    label:'4 × 6 inches',
+    filename:'Eli-PrintHub-4x6.png'
+  },
+  '5x7':{
+    width:1500,
+    height:2100,
+    label:'5 × 7 inches',
+    filename:'Eli-PrintHub-5x7.png'
+  }
+};
 const templateData=[
  ['kawaii','Kawaii','So Cute!'],['classic','Classic','GOOD VIBES'],['birthday','Birthday','HAPPY DAY'],['wedding','Wedding','Forever'],['graduation','Graduation',"LET'S CELEBRATE"],['minimal','Minimal','MEMORIES']
 ];
@@ -112,7 +144,23 @@ async function startCamera(){
 }
 async function flipCamera(){facing=facing==='user'?'environment':'user';await startCamera()}
 function setTimer(){timer=timer===3?5:timer===5?0:3;document.getElementById('timerText').textContent=timer?timer+'s':'Off'}
-function takePhoto(){
+function selectSize(size,btn){
+  printSize=size;
+
+  document.querySelectorAll('.sizeBtn').forEach(b=>{
+    b.classList.remove('primary');
+    b.classList.add('outline');
+  });
+
+  btn.classList.remove('outline');
+  btn.classList.add('primary');
+
+  document.getElementById('sizeHint').textContent =
+    'Print size · ' + printSizes[size].label;
+
+  renderResult();
+}
+  function takePhoto(){
  if(!stream){startCamera();return}
  if(photos.length>=4)return;
  const go=()=>{const v=document.getElementById('video'),c=document.getElementById('canvas');c.width=v.videoWidth;c.height=v.videoHeight;const x=c.getContext('2d');if(facing==='user'){x.translate(c.width,0);x.scale(-1,1)}x.drawImage(v,0,0);photos.push(c.toDataURL('image/jpeg',.92));updateCount();renderResult();};
@@ -129,11 +177,120 @@ function renderResult(){
  const cap=document.createElement('div');cap.className='caption';cap.textContent=templateData.find(x=>x[0]===selected)[2];r.appendChild(cap)
 }
 function downloadStrip(){
- if(!photos.length){alert('Take at least one photo first!');return}
- const W=600,H=1800,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
- const bg={kawaii:'#ffdce9',classic:'#111',birthday:'#ffe8c8',wedding:'#f5f2f0',graduation:'#17264a',minimal:'#fff'}[selected];x.fillStyle=bg;x.fillRect(0,0,W,H);
- const margin=42,gap=18,pw=W-margin*2,ph=330;
- photos.forEach((src,i)=>{let im=new Image();im.onload=()=>{let y=80+i*(ph+gap);let scale=Math.max(pw/im.width,ph/im.height),w=im.width*scale,h=im.height*scale;x.save();x.beginPath();x.roundRect(margin,y,pw,ph,18);x.clip();x.drawImage(im,margin+(pw-w)/2,y+(ph-h)/2,w,h);x.restore();if(i===photos.length-1){x.fillStyle=(selected==='classic'||selected==='graduation')?'#fff':'#ed4f86';x.font='bold 45px cursive';x.textAlign='center';x.fillText(templateData.find(t=>t[0]===selected)[2],W/2,H-38);let a=document.createElement('a');a.download='Eli-PrintHub-2x6-Photostrip.png';a.href=c.toDataURL('image/png');a.click()}};im.src=src})
+  if(!photos.length){
+    alert('Take at least one photo first!');
+    return;
+  }
+
+  const size=printSizes[printSize];
+  const W=size.width;
+  const H=size.height;
+
+  const c=document.createElement('canvas');
+  c.width=W;
+  c.height=H;
+
+  const x=c.getContext('2d');
+
+  const bg={
+    kawaii:'#ffdce9',
+    classic:'#111',
+    birthday:'#ffe8c8',
+    wedding:'#f5f2f0',
+    graduation:'#17264a',
+    minimal:'#fff'
+  }[selected];
+
+  x.fillStyle=bg;
+  x.fillRect(0,0,W,H);
+
+  const margin=Math.round(W*0.07);
+  const gap=Math.round(H*0.012);
+
+  let photoHeight;
+
+  if(printSize==='2x6'){
+    photoHeight=Math.round(H*0.18);
+  }else{
+    photoHeight=Math.round(H*0.18);
+  }
+
+  const photoWidth=W-(margin*2);
+
+  let loaded=0;
+
+  photos.forEach((src,i)=>{
+
+    const im=new Image();
+
+    im.onload=()=>{
+
+      const y=margin+i*(photoHeight+gap);
+
+      const scale=Math.max(
+        photoWidth/im.width,
+        photoHeight/im.height
+      );
+
+      const w=im.width*scale;
+      const h=im.height*scale;
+
+      x.save();
+
+      x.beginPath();
+      x.roundRect(
+        margin,
+        y,
+        photoWidth,
+        photoHeight,
+        Math.round(W*0.025)
+      );
+
+      x.clip();
+
+      x.drawImage(
+        im,
+        margin+(photoWidth-w)/2,
+        y+(photoHeight-h)/2,
+        w,
+        h
+      );
+
+      x.restore();
+
+      loaded++;
+
+      if(loaded===photos.length){
+
+        const captionColor=
+          selected==='classic'||selected==='graduation'
+          ? '#fff'
+          : '#ed4f86';
+
+        x.fillStyle=captionColor;
+
+        x.font=`bold ${Math.round(W*0.065)}px cursive`;
+
+        x.textAlign='center';
+
+        x.fillText(
+          templateData.find(t=>t[0]===selected)[2],
+          W/2,
+          H-Math.round(H*0.025)
+        );
+
+        const a=document.createElement('a');
+
+        a.download=size.filename;
+
+        a.href=c.toDataURL('image/png');
+
+        a.click();
+      }
+    };
+
+    im.src=src;
+  });
 }
 /* ================= ELI PRINTHUB SETTINGS =================
    Replace ORDER_LINK with your real order link.
