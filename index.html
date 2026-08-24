@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Eli PrintHub Online Photobooth">
+<title>Eli PrintHub Photobooth</title>
+<style>
+:root{--pink:#ed4f86;--soft:#fff4f8;--text:#29252a;--muted:#756d73;--line:#f1dce5}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#fff}
+header{height:78px;border-bottom:1px solid #f3e8ed;display:flex;align-items:center;justify-content:space-between;padding:0 4%;position:sticky;top:0;background:#fff;z-index:5}
+.logo{font-size:28px;font-weight:800;color:var(--pink)}.logo small{display:block;color:#333;font-size:9px;letter-spacing:4px;text-align:center;margin-top:-3px}
+nav{display:flex;gap:30px;align-items:center}nav a{color:#333;text-decoration:none;font-size:15px}
+.btn{border:0;border-radius:14px;padding:13px 20px;font-weight:700;cursor:pointer}.primary{background:var(--pink);color:#fff}.outline{background:#fff;border:1px solid var(--pink);color:var(--pink)}
+main{display:grid;grid-template-columns:290px minmax(400px,1fr) 300px;gap:20px;padding:22px;max-width:1500px;margin:auto}
+.card{border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:0 6px 24px #ed4f8610;padding:22px}
+.side h1{font-size:29px;line-height:1.12;margin:10px 0 16px}.side p{color:var(--muted);line-height:1.5}.step{display:flex;gap:13px;margin:25px 0}.icon{font-size:25px}.step b{color:var(--pink)}.step span{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+#cameraWrap{position:relative;background:#111;border-radius:18px;overflow:hidden;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}canvas{display:none}.cameraTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.badge{background:var(--pink);color:#fff;padding:7px 14px;border-radius:20px;font-weight:700}
+.controls{display:flex;justify-content:center;align-items:center;gap:30px;padding:18px}.shutter{width:64px;height:64px;border-radius:50%;background:var(--pink);border:7px solid #ffd8e6;color:white;font-size:25px;cursor:pointer}
+.templates{margin-top:4px}.filters{display:flex;gap:8px;overflow:auto;padding:5px 0 15px}.filter{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:18px;padding:8px 14px;cursor:pointer}.filter.active{background:var(--pink);color:#fff}
+.templateGrid{display:flex;gap:14px;overflow:auto}.template{min-width:90px;height:170px;border:2px solid transparent;border-radius:10px;padding:5px;cursor:pointer}.template.selected{border-color:var(--pink)}.strip{height:100%;border-radius:5px;display:flex;flex-direction:column;gap:4px;padding:7px;justify-content:center}.classic{background:#111}.kawaii{background:#ffdce9}.birthday{background:#ffe8c8}.wedding{background:#f5f2f0}.graduation{background:#17264a}.minimal{background:#fff;border:1px solid #ddd}.slot{background:#ddd;flex:1;min-height:0;border-radius:2px}
+.previewTitle{text-align:center;color:var(--pink);font-weight:800}.preview{display:flex;justify-content:center;margin:12px 0}.result{width:190px;height:570px;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:7px;box-shadow:0 3px 15px #0002}.result .photo{height:82px;background:#ccc;border-radius:4px;overflow:hidden}.result img{width:100%;height:100%;object-fit:cover}.result .caption{text-align:center;font-size:22px;font-weight:800;margin-top:auto;color:var(--pink);font-family:cursive}
+.right .btn{width:100%;margin-top:10px}.hint{text-align:center;color:var(--muted);font-size:12px;line-height:1.4}
+footer{text-align:center;padding:22px;background:#fff3f8;color:#777;font-size:13px}
+#countdown{position:absolute;color:white;font-size:90px;font-weight:900;text-shadow:0 3px 12px #000;display:none}
+@media(max-width:1000px){main{grid-template-columns:1fr}.right{order:3}nav{display:none}.side{display:none}.preview{justify-content:center}}
+.result{height:570px}.orderbox{background:#fff4f8;border-radius:16px;padding:14px;text-align:center}.hint{font-size:11px;line-height:1.45}.logo{font-family:cursive;font-size:28px;font-weight:800;color:#ed4f86}.logo small{font-family:Arial}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">✦ Eli PrintHub <small>PHOTOBOOTH</small></div>
+  <nav><a href="#booth">📸 Photobooth</a><a href="#templates">🎨 Templates</a><a href="#order">🛒 Order Prints</a><button class="btn primary" onclick="openOrder()">🛒 Order Prints</button></nav>
+</header>
+
+<main id="booth">
+<section class="card side">
+<h1>Create Your<br>Photostrip! 💗</h1>
+<p>Take photos, choose your favorite design, and download your photostrip.</p>
+<div class="step"><div class="icon">📷</div><div><b>4 Photos</b><span>We'll take 4 photos for your perfect strip.</span></div></div>
+<div class="step"><div class="icon">🎨</div><div><b>Choose Template</b><span>Pick your favorite design.</span></div></div>
+<div class="step"><div class="icon">⬇️</div><div><b>Download</b><span>Save your photo and print anywhere.</span></div></div>
+<button class="btn primary" style="width:100%;margin-top:10px" onclick="startCamera()">📷 Start Photobooth</button>
+</section>
+
+<section>
+<div class="card">
+<div class="cameraTop"><b>‹ BACK</b><span id="countBadge" class="badge">0 / 4</span></div>
+<div id="cameraWrap"><video id="video" autoplay playsinline></video><div id="countdown">3</div></div>
+<p style="text-align:center;color:#777">Look at the camera and smile!</p>
+<div class="controls"><button class="btn outline" onclick="flipCamera()">↔ Flip Camera</button><button class="shutter" onclick="takePhoto()">●</button><button class="btn outline" onclick="setTimer()">⏱ <span id="timerText">3s</span></button></div>
+</div>
+
+<div class="card templates" id="templates">
+<h2 style="text-align:center;color:var(--pink)">CHOOSE TEMPLATE</h2>
+<div class="filters">
+<button class="filter active" onclick="filterTemplates('all',this)">All</button>
+<button class="filter" onclick="filterTemplates('classic',this)">Classic</button>
+<button class="filter" onclick="filterTemplates('kawaii',this)">Kawaii</button>
+<button class="filter" onclick="filterTemplates('birthday',this)">Birthday</button>
+<button class="filter" onclick="filterTemplates('wedding',this)">Wedding</button>
+<button class="filter" onclick="filterTemplates('graduation',this)">Graduation</button>
+</div>
+<div class="templateGrid" id="templateGrid"></div>
+</div>
+</section>
+
+<aside class="card right">
+<div class="previewTitle">YOUR PHOTO STRIP</div>
+<div class="preview"><div id="result" class="result kawaii"></div></div>
+<button class="btn primary" onclick="downloadStrip()">⬇ Download 2×6 PNG</button>
+<button class="btn outline" onclick="resetPhotos()">↻ Retake Photos</button>
+<button class="btn" style="border:1px solid #ddd" onclick="location.reload()">⌂ Start Over</button>
+<div id="order" style="margin-top:16px;padding:15px;border-radius:16px;background:#fff4f8;text-align:center">
+<b>Want us to print it? 🖨️</b>
+<p class="hint">Scan the QR code or tap the button to send your print order to Eli PrintHub.</p>
+<div style="width:130px;height:130px;background:#fff;border-radius:8px;margin:10px auto;padding:5px"><img id="qr" alt="Eli PrintHub order QR" style="width:100%;height:100%;object-fit:contain"></div>
+<button class="btn primary" style="width:100%" onclick="openOrder()">💬 Order Prints</button>
+</div>
+<p class="hint">Your photos are processed in your browser. They are not uploaded to our server.</p>
+</aside>
+</main>
+<footer id="about">© 2026 Eli PrintHub Photobooth · Made with 💗 for your special moments</footer>
+<div id="orderModal" style="position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:50;padding:20px">
+<div style="background:#fff;border-radius:22px;max-width:600px;width:100%;padding:25px;box-shadow:0 15px 60px #0004">
+<button onclick="closeOrder()" style="float:right;border:0;background:none;font-size:25px;cursor:pointer">×</button>
+<h2 style="color:#ed4f86">🖨️ Order Your Prints</h2>
+<p>Tap below to open your Eli PrintHub order page. Replace the ORDER_LINK in the settings section of this file with your real Messenger, Google Form, Instagram, or order-page link.</p>
+<button class="btn primary" style="width:100%" onclick="window.open(ORDER_LINK,'_blank')">💬 Open Order Page</button>
+</div></div>
+<canvas id="canvas"></canvas>
+
+<script>
+let photos=[], stream=null, facing='user', timer=3, selected='kawaii';
+
+const templateData=[
+ ['kawaii','Kawaii','So Cute!'],['classic','Classic','GOOD VIBES'],['birthday','Birthday','HAPPY DAY'],['wedding','Wedding','Forever'],['graduation','Graduation',\"LET'S CELEBRATE\"],['minimal','Minimal','MEMORIES']
+];
+function renderTemplates(){
+ const box=document.getElementById('templateGrid'); box.innerHTML='';
+ templateData.forEach(t=>{
+  const d=document.createElement('div');d.className='template'+(t[0]===selected?' selected':'');d.dataset.type=t[0];
+  d.innerHTML=`<div class="strip ${t[0]}">${[1,2,3,4].map(()=>'<div class="slot"></div>').join('')}<div style="font-size:9px;text-align:center;color:${t[0]==='classic'||t[0]==='graduation'?'#fff':'#555'}">${t[2]}</div></div>`;
+  d.onclick=()=>{selected=t[0];renderTemplates();renderResult()};box.appendChild(d)
+ })
+}
+function filterTemplates(type,btn){document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.template').forEach(x=>x.style.display=type==='all'||x.dataset.type===type?'block':'none')}
+async function startCamera(){
+ try{if(stream)stream.getTracks().forEach(t=>t.stop());stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing,width:{ideal:1280},height:{ideal:960}},audio:false});document.getElementById('video').srcObject=stream}
+ catch(e){alert('Camera access was blocked. Please allow camera permission and open this page using HTTPS or localhost.')}
+}
+async function flipCamera(){facing=facing==='user'?'environment':'user';await startCamera()}
+function setTimer(){timer=timer===3?5:timer===5?0:3;document.getElementById('timerText').textContent=timer?timer+'s':'Off'}
+function takePhoto(){
+ if(!stream){startCamera();return}
+ if(photos.length>=4)return;
+ const go=()=>{const v=document.getElementById('video'),c=document.getElementById('canvas');c.width=v.videoWidth;c.height=v.videoHeight;const x=c.getContext('2d');if(facing==='user'){x.translate(c.width,0);x.scale(-1,1)}x.drawImage(v,0,0);photos.push(c.toDataURL('image/jpeg',.92));updateCount();renderResult();};
+ if(!timer){go();return}
+ let n=timer,el=document.getElementById('countdown');el.style.display='block';el.textContent=n;
+ const iv=setInterval(()=>{n--;if(n<=0){clearInterval(iv);el.style.display='none';go()}else el.textContent=n},1000)
+}
+function updateCount(){document.getElementById('countBadge').textContent=photos.length+' / 4'}
+function resetPhotos(){photos=[];updateCount();renderResult()}
+function renderResult(){
+ const r=document.getElementById('result');r.className='result '+selected;r.innerHTML='';
+ photos.forEach(p=>{let d=document.createElement('div');d.className='photo';let im=document.createElement('img');im.src=p;d.appendChild(im);r.appendChild(d)});
+ while(r.children.length<4){let d=document.createElement('div');d.className='photo';r.appendChild(d)}
+ const cap=document.createElement('div');cap.className='caption';cap.textContent=templateData.find(x=>x[0]===selected)[2];r.appendChild(cap)
+}
+function downloadStrip(){
+ if(!photos.length){alert('Take at least one photo first!');return}
+ const W=600,H=1800,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+ const bg={kawaii:'#ffdce9',classic:'#111',birthday:'#ffe8c8',wedding:'#f5f2f0',graduation:'#17264a',minimal:'#fff'}[selected];x.fillStyle=bg;x.fillRect(0,0,W,H);
+ const margin=42,gap=18,pw=W-margin*2,ph=330;
+ photos.forEach((src,i)=>{let im=new Image();im.onload=()=>{let y=80+i*(ph+gap);let scale=Math.max(pw/im.width,ph/im.height),w=im.width*scale,h=im.height*scale;x.save();x.beginPath();x.roundRect(margin,y,pw,ph,18);x.clip();x.drawImage(im,margin+(pw-w)/2,y+(ph-h)/2,w,h);x.restore();if(i===photos.length-1){x.fillStyle=(selected==='classic'||selected==='graduation')?'#fff':'#ed4f86';x.font='bold 45px cursive';x.textAlign='center';x.fillText(templateData.find(t=>t[0]===selected)[2],W/2,H-38);let a=document.createElement('a');a.download='Eli-PrintHub-2x6-Photostrip.png';a.href=c.toDataURL('image/png');a.click()}};im.src=src})
+}
+/* ================= ELI PRINTHUB SETTINGS =================
+   Replace ORDER_LINK with your real order link.
+   Example Messenger: https://m.me/YOURPAGEUSERNAME
+   Example Google Form: https://forms.gle/YOURFORM
+   The QR code below uses the same link automatically.
+================================================================ */
+const ORDER_LINK = "https://m.me/YOURPAGEUSERNAME";
+document.getElementById("qr").src = "https://quickchart.io/qr?size=300&text=" + encodeURIComponent(ORDER_LINK);
+function openOrder(){document.getElementById('orderModal').style.display='flex'}
+function closeOrder(){document.getElementById('orderModal').style.display='none'}
+renderTemplates();renderResult();
+</script>
+</body>
+</html>
