@@ -1,21 +1,49 @@
 <!doctype html>
 <html lang="en">
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Eli PrintHub Online Photobooth">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<meta
+  name="description"
+  content="Eli PrintHub Online Photobooth"
+>
+
 <title>Eli PrintHub Photobooth</title>
 
 <style>
+
+/* =========================================================
+   ELI PRINTHUB COLORS
+========================================================= */
+
 :root{
   --pink:#ed4f86;
+  --pink-dark:#d93d73;
   --soft:#fff4f8;
   --text:#29252a;
   --muted:#756d73;
   --line:#f1dce5;
+  --white:#ffffff;
 }
 
-*{box-sizing:border-box}
+
+/* =========================================================
+   BASIC RESET
+========================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   margin:0;
@@ -24,17 +52,27 @@ body{
   background:#fff;
 }
 
+
+/* =========================================================
+   HEADER
+========================================================= */
+
 header{
   min-height:78px;
   border-bottom:1px solid #f3e8ed;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
+
   padding:12px 4%;
+
   position:sticky;
   top:0;
+
   background:#fff;
-  z-index:5;
+
+  z-index:20;
 }
 
 .logo{
@@ -47,7 +85,7 @@ header{
 .logo small{
   display:block;
   color:#333;
-  font-family:Arial;
+  font-family:Arial,sans-serif;
   font-size:9px;
   letter-spacing:4px;
   text-align:center;
@@ -66,12 +104,23 @@ nav a{
   font-size:15px;
 }
 
+nav a:hover{
+  color:var(--pink);
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
 .btn{
   border:0;
   border-radius:14px;
   padding:13px 20px;
+
   font-weight:700;
   cursor:pointer;
+
   transition:.2s;
 }
 
@@ -79,9 +128,19 @@ nav a{
   transform:translateY(-1px);
 }
 
+.btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+  transform:none;
+}
+
 .primary{
   background:var(--pink);
   color:#fff;
+}
+
+.primary:hover{
+  background:var(--pink-dark);
 }
 
 .outline{
@@ -90,22 +149,47 @@ nav a{
   color:var(--pink);
 }
 
+.outline:hover{
+  background:var(--soft);
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
 main{
   display:grid;
-  grid-template-columns:290px minmax(400px,1fr) 310px;
+
+  grid-template-columns:
+    290px
+    minmax(400px,1fr)
+    310px;
+
   gap:20px;
+
   padding:22px;
+
   max-width:1500px;
+
   margin:auto;
 }
 
 .card{
   border:1px solid var(--line);
   border-radius:22px;
+
   background:#fff;
+
   box-shadow:0 6px 24px #ed4f8610;
+
   padding:22px;
 }
+
+
+/* =========================================================
+   LEFT INFORMATION
+========================================================= */
 
 .side h1{
   font-size:29px;
@@ -139,27 +223,41 @@ main{
   margin-top:4px;
 }
 
+
+/* =========================================================
+   CAMERA
+========================================================= */
+
 .cameraTop{
   display:flex;
   justify-content:space-between;
   align-items:center;
+
   margin-bottom:12px;
 }
 
 .badge{
   background:var(--pink);
   color:#fff;
+
   padding:7px 14px;
+
   border-radius:20px;
+
   font-weight:700;
 }
 
 #cameraWrap{
   position:relative;
+
   background:#111;
+
   border-radius:18px;
+
   overflow:hidden;
+
   aspect-ratio:4/3;
+
   display:flex;
   align-items:center;
   justify-content:center;
@@ -168,8 +266,12 @@ main{
 video{
   width:100%;
   height:100%;
+
   object-fit:cover;
+
   transform:scaleX(-1);
+
+  background:#111;
 }
 
 canvas{
@@ -178,76 +280,155 @@ canvas{
 
 #countdown{
   position:absolute;
+
   color:white;
+
   font-size:90px;
+
   font-weight:900;
+
   text-shadow:0 3px 12px #000;
+
   display:none;
+
   z-index:3;
 }
 
+.cameraMessage{
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  text-align:center;
+
+  padding:30px;
+
+  color:#fff;
+
+  background:#111;
+
+  z-index:1;
+}
+
+.cameraMessage.hidden{
+  display:none;
+}
+
+
+/* =========================================================
+   CAMERA CONTROLS
+========================================================= */
+
 .controls{
   display:flex;
+
   justify-content:center;
+
   align-items:center;
+
   gap:15px;
+
   padding:18px;
+
   flex-wrap:wrap;
 }
 
 .shutter{
   width:64px;
   height:64px;
+
   border-radius:50%;
+
   background:var(--pink);
+
   border:7px solid #ffd8e6;
+
   color:white;
+
   font-size:25px;
+
   cursor:pointer;
 }
 
+
+/* =========================================================
+   SECTION TITLES
+========================================================= */
+
 .sectionTitle{
   text-align:center;
+
   color:var(--pink);
+
   margin-top:5px;
 }
 
 .optionTitle{
   font-size:14px;
+
   font-weight:800;
+
   margin:15px 0 8px;
 }
+
+
+/* =========================================================
+   SIZE / PHOTO OPTIONS
+========================================================= */
 
 .sizeGrid,
 .photoGrid{
   display:flex;
+
   gap:8px;
+
   flex-wrap:wrap;
 }
 
 .sizeBtn,
 .photoBtn{
   flex:1;
+
   min-width:80px;
+
   padding:11px 10px;
 }
 
 .sizeBtn.active,
 .photoBtn.active{
   background:var(--pink);
+
   color:white;
+
   border-color:var(--pink);
 }
 
 .sizeInfo{
   background:var(--soft);
-  padding:10px;
+
+  padding:12px;
+
   border-radius:12px;
+
   margin-top:10px;
+
   text-align:center;
+
   font-size:12px;
+
   color:var(--muted);
 }
+
+
+/* =========================================================
+   TEMPLATES
+========================================================= */
 
 .templates{
   margin-top:20px;
@@ -255,39 +436,57 @@ canvas{
 
 .filters{
   display:flex;
+
   gap:8px;
+
   overflow:auto;
+
   padding:5px 0 15px;
 }
 
 .filter{
   white-space:nowrap;
+
   border:1px solid var(--line);
+
   background:#fff;
+
   border-radius:18px;
+
   padding:8px 14px;
+
   cursor:pointer;
 }
 
 .filter.active{
   background:var(--pink);
+
   color:#fff;
 }
 
 .templateGrid{
   display:flex;
+
   gap:14px;
+
   overflow:auto;
+
   padding-bottom:5px;
 }
 
 .template{
   min-width:105px;
+
   height:175px;
+
   border:2px solid transparent;
+
   border-radius:10px;
+
   padding:5px;
+
   cursor:pointer;
+
   background:#fff;
 }
 
@@ -297,162 +496,339 @@ canvas{
 
 .templatePreview{
   height:100%;
+
   border-radius:6px;
+
   overflow:hidden;
+
   position:relative;
+
   display:flex;
+
   flex-direction:column;
+
   gap:4px;
+
   padding:7px;
 }
 
 .templatePreview img{
   position:absolute;
+
   inset:0;
+
   width:100%;
   height:100%;
+
   object-fit:cover;
+
   z-index:2;
+
   pointer-events:none;
+}
+
+.templatePlaceholder{
+  background:#ffffff99;
+
+  border-radius:4px;
+
+  flex:1;
+
+  min-height:20px;
+
+  z-index:1;
 }
 
 .templateName{
   position:absolute;
+
   bottom:6px;
+
   left:0;
   right:0;
+
   text-align:center;
+
   font-size:9px;
+
   font-weight:bold;
-  z-index:3;
+
+  z-index:4;
 }
+
+
+/* =========================================================
+   RIGHT PREVIEW
+========================================================= */
 
 .previewTitle{
   text-align:center;
+
   color:var(--pink);
+
   font-weight:800;
 }
 
 .preview{
   display:flex;
+
   justify-content:center;
+
   margin:12px 0;
 }
 
 .result{
   width:190px;
-  min-height:285px;
+
+  max-height:500px;
+
   border-radius:8px;
+
   padding:10px;
+
   display:grid;
+
   gap:6px;
+
   position:relative;
+
   overflow:hidden;
+
   box-shadow:0 3px 15px #0002;
 }
 
 .result .photo{
-  background:#ccc;
+  background:#ddd;
+
   border-radius:4px;
+
   overflow:hidden;
+
   min-height:0;
+
+  position:relative;
 }
 
 .result img.photoImage{
   width:100%;
   height:100%;
+
   object-fit:cover;
+
   display:block;
 }
 
 .resultOverlay{
   position:absolute;
+
   inset:0;
+
   width:100%;
   height:100%;
+
   object-fit:cover;
+
   pointer-events:none;
+
   z-index:5;
 }
 
 .resultCaption{
   position:absolute;
+
   bottom:5px;
+
   left:0;
   right:0;
+
   text-align:center;
+
   font-size:11px;
+
   font-weight:800;
+
   color:var(--pink);
+
   z-index:6;
 }
 
+
+/* =========================================================
+   ORDER
+========================================================= */
+
 .right .btn{
   width:100%;
+
   margin-top:10px;
 }
 
 .hint{
   text-align:center;
+
   color:var(--muted);
+
   font-size:12px;
+
   line-height:1.4;
 }
 
 .orderbox{
   margin-top:16px;
+
   padding:15px;
+
   border-radius:16px;
+
   background:var(--soft);
+
   text-align:center;
 }
 
 #qr{
-  width:120px;
-  height:120px;
+  width:150px;
+  height:150px;
+
   object-fit:contain;
+
   background:#fff;
+
   border-radius:8px;
+
   padding:5px;
+
+  display:none;
+
+  margin:12px auto;
 }
 
-footer{
-  text-align:center;
-  padding:22px;
-  background:#fff3f8;
-  color:#777;
-  font-size:13px;
+.qrReady{
+  display:block !important;
 }
+
+.qrTitle{
+  display:none;
+
+  color:var(--pink);
+
+  font-weight:800;
+
+  margin-top:10px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.statusBox{
+  margin-top:12px;
+
+  padding:12px;
+
+  border-radius:12px;
+
+  background:#fafafa;
+
+  color:var(--muted);
+
+  text-align:center;
+
+  font-size:12px;
+
+  display:none;
+}
+
+.statusBox.show{
+  display:block;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal{
   position:fixed;
+
   inset:0;
+
   background:#0008;
+
   display:none;
+
   align-items:center;
+
   justify-content:center;
+
   z-index:50;
+
   padding:20px;
+}
+
+.modal.show{
+  display:flex;
 }
 
 .modalBox{
   background:#fff;
+
   border-radius:22px;
+
   max-width:600px;
+
   width:100%;
+
   padding:25px;
+
   box-shadow:0 15px 60px #0004;
 }
 
 .closeBtn{
   float:right;
+
   border:0;
+
   background:none;
+
   font-size:25px;
+
   cursor:pointer;
 }
 
+
+/* =========================================================
+   PRINT AREA
+========================================================= */
+
+#printArea{
+  display:none;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+  text-align:center;
+
+  padding:22px;
+
+  background:#fff3f8;
+
+  color:#777;
+
+  font-size:13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
 @media(max-width:1100px){
+
   main{
     grid-template-columns:1fr;
   }
@@ -471,6 +847,7 @@ footer{
 }
 
 @media(max-width:600px){
+
   main{
     padding:10px;
   }
@@ -488,34 +865,113 @@ footer{
     height:58px;
   }
 }
+
+
+/* =========================================================
+   PRINT STYLE
+
+   ONLY THE FINAL PHOTO WILL PRINT.
+========================================================= */
+
+@media print{
+
+  body *{
+    visibility:hidden !important;
+  }
+
+  #printArea,
+  #printArea *{
+    visibility:visible !important;
+  }
+
+  #printArea{
+    display:block !important;
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:auto;
+  }
+
+  #printCanvas{
+    display:block !important;
+
+    width:100%;
+
+    height:auto;
+
+    margin:0;
+  }
+
+  @page{
+    margin:0;
+  }
+}
+
 </style>
+
 </head>
 
+
 <body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
 <header>
 
   <div class="logo">
+
     ✦ Eli PrintHub
-    <small>PHOTOBOOTH</small>
+
+    <small>
+      PHOTOBOOTH
+    </small>
+
   </div>
 
-  <nav>
-    <a href="#booth">📸 Photobooth</a>
-    <a href="#templates">🎨 Templates</a>
-    <a href="#order">🛒 Order Prints</a>
 
-    <button class="btn primary" onclick="openOrder()">
+  <nav>
+
+    <a href="#booth">
+      📸 Photobooth
+    </a>
+
+    <a href="#templates">
+      🎨 Templates
+    </a>
+
+    <a href="#order">
+      🛒 Order Prints
+    </a>
+
+    <button
+      class="btn primary"
+      onclick="openOrder()"
+    >
       🛒 Order Prints
     </button>
+
   </nav>
 
 </header>
 
 
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
 <main id="booth">
 
-<!-- LEFT INFORMATION -->
+
+<!-- =========================================================
+     LEFT INFORMATION
+========================================================= -->
 
 <section class="card side">
 
@@ -529,37 +985,92 @@ footer{
     then take your photos.
   </p>
 
-  <div class="step">
-    <div class="icon">📐</div>
-    <div>
-      <b>Choose Size</b>
-      <span>2×6, 4R / 4×6 or 5R / 5×7.</span>
-    </div>
-  </div>
 
   <div class="step">
-    <div class="icon">📷</div>
-    <div>
-      <b>Take Photos</b>
-      <span>The camera automatically follows your selected photo count.</span>
+
+    <div class="icon">
+      📐
     </div>
+
+    <div>
+
+      <b>
+        Choose Size
+      </b>
+
+      <span>
+        2×6, 4R / 4×6 or 5R / 5×7.
+      </span>
+
+    </div>
+
   </div>
 
-  <div class="step">
-    <div class="icon">🎨</div>
-    <div>
-      <b>Choose Template</b>
-      <span>Pick your favorite design.</span>
-    </div>
-  </div>
 
   <div class="step">
-    <div class="icon">⬇️</div>
-    <div>
-      <b>Download</b>
-      <span>Save your print-ready image.</span>
+
+    <div class="icon">
+      📷
     </div>
+
+    <div>
+
+      <b>
+        Take Photos
+      </b>
+
+      <span>
+        The camera follows your selected
+        photo count.
+      </span>
+
+    </div>
+
   </div>
+
+
+  <div class="step">
+
+    <div class="icon">
+      🎨
+    </div>
+
+    <div>
+
+      <b>
+        Choose Template
+      </b>
+
+      <span>
+        Pick your favorite design.
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <div class="step">
+
+    <div class="icon">
+      🖨️
+    </div>
+
+    <div>
+
+      <b>
+        Print & Get QR
+      </b>
+
+      <span>
+        Print the physical copy and
+        download the soft copy.
+      </span>
+
+    </div>
+
+  </div>
+
 
   <button
     class="btn primary"
@@ -572,16 +1083,30 @@ footer{
 </section>
 
 
-<!-- CENTER -->
+<!-- =========================================================
+     CENTER
+========================================================= -->
 
 <section>
+
 
 <div class="card">
 
   <div class="cameraTop">
-    <b>📸 PHOTOBOOTH</b>
-    <span id="countBadge" class="badge">0 / 4</span>
+
+    <b>
+      📸 PHOTOBOOTH
+    </b>
+
+    <span
+      id="countBadge"
+      class="badge"
+    >
+      0 / 4
+    </span>
+
   </div>
+
 
   <div id="cameraWrap">
 
@@ -592,25 +1117,53 @@ footer{
       muted
     ></video>
 
-    <div id="countdown">3</div>
+
+    <div
+      id="cameraMessage"
+      class="cameraMessage"
+    >
+      📷<br><br>
+      Click <b>Start Photobooth</b>
+      to activate the camera.
+    </div>
+
+
+    <div id="countdown">
+      3
+    </div>
 
   </div>
 
-  <p style="text-align:center;color:#777">
+
+  <p
+    style="text-align:center;color:#777"
+  >
     Look at the camera and smile! 💗
   </p>
 
+
   <div class="controls">
 
-    <button class="btn outline" onclick="flipCamera()">
+    <button
+      class="btn outline"
+      onclick="flipCamera()"
+    >
       ↔ Flip Camera
     </button>
 
-    <button class="shutter" onclick="takePhoto()">
+
+    <button
+      class="shutter"
+      onclick="takePhoto()"
+    >
       ●
     </button>
 
-    <button class="btn outline" onclick="setTimer()">
+
+    <button
+      class="btn outline"
+      onclick="setTimer()"
+    >
       ⏱ <span id="timerText">3s</span>
     </button>
 
@@ -619,17 +1172,24 @@ footer{
 </div>
 
 
-<!-- PRINT SIZE -->
+<!-- =========================================================
+     PRINT SIZE
+========================================================= -->
 
-<div class="card" style="margin-top:20px">
+<div
+  class="card"
+  style="margin-top:20px"
+>
 
   <h2 class="sectionTitle">
     CHOOSE PRINT SIZE
   </h2>
 
+
   <div class="optionTitle">
     📐 Print Size
   </div>
+
 
   <div class="sizeGrid">
 
@@ -640,12 +1200,14 @@ footer{
       2×6
     </button>
 
+
     <button
       class="btn outline sizeBtn"
       onclick="selectSize('4x6',this)"
     >
       4R / 4×6
     </button>
+
 
     <button
       class="btn outline sizeBtn"
@@ -661,6 +1223,7 @@ footer{
     📷 Number of Photos
   </div>
 
+
   <div
     class="photoGrid"
     id="photoCountOptions"
@@ -670,20 +1233,24 @@ footer{
   <div
     class="sizeInfo"
     id="sizeInfo"
-  >
-    2 × 6 inches · 4 photos · Photostrip
-  </div>
+  ></div>
 
 </div>
 
 
-<!-- TEMPLATES -->
+<!-- =========================================================
+     TEMPLATES
+========================================================= -->
 
-<div class="card templates" id="templates">
+<div
+  class="card templates"
+  id="templates"
+>
 
   <h2 class="sectionTitle">
     CHOOSE TEMPLATE
   </h2>
+
 
   <div class="filters">
 
@@ -694,12 +1261,14 @@ footer{
       All
     </button>
 
+
     <button
       class="filter"
       onclick="filterTemplates('kawaii',this)"
     >
       Kawaii
     </button>
+
 
     <button
       class="filter"
@@ -708,6 +1277,7 @@ footer{
       Birthday
     </button>
 
+
     <button
       class="filter"
       onclick="filterTemplates('wedding',this)"
@@ -715,12 +1285,14 @@ footer{
       Wedding
     </button>
 
+
     <button
       class="filter"
       onclick="filterTemplates('graduation',this)"
     >
       Graduation
     </button>
+
 
     <button
       class="filter"
@@ -731,6 +1303,7 @@ footer{
 
   </div>
 
+
   <div
     class="templateGrid"
     id="templateGrid"
@@ -738,30 +1311,48 @@ footer{
 
 </div>
 
+
 </section>
 
 
-<!-- RIGHT -->
+<!-- =========================================================
+     RIGHT PANEL
+========================================================= -->
 
 <aside class="card right">
+
 
   <div class="previewTitle">
     YOUR PHOTO PREVIEW
   </div>
 
+
   <div class="preview">
+
     <div
       id="result"
       class="result"
     ></div>
+
   </div>
 
 
+  <!-- MAIN PRINT BUTTON -->
+
   <button
+    id="printButton"
     class="btn primary"
-    onclick="downloadPrint()"
+    onclick="printAndCreateQR()"
   >
-    ⬇ Download Print
+    🖨️ PRINT & GET QR
+  </button>
+
+
+  <button
+    class="btn outline"
+    onclick="downloadDigitalCopy()"
+  >
+    ⬇ Download Soft Copy
   </button>
 
 
@@ -782,28 +1373,80 @@ footer{
   </button>
 
 
-  <!-- ORDER -->
+  <!-- =====================================================
+       QR DOWNLOAD AREA
+  ===================================================== -->
 
   <div
     id="order"
     class="orderbox"
   >
 
-    <b>Want us to print it? 🖨️</b>
+    <b>
+      📱 YOUR DIGITAL COPY
+    </b>
+
 
     <p class="hint">
-      Scan the QR code or tap the button to send
-      your print order to Eli PrintHub.
+
+      After printing, scan this QR code
+      using your phone to download
+      your soft copy.
+
     </p>
+
+
+    <div
+      id="qrTitle"
+      class="qrTitle"
+    >
+      🎉 Your photo is ready!
+    </div>
+
 
     <img
       id="qr"
-      alt="Eli PrintHub order QR"
+      alt="QR code for digital photo"
     >
+
+
+    <p
+      id="qrInstructions"
+      class="hint"
+      style="display:none"
+    >
+      Scan the QR code with your phone.
+      Your digital photo will open.
+    </p>
+
+  </div>
+
+
+  <!-- =====================================================
+       MESSENGER ORDER
+  ===================================================== -->
+
+  <div
+    class="orderbox"
+    style="margin-top:12px"
+  >
+
+    <b>
+      Want us to print it? 🖨️
+    </b>
+
+
+    <p class="hint">
+
+      Need another copy?
+      Message Eli PrintHub.
+
+    </p>
+
 
     <button
       class="btn primary"
-      style="width:100%;margin-top:10px"
+      style="width:100%;margin-top:5px"
       onclick="openOrder()"
     >
       💬 Order Prints
@@ -812,24 +1455,44 @@ footer{
   </div>
 
 
-  <p class="hint" style="margin-top:15px">
+  <div
+    id="statusBox"
+    class="statusBox"
+  ></div>
+
+
+  <p
+    class="hint"
+    style="margin-top:15px"
+  >
+
     Your photos are processed in your browser.
-    They are not uploaded to our server.
+    The final digital copy is uploaded only when
+    you choose <b>PRINT & GET QR</b>.
+
   </p>
 
 </aside>
 
+
 </main>
 
 
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
 <footer>
 
-© 2026 Eli PrintHub Photobooth · Made with 💗 for your special moments
+© 2026 Eli PrintHub Photobooth
+· Made with 💗 for your special moments
 
 </footer>
 
 
-<!-- ORDER MODAL -->
+<!-- =========================================================
+     ORDER MODAL
+========================================================= -->
 
 <div
   id="orderModal"
@@ -845,20 +1508,26 @@ footer{
       ×
     </button>
 
+
     <h2 style="color:#ed4f86">
       🖨️ Order Your Prints
     </h2>
 
+
     <p>
-      Tap below to open your Eli PrintHub order page.
+
+      Need additional prints?
+      Message Eli PrintHub through Messenger.
+
     </p>
+
 
     <button
       class="btn primary"
       style="width:100%"
       onclick="window.open(ORDER_LINK,'_blank')"
     >
-      💬 Open Order Page
+      💬 Open Eli PrintHub Messenger
     </button>
 
   </div>
@@ -866,29 +1535,53 @@ footer{
 </div>
 
 
-<canvas id="canvas"></canvas>
+<!-- =========================================================
+     PRINT AREA
+
+     This is hidden normally.
+
+     During browser printing,
+     ONLY this area becomes visible.
+========================================================= -->
+
+<div id="printArea">
+
+  <canvas id="printCanvas"></canvas>
+
+</div>
+
+
+<canvas
+  id="canvas"
+></canvas>
 
 
 <script>
 
-/* ============================================================
-   ELI PRINTHUB PHOTOBOOTH
-   ============================================================ */
+/* =========================================================
+   ELI PRINTHUB SETTINGS
+========================================================= */
 
 
-/* ============================================================
-   SETTINGS
-============================================================ */
+/* YOUR MESSENGER */
 
-const ORDER_LINK = "https://m.me/929560463576889";
-
-const CLOUD_NAME = "dnna43sv";
-const UPLOAD_PRESET = "eli_printhub_photos";
+const ORDER_LINK =
+  "https://m.me/929560463576889";
 
 
-/* ============================================================
-   CAMERA VARIABLES
-============================================================ */
+/* YOUR CLOUDINARY */
+
+const CLOUD_NAME =
+  "dnna43sv";
+
+
+const UPLOAD_PRESET =
+  "eli_printhub_photos";
+
+
+/* =========================================================
+   PHOTOBOOTH VARIABLES
+========================================================= */
 
 let photos = [];
 
@@ -905,60 +1598,60 @@ let photoCount = 4;
 let selectedTemplate = "kawaii";
 
 
-/* ============================================================
+/* =========================================================
    PRINT SIZE SETTINGS
-============================================================ */
+========================================================= */
 
 const printSizes = {
 
   "2x6": {
 
-    label: "2 × 6 inches",
+    label:"2 × 6 inches",
 
-    width: 600,
+    width:600,
 
-    height: 1800,
+    height:1800,
 
-    photoCounts: [4],
+    photoCounts:[4],
 
-    description: "Photostrip"
+    description:"Photostrip · 4 photos"
 
   },
 
 
   "4x6": {
 
-    label: "4R / 4 × 6 inches",
+    label:"4R / 4 × 6 inches",
 
-    width: 1200,
+    width:1200,
 
-    height: 1800,
+    height:1800,
 
-    photoCounts: [1, 4, 6],
+    photoCounts:[1,4,6],
 
-    description: "Standard photo print"
+    description:"Standard photo print"
 
   },
 
 
   "5x7": {
 
-    label: "5R / 5 × 7 inches",
+    label:"5R / 5 × 7 inches",
 
-    width: 1500,
+    width:1500,
 
-    height: 2100,
+    height:2100,
 
-    photoCounts: [1, 4, 6],
+    photoCounts:[1,4,6],
 
-    description: "Large photo print"
+    description:"Large photo print"
 
   }
 
 };
 
 
-/* ============================================================
+/* =========================================================
    TEMPLATE SETTINGS
 
    Upload your PNG designs to:
@@ -968,146 +1661,149 @@ const printSizes = {
    Example:
 
    templates/kawaii-2x6.png
-   templates/kawaii-4x6.png
-   templates/kawaii-5x7.png
-============================================================ */
+========================================================= */
 
 const templateData = [
 
   {
-    id: "kawaii",
 
-    name: "Kawaii",
+    id:"kawaii",
 
-    category: "kawaii",
+    name:"Kawaii",
 
-    caption: "SO CUTE!",
+    category:"kawaii",
 
-    image: {
+    caption:"SO CUTE!",
 
-      "2x6": "templates/kawaii-2x6.png",
+    color:"#ffdce9",
 
-      "4x6": "templates/kawaii-4x6.png",
+    image:{
 
-      "5x7": "templates/kawaii-5x7.png"
+      "2x6":"templates/kawaii-2x6.png",
 
-    },
+      "4x6":"templates/kawaii-4x6.png",
 
-    color: "#ffdce9"
+      "5x7":"templates/kawaii-5x7.png"
 
-  },
-
-
-  {
-    id: "birthday",
-
-    name: "Birthday",
-
-    category: "birthday",
-
-    caption: "HAPPY DAY",
-
-    image: {
-
-      "2x6": "templates/birthday-2x6.png",
-
-      "4x6": "templates/birthday-4x6.png",
-
-      "5x7": "templates/birthday-5x7.png"
-
-    },
-
-    color: "#ffe8c8"
+    }
 
   },
 
 
   {
-    id: "wedding",
 
-    name: "Wedding",
+    id:"birthday",
 
-    category: "wedding",
+    name:"Birthday",
 
-    caption: "FOREVER",
+    category:"birthday",
 
-    image: {
+    caption:"HAPPY DAY",
 
-      "2x6": "templates/wedding-2x6.png",
+    color:"#ffe8c8",
 
-      "4x6": "templates/wedding-4x6.png",
+    image:{
 
-      "5x7": "templates/wedding-5x7.png"
+      "2x6":"templates/birthday-2x6.png",
 
-    },
+      "4x6":"templates/birthday-4x6.png",
 
-    color: "#f5f2f0"
+      "5x7":"templates/birthday-5x7.png"
 
-  },
-
-
-  {
-    id: "graduation",
-
-    name: "Graduation",
-
-    category: "graduation",
-
-    caption: "LET'S CELEBRATE",
-
-    image: {
-
-      "2x6": "templates/graduation-2x6.png",
-
-      "4x6": "templates/graduation-4x6.png",
-
-      "5x7": "templates/graduation-5x7.png"
-
-    },
-
-    color: "#17264a"
+    }
 
   },
 
 
   {
-    id: "minimal",
 
-    name: "Minimal",
+    id:"wedding",
 
-    category: "minimal",
+    name:"Wedding",
 
-    caption: "MEMORIES",
+    category:"wedding",
 
-    image: {
+    caption:"FOREVER",
 
-      "2x6": "templates/minimal-2x6.png",
+    color:"#f5f2f0",
 
-      "4x6": "templates/minimal-4x6.png",
+    image:{
 
-      "5x7": "templates/minimal-5x7.png"
+      "2x6":"templates/wedding-2x6.png",
 
-    },
+      "4x6":"templates/wedding-4x6.png",
 
-    color: "#ffffff"
+      "5x7":"templates/wedding-5x7.png"
+
+    }
+
+  },
+
+
+  {
+
+    id:"graduation",
+
+    name:"Graduation",
+
+    category:"graduation",
+
+    caption:"LET'S CELEBRATE",
+
+    color:"#17264a",
+
+    image:{
+
+      "2x6":"templates/graduation-2x6.png",
+
+      "4x6":"templates/graduation-4x6.png",
+
+      "5x7":"templates/graduation-5x7.png"
+
+    }
+
+  },
+
+
+  {
+
+    id:"minimal",
+
+    name:"Minimal",
+
+    category:"minimal",
+
+    caption:"MEMORIES",
+
+    color:"#ffffff",
+
+    image:{
+
+      "2x6":"templates/minimal-2x6.png",
+
+      "4x6":"templates/minimal-4x6.png",
+
+      "5x7":"templates/minimal-5x7.png"
+
+    }
 
   }
 
 ];
 
 
-/* ============================================================
+/* =========================================================
    CAMERA
-============================================================ */
+========================================================= */
 
-async function startCamera() {
+async function startCamera(){
 
-  try {
+  try{
 
-    if (
+    if(
       !navigator.mediaDevices ||
       !navigator.mediaDevices.getUserMedia
-    ) {
+    ){
 
       alert(
         "Camera is not supported by this browser."
@@ -1118,11 +1814,13 @@ async function startCamera() {
     }
 
 
-    if (stream) {
+    if(stream){
 
       stream
         .getTracks()
-        .forEach(track => track.stop());
+        .forEach(
+          track => track.stop()
+        );
 
     }
 
@@ -1130,21 +1828,21 @@ async function startCamera() {
     stream =
       await navigator.mediaDevices.getUserMedia({
 
-        video: {
+        video:{
 
-          facingMode: facing,
+          facingMode:facing,
 
-          width: {
-            ideal: 1280
+          width:{
+            ideal:1280
           },
 
-          height: {
-            ideal: 960
+          height:{
+            ideal:960
           }
 
         },
 
-        audio: false
+        audio:false
 
       });
 
@@ -1153,26 +1851,24 @@ async function startCamera() {
       document.getElementById("video");
 
 
-    video.srcObject = stream;
+    video.srcObject =
+      stream;
 
 
     await video.play();
 
 
-  }
+    document
+      .getElementById("cameraMessage")
+      .classList.add("hidden");
 
-  catch (error) {
 
-    console.error(
-      "Camera error:",
-      error
-    );
+  }catch(error){
 
+    console.error(error);
 
     alert(
-      "Camera access was blocked. " +
-      "Please allow camera permission and make sure " +
-      "your GitHub website is using HTTPS."
+      "Camera access was blocked. Please allow camera permission and make sure this website is using HTTPS."
     );
 
   }
@@ -1180,11 +1876,11 @@ async function startCamera() {
 }
 
 
-/* ============================================================
+/* =========================================================
    FLIP CAMERA
-============================================================ */
+========================================================= */
 
-async function flipCamera() {
+async function flipCamera(){
 
   facing =
     facing === "user"
@@ -1197,11 +1893,11 @@ async function flipCamera() {
 }
 
 
-/* ============================================================
+/* =========================================================
    TIMER
-============================================================ */
+========================================================= */
 
-function setTimer() {
+function setTimer(){
 
   timer =
     timer === 3
@@ -1211,37 +1907,38 @@ function setTimer() {
         : 3;
 
 
-  document.getElementById(
-    "timerText"
-  ).textContent =
-    timer
-      ? timer + "s"
-      : "Off";
+  document
+    .getElementById("timerText")
+    .textContent =
+      timer
+        ? timer + "s"
+        : "Off";
 
 }
 
 
-/* ============================================================
+/* =========================================================
    SELECT PRINT SIZE
-============================================================ */
+========================================================= */
 
 function selectSize(
   size,
   button
-) {
+){
 
-  printSize = size;
+  printSize =
+    size;
 
 
   const settings =
     printSizes[size];
 
 
-  if (
+  if(
     !settings.photoCounts.includes(
       photoCount
     )
-  ) {
+  ){
 
     photoCount =
       settings.photoCounts[0];
@@ -1254,18 +1951,13 @@ function selectSize(
 
   document
     .querySelectorAll(".sizeBtn")
-    .forEach(btn => {
-
-      btn.classList.remove(
-        "active"
-      );
-
-    });
+    .forEach(
+      btn =>
+        btn.classList.remove("active")
+    );
 
 
-  button.classList.add(
-    "active"
-  );
+  button.classList.add("active");
 
 
   renderPhotoCountButtons();
@@ -1281,11 +1973,11 @@ function selectSize(
 }
 
 
-/* ============================================================
+/* =========================================================
    PHOTO COUNT BUTTONS
-============================================================ */
+========================================================= */
 
-function renderPhotoCountButtons() {
+function renderPhotoCountButtons(){
 
   const container =
     document.getElementById(
@@ -1301,6 +1993,7 @@ function renderPhotoCountButtons() {
   ].photoCounts.forEach(
     count => {
 
+
       const button =
         document.createElement(
           "button"
@@ -1311,9 +2004,9 @@ function renderPhotoCountButtons() {
         "btn outline photoBtn";
 
 
-      if (
+      if(
         count === photoCount
-      ) {
+      ){
 
         button.classList.add(
           "active"
@@ -1323,33 +2016,29 @@ function renderPhotoCountButtons() {
 
 
       button.textContent =
-        count +
-        (
-          count === 1
-            ? " Photo"
-            : " Photos"
-        );
+        count === 1
+          ? "1 Photo"
+          : count + " Photos";
 
 
-      button.onclick =
-        function() {
+      button.onclick = () => {
 
-          photoCount =
-            count;
-
-
-          photos = [];
+        photoCount =
+          count;
 
 
-          renderPhotoCountButtons();
+        photos = [];
 
-          updateSizeInfo();
 
-          updateCount();
+        renderPhotoCountButtons();
 
-          renderResult();
+        updateSizeInfo();
 
-        };
+        updateCount();
+
+        renderResult();
+
+      };
 
 
       container.appendChild(
@@ -1362,48 +2051,46 @@ function renderPhotoCountButtons() {
 }
 
 
-/* ============================================================
+/* =========================================================
    SIZE INFORMATION
-============================================================ */
+========================================================= */
 
-function updateSizeInfo() {
+function updateSizeInfo(){
 
   const settings =
-    printSizes[
-      printSize
-    ];
+    printSizes[printSize];
 
 
-  document.getElementById(
-    "sizeInfo"
-  ).textContent =
+  document
+    .getElementById("sizeInfo")
+    .textContent =
 
-    settings.label +
+      settings.label +
 
-    " · " +
+      " · " +
 
-    photoCount +
+      photoCount +
 
-    (
-      photoCount === 1
-        ? " photo"
-        : " photos"
-    ) +
+      (
+        photoCount === 1
+          ? " photo"
+          : " photos"
+      ) +
 
-    " · " +
+      " · " +
 
-    settings.description;
+      settings.description;
 
 }
 
 
-/* ============================================================
+/* =========================================================
    TAKE PHOTO
-============================================================ */
+========================================================= */
 
-function takePhoto() {
+function takePhoto(){
 
-  if (!stream) {
+  if(!stream){
 
     startCamera();
 
@@ -1412,10 +2099,9 @@ function takePhoto() {
   }
 
 
-  if (
-    photos.length >=
-    photoCount
-  ) {
+  if(
+    photos.length >= photoCount
+  ){
 
     alert(
       "You already took all " +
@@ -1432,105 +2118,103 @@ function takePhoto() {
   }
 
 
-  const takeActualPhoto =
-    function() {
+  const capture = () => {
 
-      const video =
-        document.getElementById(
-          "video"
-        );
-
-
-      const canvas =
-        document.getElementById(
-          "canvas"
-        );
+    const video =
+      document.getElementById(
+        "video"
+      );
 
 
-      if (
-        !video.videoWidth
-      ) {
-
-        alert(
-          "Please wait for the camera to start."
-        );
-
-        return;
-
-      }
+    const canvas =
+      document.getElementById(
+        "canvas"
+      );
 
 
-      canvas.width =
-        video.videoWidth;
+    if(!video.videoWidth){
+
+      alert(
+        "Please wait for the camera to start."
+      );
+
+      return;
+
+    }
 
 
-      canvas.height =
-        video.videoHeight;
+    canvas.width =
+      video.videoWidth;
 
 
-      const context =
-        canvas.getContext(
-          "2d"
-        );
+    canvas.height =
+      video.videoHeight;
 
 
-      context.save();
+    const context =
+      canvas.getContext(
+        "2d"
+      );
 
 
-      if (
-        facing === "user"
-      ) {
-
-        context.translate(
-          canvas.width,
-          0
-        );
-
-        context.scale(
-          -1,
-          1
-        );
-
-      }
+    context.save();
 
 
-      context.drawImage(
-        video,
-        0,
-        0,
+    if(
+      facing === "user"
+    ){
+
+      context.translate(
         canvas.width,
-        canvas.height
+        0
       );
 
-
-      context.restore();
-
-
-      photos.push(
-        canvas.toDataURL(
-          "image/jpeg",
-          0.92
-        )
+      context.scale(
+        -1,
+        1
       );
 
-
-      updateCount();
-
-      renderResult();
-
-    };
+    }
 
 
-  if (!timer) {
+    context.drawImage(
+      video,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
 
-    takeActualPhoto();
+
+    context.restore();
+
+
+    photos.push(
+      canvas.toDataURL(
+        "image/jpeg",
+        .92
+      )
+    );
+
+
+    updateCount();
+
+    renderResult();
+
+  };
+
+
+  if(!timer){
+
+    capture();
 
     return;
 
   }
 
 
-  let number = timer;
+  let number =
+    timer;
 
 
   const countdown =
@@ -1548,65 +2232,61 @@ function takePhoto() {
 
 
   const interval =
-    setInterval(
-      function() {
+    setInterval(() => {
 
-        number--;
-
-
-        if (
-          number <= 0
-        ) {
-
-          clearInterval(
-            interval
-          );
+      number--;
 
 
-          countdown.style.display =
-            "none";
+      if(
+        number <= 0
+      ){
+
+        clearInterval(
+          interval
+        );
 
 
-          takeActualPhoto();
+        countdown.style.display =
+          "none";
 
-        }
 
-        else {
+        capture();
 
-          countdown.textContent =
-            number;
+      }else{
 
-        }
+        countdown.textContent =
+          number;
 
-      },
-      1000
-    );
+      }
+
+    },1000);
 
 }
 
 
-/* ============================================================
-   UPDATE PHOTO COUNT
-============================================================ */
+/* =========================================================
+   COUNT
+========================================================= */
 
-function updateCount() {
+function updateCount(){
 
-  document.getElementById(
-    "countBadge"
-  ).textContent =
-
-    photos.length +
-    " / " +
-    photoCount;
+  document
+    .getElementById(
+      "countBadge"
+    )
+    .textContent =
+      photos.length +
+      " / " +
+      photoCount;
 
 }
 
 
-/* ============================================================
-   TEMPLATE DISPLAY
-============================================================ */
+/* =========================================================
+   TEMPLATE RENDERING
+========================================================= */
 
-function renderTemplates() {
+function renderTemplates(){
 
   const box =
     document.getElementById(
@@ -1618,7 +2298,8 @@ function renderTemplates() {
 
 
   templateData.forEach(
-    function(template) {
+    template => {
+
 
       const item =
         document.createElement(
@@ -1655,7 +2336,7 @@ function renderTemplates() {
         template.color;
 
 
-      const image =
+      const imagePath =
         template.image[
           printSize
         ];
@@ -1668,21 +2349,49 @@ function renderTemplates() {
 
 
       img.src =
-        image;
+        imagePath;
 
 
-      img.onerror =
-        function() {
+      img.onerror = () => {
 
-          img.style.display =
-            "none";
+        img.style.display =
+          "none";
 
-        };
+      };
 
 
       preview.appendChild(
         img
       );
+
+
+      const slotCount =
+        printSize === "2x6"
+          ? 4
+          : photoCount;
+
+
+      for(
+        let i = 0;
+        i < slotCount;
+        i++
+      ){
+
+        const slot =
+          document.createElement(
+            "div"
+          );
+
+
+        slot.className =
+          "templatePlaceholder";
+
+
+        preview.appendChild(
+          slot
+        );
+
+      }
 
 
       const name =
@@ -1716,18 +2425,17 @@ function renderTemplates() {
       );
 
 
-      item.onclick =
-        function() {
+      item.onclick = () => {
 
-          selectedTemplate =
-            template.id;
+        selectedTemplate =
+          template.id;
 
 
-          renderTemplates();
+        renderTemplates();
 
-          renderResult();
+        renderResult();
 
-        };
+      };
 
 
       box.appendChild(
@@ -1740,27 +2448,24 @@ function renderTemplates() {
 }
 
 
-/* ============================================================
+/* =========================================================
    FILTER TEMPLATES
-============================================================ */
+========================================================= */
 
 function filterTemplates(
   type,
   button
-) {
+){
 
   document
     .querySelectorAll(
       ".filter"
     )
     .forEach(
-      function(x) {
-
+      x =>
         x.classList.remove(
           "active"
-        );
-
-      }
+        )
     );
 
 
@@ -1774,17 +2479,13 @@ function filterTemplates(
       ".template"
     )
     .forEach(
-      function(template) {
+      template => {
 
         template.style.display =
-
           type === "all" ||
-
           template.dataset.type ===
             type
-
             ? "block"
-
             : "none";
 
       }
@@ -1793,88 +2494,65 @@ function filterTemplates(
 }
 
 
-/* ============================================================
+/* =========================================================
    PHOTO LAYOUT
-============================================================ */
+========================================================= */
 
-function getLayout() {
+function getLayout(){
 
-  if (
-    printSize === "2x6"
-  ) {
+  if(printSize === "2x6"){
 
     return {
-
-      columns: 1,
-
-      rows: 4
-
+      columns:1,
+      rows:4
     };
 
   }
 
 
-  if (
-    photoCount === 1
-  ) {
+  if(photoCount === 1){
 
     return {
-
-      columns: 1,
-
-      rows: 1
-
+      columns:1,
+      rows:1
     };
 
   }
 
 
-  if (
-    photoCount === 4
-  ) {
+  if(photoCount === 4){
 
     return {
-
-      columns: 2,
-
-      rows: 2
-
+      columns:2,
+      rows:2
     };
 
   }
 
 
-  if (
-    photoCount === 6
-  ) {
+  if(photoCount === 6){
 
     return {
-
-      columns: 2,
-
-      rows: 3
-
+      columns:2,
+      rows:3
     };
 
   }
 
 
   return {
-
-    columns: 2,
-
-    rows: 2
-
+    columns:2,
+    rows:2
   };
 
 }
 
 
-/* ============================================================
+/* =========================================================
    LIVE PREVIEW
-============================================================ */
+========================================================= */
 
-function renderResult() {
+function renderResult(){
 
   const result =
     document.getElementById(
@@ -1886,9 +2564,7 @@ function renderResult() {
 
 
   const settings =
-    printSizes[
-      printSize
-    ];
+    printSizes[printSize];
 
 
   const layout =
@@ -1896,21 +2572,18 @@ function renderResult() {
 
 
   result.style.aspectRatio =
-
     settings.width +
     "/" +
     settings.height;
 
 
   result.style.gridTemplateColumns =
-
     "repeat(" +
     layout.columns +
     ",1fr)";
 
 
   result.style.gridTemplateRows =
-
     "repeat(" +
     layout.rows +
     ",1fr)";
@@ -1918,14 +2591,9 @@ function renderResult() {
 
   const template =
     templateData.find(
-      function(t) {
-
-        return (
-          t.id ===
-          selectedTemplate
-        );
-
-      }
+      t =>
+        t.id ===
+        selectedTemplate
     );
 
 
@@ -1933,25 +2601,23 @@ function renderResult() {
     template.color;
 
 
-  for (
+  for(
     let i = 0;
     i < photoCount;
     i++
-  ) {
+  ){
 
-    const photoBox =
+    const box =
       document.createElement(
         "div"
       );
 
 
-    photoBox.className =
+    box.className =
       "photo";
 
 
-    if (
-      photos[i]
-    ) {
+    if(photos[i]){
 
       const image =
         document.createElement(
@@ -1967,7 +2633,7 @@ function renderResult() {
         "photoImage";
 
 
-      photoBox.appendChild(
+      box.appendChild(
         image
       );
 
@@ -1975,7 +2641,7 @@ function renderResult() {
 
 
     result.appendChild(
-      photoBox
+      box
     );
 
   }
@@ -1997,13 +2663,12 @@ function renderResult() {
     ];
 
 
-  overlay.onerror =
-    function() {
+  overlay.onerror = () => {
 
-      overlay.style.display =
-        "none";
+    overlay.style.display =
+      "none";
 
-    };
+  };
 
 
   result.appendChild(
@@ -2032,11 +2697,11 @@ function renderResult() {
 }
 
 
-/* ============================================================
-   RESET PHOTOS
-============================================================ */
+/* =========================================================
+   RESET
+========================================================= */
 
-function resetPhotos() {
+function resetPhotos(){
 
   photos = [];
 
@@ -2045,21 +2710,22 @@ function resetPhotos() {
 
   renderResult();
 
+
+  hideQR();
+
 }
 
 
-/* ============================================================
+/* =========================================================
    CREATE FINAL PRINT IMAGE
-============================================================ */
+========================================================= */
 
-async function createFinalPrint() {
+async function createFinalImage(){
 
-  if (
-    !photos.length
-  ) {
+  if(!photos.length){
 
     throw new Error(
-      "No photos available."
+      "Please take at least one photo."
     );
 
   }
@@ -2101,18 +2767,13 @@ async function createFinalPrint() {
 
   const template =
     templateData.find(
-      function(t) {
-
-        return (
-          t.id ===
-          selectedTemplate
-        );
-
-      }
+      t =>
+        t.id ===
+        selectedTemplate
     );
 
 
-  /* Background */
+  /* BACKGROUND */
 
   ctx.fillStyle =
     template.color;
@@ -2126,7 +2787,11 @@ async function createFinalPrint() {
   );
 
 
-  /* Margins */
+  /* LAYOUT */
+
+  const layout =
+    getLayout();
+
 
   const margin =
     Math.round(
@@ -2138,10 +2803,6 @@ async function createFinalPrint() {
     Math.round(
       height * 0.015
     );
-
-
-  const layout =
-    getLayout();
 
 
   const usableWidth =
@@ -2158,7 +2819,7 @@ async function createFinalPrint() {
     (
       usableWidth -
       gap *
-      (layout.columns - 1)
+        (layout.columns - 1)
     ) /
     layout.columns;
 
@@ -2167,144 +2828,138 @@ async function createFinalPrint() {
     (
       usableHeight -
       gap *
-      (layout.rows - 1)
+        (layout.rows - 1)
     ) /
     layout.rows;
 
 
-  /* Draw photos */
+  /* PHOTOS */
 
-  for (
+  for(
     let i = 0;
     i < photos.length;
     i++
-  ) {
+  ){
 
     await new Promise(
-      function(resolve) {
+      resolve => {
 
         const image =
           new Image();
 
 
-        image.onload =
-          function() {
+        image.onload = () => {
 
-            const column =
-              i %
-              layout.columns;
-
-
-            const row =
-              Math.floor(
-                i /
-                layout.columns
-              );
+          const column =
+            i %
+            layout.columns;
 
 
-            const x =
-              margin +
-              column *
+          const row =
+            Math.floor(
+              i /
+              layout.columns
+            );
+
+
+          const x =
+            margin +
+            column *
               (
                 cellWidth +
                 gap
               );
 
 
-            const y =
-              margin +
-              row *
+          const y =
+            margin +
+            row *
               (
                 cellHeight +
                 gap
               );
 
 
-            const scale =
-              Math.max(
-                cellWidth /
-                  image.width,
+          const scale =
+            Math.max(
+              cellWidth /
+                image.width,
 
-                cellHeight /
-                  image.height
-              );
-
-
-            const drawWidth =
-              image.width *
-              scale;
-
-
-            const drawHeight =
-              image.height *
-              scale;
-
-
-            const drawX =
-              x +
-              (
-                cellWidth -
-                drawWidth
-              ) /
-              2;
-
-
-            const drawY =
-              y +
-              (
-                cellHeight -
-                drawHeight
-              ) /
-              2;
-
-
-            ctx.save();
-
-
-            const radius =
-              Math.round(
-                width * 0.015
-              );
-
-
-            ctx.beginPath();
-
-
-            ctx.roundRect(
-              x,
-              y,
-              cellWidth,
-              cellHeight,
-              radius
+              cellHeight /
+                image.height
             );
 
 
-            ctx.clip();
+          const drawWidth =
+            image.width *
+            scale;
 
 
-            ctx.drawImage(
-              image,
-              drawX,
-              drawY,
-              drawWidth,
+          const drawHeight =
+            image.height *
+            scale;
+
+
+          const drawX =
+            x +
+            (
+              cellWidth -
+              drawWidth
+            ) / 2;
+
+
+          const drawY =
+            y +
+            (
+              cellHeight -
               drawHeight
+            ) / 2;
+
+
+          ctx.save();
+
+
+          const radius =
+            Math.round(
+              width *
+              0.015
             );
 
 
-            ctx.restore();
+          ctx.beginPath();
 
 
-            resolve();
+          ctx.roundRect(
+            x,
+            y,
+            cellWidth,
+            cellHeight,
+            radius
+          );
 
-          };
+
+          ctx.clip();
+
+
+          ctx.drawImage(
+            image,
+            drawX,
+            drawY,
+            drawWidth,
+            drawHeight
+          );
+
+
+          ctx.restore();
+
+
+          resolve();
+
+        };
 
 
         image.onerror =
-          function() {
-
-            resolve();
-
-          };
+          resolve;
 
 
         image.src =
@@ -2316,38 +2971,33 @@ async function createFinalPrint() {
   }
 
 
-  /* Add template overlay */
+  /* TEMPLATE OVERLAY */
 
   await new Promise(
-    function(resolve) {
+    resolve => {
 
       const overlay =
         new Image();
 
 
-      overlay.onload =
-        function() {
+      overlay.onload = () => {
 
-          ctx.drawImage(
-            overlay,
-            0,
-            0,
-            width,
-            height
-          );
+        ctx.drawImage(
+          overlay,
+          0,
+          0,
+          width,
+          height
+        );
 
 
-          resolve();
+        resolve();
 
-        };
+      };
 
 
       overlay.onerror =
-        function() {
-
-          resolve();
-
-        };
+        resolve;
 
 
       overlay.src =
@@ -2359,39 +3009,99 @@ async function createFinalPrint() {
   );
 
 
-  return canvas.toDataURL(
-    "image/png"
+  /* TEMPORARY TEXT
+     Only useful before
+     custom PNG templates
+     are uploaded.
+  */
+
+  const hasTemplate =
+    await imageExists(
+      template.image[
+        printSize
+      ]
+    );
+
+
+  if(!hasTemplate){
+
+    ctx.fillStyle =
+      template.id ===
+        "graduation"
+        ? "#fff"
+        : "#ed4f86";
+
+
+    ctx.font =
+      "bold 45px cursive";
+
+
+    ctx.textAlign =
+      "center";
+
+
+    ctx.fillText(
+      template.caption,
+      width / 2,
+      height - 40
+    );
+
+  }
+
+
+  return canvas;
+
+}
+
+
+/* =========================================================
+   CHECK IF TEMPLATE EXISTS
+========================================================= */
+
+function imageExists(
+  src
+){
+
+  return new Promise(
+    resolve => {
+
+      const img =
+        new Image();
+
+
+      img.onload =
+        () => resolve(true);
+
+
+      img.onerror =
+        () => resolve(false);
+
+
+      img.src =
+        src;
+
+    }
   );
 
 }
 
 
-/* ============================================================
-   DOWNLOAD PRINT
-============================================================ */
+/* =========================================================
+   LOCAL DOWNLOAD
+========================================================= */
 
-async function downloadPrint() {
+async function downloadDigitalCopy(){
 
-  if (
-    !photos.length
-  ) {
+  try{
 
-    alert(
-      "Please take at least one photo first."
+    showStatus(
+      "Preparing your soft copy..."
     );
 
-    return;
 
-  }
+    const canvas =
+      await createFinalImage();
 
-
-  try {
-
-    const dataUrl =
-      await createFinalPrint();
-
-
-    /* Download locally */
 
     const link =
       document.createElement(
@@ -2408,33 +3118,24 @@ async function downloadPrint() {
 
 
     link.href =
-      dataUrl;
+      canvas.toDataURL(
+        "image/png"
+      );
 
 
     link.click();
 
 
-    /*
-       Upload to Cloudinary
-       for QR download
-    */
-
-    await uploadAndCreateQR(
-      dataUrl
+    showStatus(
+      "Soft copy downloaded successfully! 💗"
     );
 
+  }catch(error){
 
-  }
-
-  catch(error) {
-
-    console.error(
-      error
-    );
-
+    console.error(error);
 
     alert(
-      "The print was created, but something went wrong with the QR upload."
+      error.message
     );
 
   }
@@ -2442,23 +3143,17 @@ async function downloadPrint() {
 }
 
 
-/* ============================================================
+/* =========================================================
    CLOUDINARY UPLOAD
-============================================================ */
+========================================================= */
 
 async function uploadToCloudinary(
   dataUrl
-) {
+){
 
   const formData =
     new FormData();
 
-
-  /*
-     IMPORTANT:
-     Cloudinary accepts the data URL
-     as the file value.
-  */
 
   formData.append(
     "file",
@@ -2481,18 +3176,16 @@ async function uploadToCloudinary(
 
       {
 
-        method: "POST",
+        method:"POST",
 
-        body: formData
+        body:formData
 
       }
 
     );
 
 
-  if (
-    !response.ok
-  ) {
+  if(!response.ok){
 
     const errorText =
       await response.text();
@@ -2515,9 +3208,7 @@ async function uploadToCloudinary(
     await response.json();
 
 
-  if (
-    !data.secure_url
-  ) {
+  if(!data.secure_url){
 
     throw new Error(
       "Cloudinary did not return an image URL."
@@ -2531,13 +3222,13 @@ async function uploadToCloudinary(
 }
 
 
-/* ============================================================
-   UPLOAD + GENERATE QR
-============================================================ */
+/* =========================================================
+   GENERATE QR
+========================================================= */
 
-async function uploadAndCreateQR(
-  dataUrl
-) {
+function showQR(
+  imageUrl
+){
 
   const qr =
     document.getElementById(
@@ -2545,21 +3236,147 @@ async function uploadAndCreateQR(
     );
 
 
-  try {
+  const qrUrl =
+    "https://quickchart.io/qr?size=500&text=" +
+    encodeURIComponent(
+      imageUrl
+    );
 
-    /*
-       Tell customer what is happening.
-    */
 
-    qr.style.display =
+  qr.src =
+    qrUrl;
+
+
+  qr.classList.add(
+    "qrReady"
+  );
+
+
+  document
+    .getElementById(
+      "qrTitle"
+    )
+    .style.display =
       "block";
 
 
-    qr.src =
-      "https://quickchart.io/qr?size=300&text=" +
-      encodeURIComponent(
-        window.location.href
+  document
+    .getElementById(
+      "qrInstructions"
+    )
+    .style.display =
+      "block";
+
+}
+
+
+/* =========================================================
+   HIDE QR
+========================================================= */
+
+function hideQR(){
+
+  const qr =
+    document.getElementById(
+      "qr"
+    );
+
+
+  qr.src = "";
+
+
+  qr.classList.remove(
+    "qrReady"
+  );
+
+
+  document
+    .getElementById(
+      "qrTitle"
+    )
+    .style.display =
+      "none";
+
+
+  document
+    .getElementById(
+      "qrInstructions"
+    )
+    .style.display =
+      "none";
+
+}
+
+
+/* =========================================================
+   PRINT + CLOUDINARY + QR
+
+   THIS IS THE MAIN BUTTON.
+========================================================= */
+
+async function printAndCreateQR(){
+
+  if(
+    photos.length <
+    photoCount
+  ){
+
+    alert(
+      "Please take all " +
+      photoCount +
+      (
+        photoCount === 1
+          ? " photo"
+          : " photos"
+      ) +
+      " first."
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "printButton"
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "⏳ Preparing...";
+
+
+  try{
+
+    showStatus(
+      "Creating your print-ready photo..."
+    );
+
+
+    /* CREATE FINAL IMAGE */
+
+    const canvas =
+      await createFinalImage();
+
+
+    /* CONVERT TO DATA URL */
+
+    const dataUrl =
+      canvas.toDataURL(
+        "image/png"
       );
+
+
+    /* UPLOAD TO CLOUDINARY */
+
+    showStatus(
+      "Uploading digital copy..."
+    );
 
 
     const imageUrl =
@@ -2569,79 +3386,131 @@ async function uploadAndCreateQR(
 
 
     console.log(
-      "Cloudinary photo:",
+      "Cloudinary image:",
       imageUrl
     );
 
 
-    /*
-       Create QR pointing directly
-       to the uploaded Cloudinary image.
-    */
+    /* GENERATE QR */
 
-    const qrUrl =
-      "https://quickchart.io/qr?size=400&text=" +
-      encodeURIComponent(
-        imageUrl
-      );
-
-
-    qr.src =
-      qrUrl;
-
-
-    /*
-       Make QR easier to notice.
-    */
-
-    const orderBox =
-      document.querySelector(
-        ".orderbox"
-      );
-
-
-    if (
-      orderBox
-    ) {
-
-      orderBox.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-    }
-
-
-    alert(
-      "✅ Print created!\n\n" +
-      "📱 Scan the QR code to download the digital photo."
+    showQR(
+      imageUrl
     );
 
-  }
 
-  catch(error) {
+    /* PREPARE PRINT CANVAS */
+
+    const printCanvas =
+      document.getElementById(
+        "printCanvas"
+      );
+
+
+    const printContext =
+      printCanvas.getContext(
+        "2d"
+      );
+
+
+    printCanvas.width =
+      canvas.width;
+
+
+    printCanvas.height =
+      canvas.height;
+
+
+    printContext.clearRect(
+      0,
+      0,
+      printCanvas.width,
+      printCanvas.height
+    );
+
+
+    printContext.drawImage(
+      canvas,
+      0,
+      0
+    );
+
+
+    /* SAVE LOCAL BACKUP */
+
+    const backup =
+      document.createElement(
+        "a"
+      );
+
+
+    backup.download =
+      "Eli-PrintHub-" +
+      printSize +
+      "-" +
+      photoCount +
+      "photos.png";
+
+
+    backup.href =
+      dataUrl;
+
+
+    backup.click();
+
+
+    /* PRINT */
+
+    showStatus(
+      "Your digital copy is ready. Opening the print dialog..."
+    );
+
+
+    setTimeout(
+      () => {
+
+        window.print();
+
+
+        button.disabled =
+          false;
+
+
+        button.textContent =
+          "🖨️ PRINT & GET QR";
+
+
+        showStatus(
+          "🎉 Printed! The QR code above can be scanned to download the soft copy."
+        );
+
+      },
+      700
+    );
+
+
+  }catch(error){
 
     console.error(
-      "QR upload error:",
       error
     );
 
 
-    /*
-       Put the Messenger QR back
-       if photo upload fails.
-    */
-
-    qr.src =
-      "https://quickchart.io/qr?size=300&text=" +
-      encodeURIComponent(
-        ORDER_LINK
-      );
-
-
     alert(
-      "The print was downloaded successfully, but the QR photo upload failed.\n\n" +
-      "Please check your Cloudinary Upload Preset."
+      "The photo was created, but the digital upload failed.\n\n" +
+      "Please check your Cloudinary Cloud Name and Upload Preset."
+    );
+
+
+    button.disabled =
+      false;
+
+
+    button.textContent =
+      "🖨️ PRINT & GET QR";
+
+
+    showStatus(
+      "Upload failed. Please check Cloudinary settings."
     );
 
   }
@@ -2649,84 +3518,64 @@ async function uploadAndCreateQR(
 }
 
 
-/* ============================================================
-   MESSENGER ORDER
-============================================================ */
+/* =========================================================
+   STATUS MESSAGE
+========================================================= */
 
-function openOrder() {
+function showStatus(
+  message
+){
 
-  document.getElementById(
-    "orderModal"
-  ).style.display =
-    "flex";
-
-}
-
-
-function closeOrder() {
-
-  document.getElementById(
-    "orderModal"
-  ).style.display =
-    "none";
-
-}
-
-
-/* ============================================================
-   INITIAL ORDER QR
-============================================================ */
-
-function createOrderQR() {
-
-  const qr =
+  const box =
     document.getElementById(
-      "qr"
+      "statusBox"
     );
 
 
-  /*
-     Before a photo is printed,
-     QR goes to Messenger.
-  */
-
-  qr.src =
-    "https://quickchart.io/qr?size=300&text=" +
-    encodeURIComponent(
-      ORDER_LINK
-    );
-
-}
+  box.textContent =
+    message;
 
 
-/* ============================================================
-   CLOSE MODAL WHEN CLICKING OUTSIDE
-============================================================ */
-
-document
-  .getElementById(
-    "orderModal"
-  )
-  .addEventListener(
-    "click",
-    function(event) {
-
-      if (
-        event.target ===
-        this
-      ) {
-
-        closeOrder();
-
-      }
-
-    }
+  box.classList.add(
+    "show"
   );
 
+}
 
-/* ============================================================
-   INITIALIZE WEBSITE
-============================================================ */
+
+/* =========================================================
+   ORDER MODAL
+========================================================= */
+
+function openOrder(){
+
+  document
+    .getElementById(
+      "orderModal"
+    )
+    .classList.add(
+      "show"
+    );
+
+}
+
+
+function closeOrder(){
+
+  document
+    .getElementById(
+      "orderModal"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
 
 renderPhotoCountButtons();
 
@@ -2738,8 +3587,31 @@ renderResult();
 
 updateCount();
 
-createOrderQR();
+hideQR();
 
+
+/* =========================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+========================================================= */
+
+document
+  .getElementById(
+    "orderModal"
+  )
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(
+        event.target === this
+      ){
+
+        closeOrder();
+
+      }
+
+    }
+  );
 
 </script>
 
