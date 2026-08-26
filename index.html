@@ -2,1721 +2,285 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eli PrintHub Photobooth</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#d85b91">
+<title>eli.print • DIY Photobooth</title>
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f7f1f5;
-    color: #333;
-}
-
-button,
-select,
-input {
-    font: inherit;
-}
-
-header {
-    background: #ffffff;
-    padding: 18px 20px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.logo {
-    font-size: 28px;
-    font-weight: 800;
-}
-
-.logo span {
-    color: #d65b91;
-}
-
-header p {
-    margin: 5px 0 0;
-    color: #777;
-}
-
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 20px;
-}
-
-.panel {
-    background: white;
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.08);
-}
-
-h2 {
-    margin-top: 0;
-}
-
-.controls {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 15px;
-}
-
-.control-group {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-}
-
-label {
-    font-weight: bold;
-    font-size: 14px;
-}
-
-select,
-input[type="number"] {
-    padding: 11px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background: white;
-}
-
-button {
-    border: none;
-    border-radius: 10px;
-    padding: 12px 18px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: .2s;
-}
-
-button:hover {
-    transform: translateY(-1px);
-}
-
-.primary {
-    background: #d65b91;
-    color: white;
-}
-
-.secondary {
-    background: #eee;
-    color: #333;
-}
-
-.success {
-    background: #4caf50;
-    color: white;
-}
-
-.danger {
-    background: #e74c3c;
-    color: white;
-}
-
-.camera-area {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.camera-box {
-    position: relative;
-    background: #111;
-    border-radius: 18px;
-    overflow: hidden;
-    min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-video {
-    width: 100%;
-    height: 100%;
-    min-height: 400px;
-    object-fit: cover;
-    transform: scaleX(-1);
-}
-
-.countdown {
-    position: absolute;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 100px;
-    font-weight: bold;
-    text-shadow: 0 5px 15px rgba(0,0,0,.5);
-    background: rgba(0,0,0,.2);
-}
-
-.camera-buttons {
-    position: absolute;
-    bottom: 15px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.camera-buttons button {
-    background: white;
-    color: #333;
-}
-
-.preview-box {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    background: #eee;
-    border-radius: 18px;
-    padding: 15px;
-    min-height: 430px;
-}
-
-#previewCanvas {
-    max-width: 100%;
-    max-height: 600px;
-    border-radius: 5px;
-    background: white;
-    box-shadow: 0 4px 15px rgba(0,0,0,.2);
-}
-
-.take-status {
-    text-align: center;
-    margin-top: 12px;
-    font-weight: bold;
-}
-
-.photo-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-}
-
-.photo-slot {
-    position: relative;
-    aspect-ratio: 1;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #eee;
-    border: 2px dashed #ccc;
-}
-
-.photo-slot img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.photo-slot span {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #aaa;
-    font-weight: bold;
-}
-
-.template-grid,
-.sticker-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 12px;
-}
-
-.template {
-    border: 3px solid transparent;
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
-    background: #f4f4f4;
-}
-
-.template.active {
-    border-color: #d65b91;
-}
-
-.template-preview {
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.template p {
-    margin: 0;
-    padding: 8px;
-    text-align: center;
-    font-size: 13px;
-}
-
-.sticker {
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    background: white;
-    padding: 12px;
-    text-align: center;
-    font-size: 32px;
-    cursor: pointer;
-}
-
-.sticker.active {
-    border-color: #d65b91;
-    background: #fff0f6;
-}
-
-.action-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-.notice {
-    background: #fff7e6;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: 14px;
-}
-
-footer {
-    text-align: center;
-    padding: 25px;
-    color: #777;
-}
-
-/* TEMPLATE COLORS */
-
-.t-pink {
-    background: linear-gradient(135deg,#ffd5e5,#fff);
-    color: #b72e68;
-}
-
-.t-black {
-    background: linear-gradient(135deg,#111,#555);
-    color: white;
-}
-
-.t-white {
-    background: white;
-    color: #222;
-    border: 1px solid #ddd;
-}
-
-.t-blue {
-    background: linear-gradient(135deg,#d9efff,#fff);
-    color: #3479a8;
-}
-
-.t-purple {
-    background: linear-gradient(135deg,#e6d7ff,#fff);
-    color: #7448aa;
-}
-
-.t-yellow {
-    background: linear-gradient(135deg,#fff0ad,#fff);
-    color: #9b7b00;
-}
-
-@media(max-width: 800px) {
-    .camera-area {
-        grid-template-columns: 1fr;
-    }
-
-    .photo-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .camera-box,
-    video {
-        min-height: 320px;
-    }
-}
-
-@media(max-width: 500px) {
-    .container {
-        padding: 10px;
-    }
-
-    .panel {
-        padding: 15px;
-    }
-
-    .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .countdown {
-        font-size: 70px;
-    }
-}
+:root{--pink:#d85b91;--pink2:#f7d5e3;--ink:#2f2930;--muted:#777;--card:#fff;--bg:#faf6f8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+button,input,select{font:inherit}button{border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}.primary{background:var(--pink);color:#fff}.secondary{background:#eee;color:#333}.success{background:#48a868;color:#fff}.danger{background:#df4e55;color:#fff}
+header{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:20}
+.header-inner{max-width:1100px;margin:auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.brand{display:flex;align-items:center;gap:10px}.brand img{max-height:52px;max-width:180px;object-fit:contain}.brand-name{font-weight:900;font-size:27px}.brand-name span{color:var(--pink)}
+.container{max-width:1100px;margin:auto;padding:18px}.card{background:var(--card);border-radius:20px;padding:20px;margin-bottom:18px;box-shadow:0 5px 24px #0000000d}
+h2{margin:0 0 14px}.muted{color:var(--muted);font-size:13px}.notice{background:#fff5d9;padding:12px;border-radius:12px;font-size:13px;margin-bottom:14px}
+.grid{display:grid;gap:14px}.settings{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}.field{display:flex;flex-direction:column;gap:7px}.field label{font-size:13px;font-weight:800}.field input,.field select{padding:11px;border:1px solid #ddd;border-radius:10px;background:#fff}
+.camera-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.camera{position:relative;background:#111;border-radius:18px;overflow:hidden;min-height:390px}.camera video{width:100%;height:100%;min-height:390px;object-fit:cover;transform:scaleX(-1)}.camera-actions{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:8px}.camera-actions button{background:#fff}.count{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#fff;font-size:100px;font-weight:900;background:#0002}
+.preview-wrap{background:#eee;border-radius:18px;min-height:420px;padding:12px;display:flex;align-items:flex-start;justify-content:center}.preview-wrap canvas{max-width:100%;max-height:620px;background:#fff;box-shadow:0 5px 18px #0002}
+.status{text-align:center;font-weight:800;margin-top:10px}.shots{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.shot{aspect-ratio:1;background:#f1f1f1;border:2px dashed #ccc;border-radius:10px;overflow:hidden;display:grid;place-items:center;color:#999;font-size:12px}.shot img{width:100%;height:100%;object-fit:cover}
+.template-grid,.sticker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}.template{border:3px solid transparent;border-radius:14px;overflow:hidden;background:#f5f5f5;cursor:pointer}.template.active{border-color:var(--pink)}.template .sample{height:90px;display:grid;place-items:center;font-weight:900}.template p{margin:0;padding:8px;text-align:center;font-size:12px}.pink{background:linear-gradient(135deg,#ffd3e2,#fff);color:#a52c60}.black{background:linear-gradient(135deg,#111,#555);color:#fff}.white{background:#fff;color:#222}.blue{background:linear-gradient(135deg,#d9efff,#fff);color:#377ba8}.purple{background:linear-gradient(135deg,#e8d9ff,#fff);color:#7046a7}.yellow{background:linear-gradient(135deg,#fff0a9,#fff);color:#8e7200}.mint{background:linear-gradient(135deg,#d9fff2,#fff);color:#247b61}.red{background:linear-gradient(135deg,#ffe0e0,#fff);color:#a42e37}
+.sticker{border:2px solid #ddd;border-radius:12px;background:#fff;padding:12px;text-align:center;font-size:30px;cursor:pointer}.sticker.active{border-color:var(--pink);background:#fff0f6}
+.toolbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.toolbar-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.text-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.text-chip{background:#f3e7ed;border-radius:20px;padding:8px 12px;font-size:13px;cursor:pointer}.text-chip.active{background:var(--pink);color:#fff}
+.logo-box{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.logo-preview{width:170px;height:90px;border:2px dashed #ccc;border-radius:12px;display:grid;place-items:center;overflow:hidden;background:#fafafa}.logo-preview img{max-width:95%;max-height:95%;object-fit:contain}.hidden{display:none}
+.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.small{font-size:12px}.price-note{display:grid;grid-template-columns:1fr 1fr;gap:10px}.price-note div{padding:12px;background:#faf0f5;border-radius:12px}
+footer{text-align:center;padding:28px;color:#888}
+@media(max-width:800px){.camera-grid{grid-template-columns:1fr}.camera,.camera video{min-height:320px}.shots{grid-template-columns:repeat(3,1fr)}.header-inner{padding:10px 12px}.brand-name{font-size:22px}}
+@media(max-width:500px){.container{padding:10px}.card{padding:15px}.shots{grid-template-columns:repeat(2,1fr)}.count{font-size:70px}}
 </style>
 </head>
-
 <body>
+<header><div class="header-inner">
+  <div class="brand"><div id="brandLogo"></div><div class="brand-name">eli<span>.print</span></div></div>
+  <button class="secondary small" onclick="document.getElementById('logoInput').click()">Upload Logo</button>
+</div></header>
 
-<header>
-   <div class="logo">
-    <img src="eli-printhub-logo.png" alt="Eli PrintHub Logo">
+<main class="container">
+<section class="card">
+<h2>📸 DIY Photobooth</h2>
+<div class="notice">Create your memories, then choose <b>Download Soft Copy</b> or <b>Print</b>. Photos stay in this browser and are not uploaded to a server by this page.</div>
+<div class="grid settings">
+<div class="field"><label>Takes</label><select id="takeCount"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option></select></div>
+<div class="field"><label>Countdown</label><select id="countdown"><option>3</option><option selected>5</option><option>10</option></select></div>
+<div class="field"><label>Output</label><select id="layout"><option value="strip">2 × 6 Strip</option><option value="4x6">4 × 6 Photo</option><option value="a4">A4 — 3 Strips</option><option value="grid">Square Collage</option></select></div>
 </div>
-    .logo img {
-    max-width: 220px;
-    max-height: 80px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-}
-    <p>DIY Online Photobooth</p>
-</header>
-
-<div class="container">
-
-    <!-- SETTINGS -->
-    <section class="panel">
-
-        <h2>📸 Photobooth Settings</h2>
-
-        <div class="notice">
-            Allow camera access when your browser asks. Your photos are processed
-            directly in your browser.
-        </div>
-
-        <div class="controls">
-
-            <div class="control-group">
-                <label for="takeCount">Number of Takes</label>
-                <select id="takeCount">
-                    <option value="2">2 Takes</option>
-                    <option value="3">3 Takes</option>
-                    <option value="4" selected>4 Takes</option>
-                    <option value="5">5 Takes</option>
-                    <option value="6">6 Takes</option>
-                </select>
-            </div>
-
-            <div class="control-group">
-                <label for="countdownTime">Countdown</label>
-                <select id="countdownTime">
-                    <option value="3">3 seconds</option>
-                    <option value="5" selected>5 seconds</option>
-                    <option value="10">10 seconds</option>
-                </select>
-            </div>
-
-            <div class="control-group">
-                <label for="layoutSelect">Layout</label>
-                <select id="layoutSelect">
-                    <option value="strip">2 × 6 Photobooth Strip</option>
-                    <option value="grid">2 × 2 Grid</option>
-                    <option value="square">Square Collage</option>
-                </select>
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- CAMERA -->
-    <section class="panel">
-
-        <h2>📷 Take Your Photos</h2>
-
-        <div class="camera-area">
-
-            <div>
-
-                <div class="camera-box">
-
-                    <video id="video" autoplay playsinline></video>
-
-                    <div id="countdownDisplay" class="countdown">
-                        5
-                    </div>
-
-                    <div class="camera-buttons">
-
-                        <button onclick="switchCamera()">
-                            🔄 Flip
-                        </button>
-
-                        <button class="primary" onclick="startSession()">
-                            📸 Start
-                        </button>
-
-                    </div>
-
-                </div>
-
-                <div class="take-status" id="takeStatus">
-                    Ready — 0 photos taken
-                </div>
-
-            </div>
-
-            <div class="preview-box">
-
-                <canvas id="previewCanvas"></canvas>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- TAKEN PHOTOS -->
-    <section class="panel">
-
-        <h2>🖼️ Your Photos</h2>
-
-        <div id="photoGrid" class="photo-grid"></div>
-
-        <br>
-
-        <div class="action-row">
-
-            <button class="secondary" onclick="retakeLast()">
-                ↩️ Retake Last
-            </button>
-
-            <button class="danger" onclick="clearPhotos()">
-                🗑️ Clear All
-            </button>
-
-        </div>
-
-    </section>
-
-    <!-- TEMPLATES -->
-    <section class="panel">
-
-        <h2>🎨 Choose a Template</h2>
-
-        <div class="template-grid">
-
-            <div class="template active" data-template="pink">
-                <div class="template-preview t-pink">
-                    ♡ PINK ♡
-                </div>
-                <p>Sweet Pink</p>
-            </div>
-
-            <div class="template" data-template="black">
-                <div class="template-preview t-black">
-                    CLASSIC
-                </div>
-                <p>Classic Black</p>
-            </div>
-
-            <div class="template" data-template="white">
-                <div class="template-preview t-white">
-                    SIMPLE
-                </div>
-                <p>Clean White</p>
-            </div>
-
-            <div class="template" data-template="blue">
-                <div class="template-preview t-blue">
-                    ✦ BLUE ✦
-                </div>
-                <p>Baby Blue</p>
-            </div>
-
-            <div class="template" data-template="purple">
-                <div class="template-preview t-purple">
-                    ✨ PURPLE ✨
-                </div>
-                <p>Lovely Purple</p>
-            </div>
-
-            <div class="template" data-template="yellow">
-                <div class="template-preview t-yellow">
-                    ☀ HAPPY ☀
-                </div>
-                <p>Sunny Yellow</p>
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- STICKERS -->
-    <section class="panel">
-
-        <h2>✨ Add Stickers</h2>
-
-        <p>
-            Select stickers to decorate your photobooth strip.
-        </p>
-
-        <div class="sticker-grid">
-
-            <div class="sticker" data-sticker="♡">♡</div>
-            <div class="sticker" data-sticker="♥">♥</div>
-            <div class="sticker" data-sticker="★">★</div>
-            <div class="sticker" data-sticker="☆">☆</div>
-            <div class="sticker" data-sticker="✨">✨</div>
-            <div class="sticker" data-sticker="🌸">🌸</div>
-            <div class="sticker" data-sticker="🌈">🌈</div>
-            <div class="sticker" data-sticker="☀️">☀️</div>
-            <div class="sticker" data-sticker="🎀">🎀</div>
-            <div class="sticker" data-sticker="🥰">🥰</div>
-            <div class="sticker" data-sticker="😎">😎</div>
-            <div class="sticker" data-sticker="💖">💖</div>
-
-        </div>
-
-    </section>
-
-    <!-- FINAL ACTIONS -->
-    <section class="panel">
-
-        <h2>💾 Save Your Photobooth</h2>
-
-        <div class="action-row">
-
-            <button class="primary" onclick="generatePreview()">
-                🖼️ Generate Preview
-            </button>
-
-            <button class="success" onclick="downloadImage()">
-                💾 Download Soft Copy
-            </button>
-
-            <button class="secondary" onclick="printImage()">
-                🖨️ Print
-            </button>
-
-        </div>
-
-    </section>
-
+</section>
+
+<section class="card">
+<h2>🖼️ Your Logo</h2>
+<div class="logo-box">
+<div class="logo-preview" id="logoPreview">No logo</div>
+<div>
+<input id="logoInput" class="hidden" type="file" accept="image/png,image/jpeg,image/webp">
+<button class="primary" onclick="logoInput.click()">📤 Upload Your Logo</button>
+<button class="danger" onclick="removeLogo()">Remove</button>
+<p class="muted">PNG with transparent background is recommended. Your logo appears in the header and final output.</p>
 </div>
+</div>
+</section>
 
-<footer>
-    © 2026 Eli PrintHub • Personalized Printing & Photobooth
-</footer>
+<section class="card">
+<h2>📷 Take Photos</h2>
+<div class="camera-grid">
+<div>
+<div class="camera"><video id="video" autoplay playsinline></video><div id="count" class="count">5</div><div class="camera-actions"><button onclick="switchCamera()">🔄 Flip</button><button class="primary" onclick="startSession()">📸 Start</button></div></div>
+<div id="status" class="status">Ready — 0 photos</div>
+</div>
+<div class="preview-wrap"><canvas id="canvas"></canvas></div>
+</div>
+</section>
 
+<section class="card"><h2>🖼️ Your Photos</h2><div id="shots" class="shots"></div><div class="actions" style="margin-top:12px"><button class="secondary" onclick="retakeLast()">↩ Retake Last</button><button class="danger" onclick="clearPhotos()">🗑 Clear All</button></div></section>
+
+<section class="card">
+<h2>🎨 Frame / Template</h2>
+<div class="template-grid" id="templates"></div>
+</section>
+
+<section class="card">
+<h2>✍️ Text Templates</h2>
+<div class="text-list" id="textTemplates"></div>
+<div class="toolbar" style="margin-top:14px">
+<div class="field"><label>Custom text</label><input id="customText" placeholder="Type your name or message"></div>
+<div class="field"><label>Font</label><select id="font"><option value="Arial">Clean</option><option value="Georgia">Elegant</option><option value="Trebuchet MS">Cute</option><option value="Impact">Bold</option><option value="cursive">Handwritten</option></select></div>
+<div class="field"><label>Size</label><select id="fontSize"><option value="24">Small</option><option value="34" selected>Medium</option><option value="48">Large</option></select></div>
+<div class="field"><label>Color</label><input id="textColor" type="color" value="#333333"></div>
+<div class="field"><label>Position</label><select id="textPosition"><option value="top">Top</option><option value="bottom" selected>Bottom</option><option value="center">Center</option></select></div>
+</div>
+<div class="toolbar-actions"><button class="primary" onclick="addText()">➕ Add Text</button><button class="secondary" onclick="clearTexts()">Clear Text</button></div>
+<p class="muted">Text is placed on the final design. Add more than one text item if you want.</p>
+</section>
+
+<section class="card">
+<h2>✨ Add Hearts & Stickers</h2>
+<div class="sticker-grid" id="stickers"></div>
+<div class="toolbar" style="margin-top:14px">
+<div class="field"><label>Sticker position</label><select id="stickerPosition"><option value="top">Top</option><option value="bottom" selected>Bottom</option><option value="left">Left</option><option value="right">Right</option><option value="center">Center</option></select></div>
+</div>
+<p class="muted">Click a sticker to add it. Click it again to remove it from the selected sticker set.</p>
+</section>
+
+<section class="card">
+<h2>💾 Finish</h2>
+<div class="actions">
+<button class="primary" onclick="generatePreview()">🖼 Generate Preview</button>
+<button class="success" onclick="downloadImage()">⬇ Download Soft Copy</button>
+<button class="secondary" onclick="printImage()">🖨 Print</button>
+<button class="danger" onclick="resetAll()">↻ Start Over</button>
+</div>
+<div class="price-note" style="margin-top:16px">
+<div><b>Soft Copy</b><br><span class="muted">Download your finished design to your phone or computer.</span></div>
+<div><b>Printed Copy</b><br><span class="muted">Use Print for your preferred printer/paper setup.</span></div>
+</div>
+</section>
+</main>
+<footer>© 2026 <b>eli.print</b> • Personalized Printing & Photobooth</footer>
 
 <script>
+const $=id=>document.getElementById(id);
+let stream=null,facing='user',photos=[],logo=null,template='pink',texts=[],selectedStickers=new Set();
 
-let stream = null;
-let facingMode = "user";
+const templateData=[
+['pink','Sweet Pink','♡ PINK ♡'],['black','Classic Black','CLASSIC'],['white','Clean White','SIMPLE'],
+['blue','Baby Blue','✦ BLUE ✦'],['purple','Lovely Purple','✨ PURPLE ✨'],['yellow','Sunny Yellow','☀ HAPPY ☀'],
+['mint','Fresh Mint','🌿 MINT 🌿'],['red','Soft Red','♥ LOVE ♥']
+];
+const textData=['No Text','♡ Custom Text ♡','Happy Birthday! 🎂','Besties Forever 💕','Sweet Memories ✨','Good Vibes Only 🌸','Today Was Fun! 🎀','Thank You! ♡','Custom Name + Date'];
+const stickerData=['♡','♥','❤','💖','💕','★','☆','✨','🌸','🌈','☀️','🎀','🥰','😎','🎂','🎓','💐','🎄','❄️','⭐'];
 
-let photos = [];
-let selectedTemplate = "pink";
-let selectedStickers = [];
-
-const video = document.getElementById("video");
-const previewCanvas = document.getElementById("previewCanvas");
-const previewCtx = previewCanvas.getContext("2d");
-
-const countdownDisplay =
-    document.getElementById("countdownDisplay");
-
-const takeStatus =
-    document.getElementById("takeStatus");
-
-const photoGrid =
-    document.getElementById("photoGrid");
-
-
-// ============================
-// CAMERA
-// ============================
-
-async function startCamera() {
-
-    try {
-
-        if (stream) {
-            stream.getTracks().forEach(track => track.stop());
-        }
-
-        stream = await navigator.mediaDevices.getUserMedia({
-            video: {
-                facingMode: facingMode,
-                width: {
-                    ideal: 1280
-                },
-                height: {
-                    ideal: 720
-                }
-            },
-            audio: false
-        });
-
-        video.srcObject = stream;
-
-    } catch (error) {
-
-        alert(
-            "Camera could not be opened.\n\n" +
-            "Please allow camera permission and try again."
-        );
-
-        console.error(error);
-    }
+function initUI(){
+  $('templates').innerHTML=templateData.map((t,i)=>`<div class="template ${i===0?'active':''}" data-t="${t[0]}" onclick="chooseTemplate('${t[0]}',this)"><div class="sample ${t[0]}">${t[2]}</div><p>${t[1]}</p></div>`).join('');
+  $('textTemplates').innerHTML=textData.map((t,i)=>`<span class="text-chip" onclick="chooseText(${i},this)">${t}</span>`).join('');
+  $('stickers').innerHTML=stickerData.map(s=>`<div class="sticker" data-s="${s}" onclick="toggleSticker(this,'${escapeAttr(s)}')">${s}</div>`).join('');
+  renderLogo();
+  renderShots();
+  renderEmpty();
 }
-
-
-// ============================
-// SWITCH CAMERA
-// ============================
-
-async function switchCamera() {
-
-    facingMode =
-        facingMode === "user"
-            ? "environment"
-            : "user";
-
-    await startCamera();
+function escapeAttr(s){return s.replaceAll('&','&amp;').replaceAll("'","&#39;").replaceAll('"','&quot;')}
+function chooseTemplate(t,el){template=t;document.querySelectorAll('.template').forEach(x=>x.classList.remove('active'));el.classList.add('active');generatePreview()}
+function chooseText(i,el){
+  document.querySelectorAll('.text-chip').forEach(x=>x.classList.remove('active'));el.classList.add('active');
+  const val=textData[i];
+  if(val==='No Text'){texts=[];renderShots();generatePreview();return}
+  if(val==='♡ Custom Text ♡'){$('customText').focus();return}
+  if(val==='Custom Name + Date'){$('customText').value='Name • '+new Date().toLocaleDateString();return}
+  $('customText').value=val;addText();
 }
-
-
-// ============================
-// START PHOTO SESSION
-// ============================
-
-async function startSession() {
-
-    if (!stream) {
-        await startCamera();
-    }
-
-    photos = [];
-
-    updatePhotoGrid();
-
-    const total =
-        parseInt(
-            document.getElementById("takeCount").value
-        );
-
-    for (let i = 0; i < total; i++) {
-
-        await countdown();
-
-        capturePhoto();
-
-        await wait(700);
-    }
-
-    updateStatus();
-
-    generatePreview();
+function addText(){
+  const value=$('customText').value.trim(); if(!value){alert('Please type your text first.');return}
+  texts.push({value,font:$('font').value,size:+$('fontSize').value,color:$('textColor').value,position:$('textPosition').value});
+  generatePreview();
 }
-
-
-// ============================
-// COUNTDOWN
-// ============================
-
-function countdown() {
-
-    return new Promise(resolve => {
-
-        let seconds =
-            parseInt(
-                document.getElementById("countdownTime").value
-            );
-
-        countdownDisplay.style.display = "flex";
-
-        countdownDisplay.textContent = seconds;
-
-        const timer =
-            setInterval(() => {
-
-                seconds--;
-
-                if (seconds <= 0) {
-
-                    clearInterval(timer);
-
-                    countdownDisplay.style.display =
-                        "none";
-
-                    resolve();
-
-                } else {
-
-                    countdownDisplay.textContent =
-                        seconds;
-                }
-
-            }, 1000);
-
-    });
+function clearTexts(){texts=[];generatePreview()}
+function toggleSticker(el,s){
+  if(selectedStickers.has(s)){selectedStickers.delete(s);el.classList.remove('active')}
+  else{selectedStickers.add(s);el.classList.add('active')}
+  generatePreview();
 }
-
-
-// ============================
-// CAPTURE PHOTO
-// ============================
-
-function capturePhoto() {
-
-    if (photos.length >= 6) return;
-
-    const canvas =
-        document.createElement("canvas");
-
-    canvas.width = 1280;
-    canvas.height = 720;
-
-    const ctx =
-        canvas.getContext("2d");
-
-    ctx.save();
-
-    if (facingMode === "user") {
-
-        ctx.translate(
-            canvas.width,
-            0
-        );
-
-        ctx.scale(-1, 1);
-    }
-
-    ctx.drawImage(
-        video,
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-    ctx.restore();
-
-    photos.push(
-        canvas.toDataURL("image/jpeg", 0.95)
-    );
-
-    updatePhotoGrid();
-
-    updateStatus();
+function renderLogo(){
+  const saved=localStorage.getItem('eliPrintLogo');
+  if(saved)logo=saved;
+  $('logoPreview').innerHTML=logo?`<img src="${logo}">`:'No logo';
+  $('brandLogo').innerHTML=logo?`<img src="${logo}" style="max-height:52px;max-width:180px">`:'';
 }
-
-
-// ============================
-// PHOTO GRID
-// ============================
-
-function updatePhotoGrid() {
-
-    photoGrid.innerHTML = "";
-
-    const total =
-        parseInt(
-            document.getElementById("takeCount").value
-        );
-
-    for (let i = 0; i < total; i++) {
-
-        const slot =
-            document.createElement("div");
-
-        slot.className = "photo-slot";
-
-        if (photos[i]) {
-
-            const img =
-                document.createElement("img");
-
-            img.src = photos[i];
-
-            slot.appendChild(img);
-
-        } else {
-
-            const span =
-                document.createElement("span");
-
-            span.textContent =
-                `Take ${i + 1}`;
-
-            slot.appendChild(span);
-        }
-
-        photoGrid.appendChild(slot);
-    }
-}
-
-
-// ============================
-// STATUS
-// ============================
-
-function updateStatus() {
-
-    takeStatus.textContent =
-        `Ready — ${photos.length} photo` +
-        `${photos.length === 1 ? "" : "s"} taken`;
-}
-
-
-// ============================
-// RETAKE LAST
-// ============================
-
-function retakeLast() {
-
-    if (photos.length === 0) {
-
-        alert("There is no photo to retake.");
-
-        return;
-    }
-
-    photos.pop();
-
-    updatePhotoGrid();
-
-    updateStatus();
-
-    generatePreview();
-}
-
-
-// ============================
-// CLEAR
-// ============================
-
-function clearPhotos() {
-
-    if (photos.length === 0) return;
-
-    if (
-        !confirm(
-            "Delete all your photos?"
-        )
-    ) return;
-
-    photos = [];
-
-    updatePhotoGrid();
-
-    updateStatus();
-
-    previewCtx.clearRect(
-        0,
-        0,
-        previewCanvas.width,
-        previewCanvas.height
-    );
-}
-
-
-// ============================
-// TEMPLATE SELECT
-// ============================
-
-document
-.querySelectorAll(".template")
-.forEach(template => {
-
-    template.addEventListener(
-        "click",
-        () => {
-
-            document
-            .querySelectorAll(".template")
-            .forEach(t =>
-                t.classList.remove("active")
-            );
-
-            template.classList.add("active");
-
-            selectedTemplate =
-                template.dataset.template;
-
-            generatePreview();
-        }
-    );
-
+$('logoInput').addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  if(f.size>5*1024*1024){alert('Please use a logo smaller than 5 MB.');return}
+  const r=new FileReader();r.onload=()=>{logo=r.result;try{localStorage.setItem('eliPrintLogo',logo)}catch(e){}renderLogo();generatePreview()};r.readAsDataURL(f);
 });
+function removeLogo(){logo=null;localStorage.removeItem('eliPrintLogo');$('logoInput').value='';renderLogo();generatePreview()}
 
-
-// ============================
-// STICKERS
-// ============================
-
-document
-.querySelectorAll(".sticker")
-.forEach(sticker => {
-
-    sticker.addEventListener(
-        "click",
-        () => {
-
-            const value =
-                sticker.dataset.sticker;
-
-            sticker.classList.toggle("active");
-
-            if (
-                selectedStickers.includes(value)
-            ) {
-
-                selectedStickers =
-                    selectedStickers.filter(
-                        s => s !== value
-                    );
-
-            } else {
-
-                selectedStickers.push(value);
-            }
-
-            generatePreview();
-        }
-    );
-
-});
-
-
-// ============================
-// GENERATE PREVIEW
-// ============================
-
-async function generatePreview() {
-
-    if (photos.length === 0) {
-
-        previewCanvas.width = 300;
-        previewCanvas.height = 450;
-
-        previewCtx.fillStyle = "#eeeeee";
-
-        previewCtx.fillRect(
-            0,
-            0,
-            previewCanvas.width,
-            previewCanvas.height
-        );
-
-        previewCtx.fillStyle = "#888";
-
-        previewCtx.font =
-            "16px Arial";
-
-        previewCtx.textAlign =
-            "center";
-
-        previewCtx.fillText(
-            "Take photos to preview",
-            150,
-            225
-        );
-
-        return;
-    }
-
-    const layout =
-        document.getElementById("layoutSelect").value;
-
-    if (layout === "strip") {
-
-        await drawStrip();
-
-    } else if (layout === "grid") {
-
-        await drawGrid();
-
-    } else {
-
-        await drawSquare();
-    }
+async function camera(){
+  try{
+    if(stream)stream.getTracks().forEach(t=>t.stop());
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing,width:{ideal:1280},height:{ideal:720}},audio:false});
+    $('video').srcObject=stream;
+  }catch(e){alert('Camera access is unavailable. Please allow camera permission and use HTTPS/GitHub Pages.')}
 }
-
-
-// ============================
-// DRAW STRIP
-// ============================
-
-async function drawStrip() {
-
-    const width = 600;
-    const photoHeight = 400;
-
-    const padding = 25;
-    const header = 80;
-    const footer = 80;
-
-    const height =
-        header +
-        footer +
-        (photos.length * photoHeight) +
-        ((photos.length + 1) * padding);
-
-    previewCanvas.width = width;
-    previewCanvas.height = height;
-
-    drawBackground(
-        previewCtx,
-        width,
-        height
-    );
-
-    drawHeader(
-        previewCtx,
-        width
-    );
-
-    for (
-        let i = 0;
-        i < photos.length;
-        i++
-    ) {
-
-        const img =
-            await loadImage(photos[i]);
-
-        const y =
-            header +
-            padding +
-            i *
-            (photoHeight + padding);
-
-        drawCoverImage(
-            previewCtx,
-            img,
-            padding,
-            y,
-            width - padding * 2,
-            photoHeight
-        );
-    }
-
-    drawFooter(
-        previewCtx,
-        width,
-        height
-    );
-
-    drawStickers(
-        previewCtx,
-        width,
-        height
-    );
+async function switchCamera(){facing=facing==='user'?'environment':'user';await camera()}
+function wait(ms){return new Promise(r=>setTimeout(r,ms))}
+function countdown(){
+  return new Promise(resolve=>{
+    let n=+$('countdown').value;$('count').style.display='flex';$('count').textContent=n;
+    const t=setInterval(()=>{n--;if(n<=0){clearInterval(t);$('count').style.display='none';resolve()}else $('count').textContent=n},1000);
+  })
 }
-
-
-// ============================
-// GRID
-// ============================
-
-async function drawGrid() {
-
-    const width = 700;
-    const height = 700;
-
-    const gap = 15;
-
-    previewCanvas.width = width;
-    previewCanvas.height = height;
-
-    drawBackground(
-        previewCtx,
-        width,
-        height
-    );
-
-    const columns = 2;
-    const rows = Math.ceil(
-        photos.length / columns
-    );
-
-    const photoWidth =
-        (width - gap * 3) / 2;
-
-    const photoHeight =
-        (height - gap * (rows + 1)) /
-        rows;
-
-    for (
-        let i = 0;
-        i < photos.length;
-        i++
-    ) {
-
-        const img =
-            await loadImage(photos[i]);
-
-        const col = i % 2;
-        const row = Math.floor(i / 2);
-
-        const x =
-            gap +
-            col *
-            (photoWidth + gap);
-
-        const y =
-            gap +
-            row *
-            (photoHeight + gap);
-
-        drawCoverImage(
-            previewCtx,
-            img,
-            x,
-            y,
-            photoWidth,
-            photoHeight
-        );
-    }
-
-    drawStickers(
-        previewCtx,
-        width,
-        height
-    );
+async function startSession(){
+  if(!stream)await camera();
+  photos=[];renderShots();
+  const total=+$('takeCount').value;
+  for(let i=0;i<total;i++){await countdown();capture();await wait(700)}
+  generatePreview()
 }
-
-
-// ============================
-// SQUARE
-// ============================
-
-async function drawSquare() {
-
-    const width = 700;
-    const height = 700;
-
-    previewCanvas.width = width;
-    previewCanvas.height = height;
-
-    drawBackground(
-        previewCtx,
-        width,
-        height
-    );
-
-    const gap = 15;
-
-    const size =
-        (width - gap * 3) / 2;
-
-    for (
-        let i = 0;
-        i < Math.min(photos.length, 4);
-        i++
-    ) {
-
-        const img =
-            await loadImage(photos[i]);
-
-        const col = i % 2;
-        const row = Math.floor(i / 2);
-
-        const x =
-            gap +
-            col *
-            (size + gap);
-
-        const y =
-            gap +
-            row *
-            (size + gap);
-
-        drawCoverImage(
-            previewCtx,
-            img,
-            x,
-            y,
-            size,
-            size
-        );
-    }
-
-    drawStickers(
-        previewCtx,
-        width,
-        height
-    );
+function capture(){
+  if(photos.length>=6)return;
+  const c=document.createElement('canvas');c.width=1280;c.height=720;const x=c.getContext('2d');
+  if(facing==='user'){x.translate(c.width,0);x.scale(-1,1)}
+  x.drawImage($('video'),0,0,c.width,c.height);photos.push(c.toDataURL('image/jpeg',.95));renderShots();$('status').textContent=`Ready — ${photos.length} photos`;
 }
-
-
-// ============================
-// BACKGROUND
-// ============================
-
-function drawBackground(
-    ctx,
-    width,
-    height
-) {
-
-    let color1 = "#ffd5e5";
-    let color2 = "#ffffff";
-
-    if (selectedTemplate === "black") {
-
-        color1 = "#111111";
-        color2 = "#444444";
-
-    } else if (selectedTemplate === "white") {
-
-        color1 = "#ffffff";
-        color2 = "#ffffff";
-
-    } else if (selectedTemplate === "blue") {
-
-        color1 = "#d9efff";
-        color2 = "#ffffff";
-
-    } else if (selectedTemplate === "purple") {
-
-        color1 = "#e6d7ff";
-        color2 = "#ffffff";
-
-    } else if (selectedTemplate === "yellow") {
-
-        color1 = "#fff0ad";
-        color2 = "#ffffff";
-    }
-
-    const gradient =
-        ctx.createLinearGradient(
-            0,
-            0,
-            width,
-            height
-        );
-
-    gradient.addColorStop(
-        0,
-        color1
-    );
-
-    gradient.addColorStop(
-        1,
-        color2
-    );
-
-    ctx.fillStyle = gradient;
-
-    ctx.fillRect(
-        0,
-        0,
-        width,
-        height
-    );
+function renderShots(){
+  const n=+$('takeCount').value;$('shots').innerHTML='';
+  for(let i=0;i<n;i++)$('shots').innerHTML+=photos[i]?`<div class="shot"><img src="${photos[i]}"></div>`:`<div class="shot">Take ${i+1}</div>`;
+  $('status').textContent=`Ready — ${photos.length} photo${photos.length===1?'':'s'}`;
 }
+function retakeLast(){if(photos.length){photos.pop();renderShots();generatePreview()}}
+function clearPhotos(){photos=[];renderShots();renderEmpty()}
+function renderEmpty(){const c=$('canvas');c.width=300;c.height=450;const x=c.getContext('2d');x.fillStyle='#eee';x.fillRect(0,0,300,450);x.fillStyle='#888';x.textAlign='center';x.font='16px Arial';x.fillText('Take photos to preview',150,225)}
 
-
-// ============================
-// HEADER
-// ============================
-
-function drawHeader(
-    ctx,
-    width
-) {
-
-    ctx.textAlign = "center";
-
-    ctx.font =
-        "bold 30px Arial";
-
-    if (selectedTemplate === "black") {
-
-        ctx.fillStyle = "white";
-
-    } else {
-
-        ctx.fillStyle = "#333";
-    }
-
-    ctx.fillText(
-        "Eli PrintHub",
-        width / 2,
-        45
-    );
+function bg(ctx,w,h){
+  const maps={pink:['#ffd5e5','#fff'],black:['#111','#444'],white:['#fff','#fff'],blue:['#d9efff','#fff'],purple:['#e8d9ff','#fff'],yellow:['#fff0a9','#fff'],mint:['#d9fff2','#fff'],red:['#ffe0e0','#fff']};
+  const [a,b]=maps[template]||maps.pink,g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,a);g.addColorStop(1,b);ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
 }
-
-
-// ============================
-// FOOTER
-// ============================
-
-function drawFooter(
-    ctx,
-    width,
-    height
-) {
-
-    ctx.textAlign = "center";
-
-    ctx.font =
-        "18px Arial";
-
-    if (selectedTemplate === "black") {
-
-        ctx.fillStyle = "white";
-
-    } else {
-
-        ctx.fillStyle = "#555";
-    }
-
-    ctx.fillText(
-        "♡ Thank you for visiting! ♡",
-        width / 2,
-        height - 35
-    );
+function load(src){return new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.src=src})}
+function cover(ctx,img,x,y,w,h){const ir=img.width/img.height,br=w/h;let sw=img.width,sh=img.height,sx=0,sy=0;if(ir>br){sw=img.height*br;sx=(img.width-sw)/2}else{sh=img.width/br;sy=(img.height-sh)/2}ctx.drawImage(img,sx,sy,sw,sh,x,y,w,h)}
+async function drawLogo(ctx,w,y,maxH){
+  if(!logo){ctx.textAlign='center';ctx.font='900 30px Arial';ctx.fillStyle=template==='black'?'#fff':'#333';ctx.fillText('eli.print',w/2,y+35);return}
+  const img=await load(logo),maxW=w*.55,s=Math.min(maxW/img.width,maxH/img.height),lw=img.width*s,lh=img.height*s;ctx.drawImage(img,(w-lw)/2,y,lw,lh)
 }
-
-
-// ============================
-// STICKERS
-// ============================
-
-function drawStickers(
-    ctx,
-    width,
-    height
-) {
-
-    if (
-        selectedStickers.length === 0
-    ) return;
-
-    ctx.textAlign = "center";
-
-    ctx.font = "40px Arial";
-
-    const positions = [
-
-        [40, 45],
-
-        [width - 40, 45],
-
-        [40, height - 35],
-
-        [width - 40, height - 35],
-
-        [width / 2, 25]
-
-    ];
-
-    selectedStickers
-    .slice(0, positions.length)
-    .forEach(
-        (sticker, index) => {
-
-            const pos =
-                positions[index];
-
-            ctx.fillText(
-                sticker,
-                pos[0],
-                pos[1]
-            );
-        }
-    );
+function drawDecor(ctx,w,h){
+  const dark=template==='black';ctx.textAlign='center';
+  texts.forEach(t=>{
+    ctx.font=`${t.size}px ${t.font}`;ctx.fillStyle=t.color;
+    let y=t.position==='top'?72:t.position==='center'?h/2:t.position==='bottom'?h-35:h/2;
+    ctx.fillText(t.value,w/2,y);
+  });
+  const arr=[...selectedStickers];ctx.font='42px Arial';
+  arr.forEach((s,i)=>{
+    const pos=$('stickerPosition').value;
+    let x=w/2,y=h/2;
+    if(pos==='top'){x=35+(i%5)*(w-70)/4;y=42}
+    if(pos==='bottom'){x=35+(i%5)*(w-70)/4;y=h-15}
+    if(pos==='left'){x=30;y=100+(i%7)*(h-150)/6}
+    if(pos==='right'){x=w-30;y=100+(i%7)*(h-150)/6}
+    ctx.fillText(s,x,y);
+  });
+  ctx.font='14px Arial';ctx.fillStyle=dark?'#fff8':'#3338';ctx.fillText('eli.print',w/2,h-8);
 }
-
-
-// ============================
-// COVER IMAGE
-// ============================
-
-function drawCoverImage(
-    ctx,
-    img,
-    x,
-    y,
-    width,
-    height
-) {
-
-    const imageRatio =
-        img.width / img.height;
-
-    const boxRatio =
-        width / height;
-
-    let sourceWidth =
-        img.width;
-
-    let sourceHeight =
-        img.height;
-
-    let sourceX = 0;
-    let sourceY = 0;
-
-    if (
-        imageRatio > boxRatio
-    ) {
-
-        sourceWidth =
-            img.height * boxRatio;
-
-        sourceX =
-            (img.width -
-            sourceWidth) / 2;
-
-    } else {
-
-        sourceHeight =
-            img.width / boxRatio;
-
-        sourceY =
-            (img.height -
-            sourceHeight) / 2;
-    }
-
-    ctx.drawImage(
-        img,
-        sourceX,
-        sourceY,
-        sourceWidth,
-        sourceHeight,
-        x,
-        y,
-        width,
-        height
-    );
+async function generatePreview(){
+  if(!photos.length){renderEmpty();return}
+  const mode=$('layout').value;
+  if(mode==='strip')await makeStrip(600,0);
+  else if(mode==='4x6')await makeStrip(1200,900);
+  else if(mode==='grid')await makeGrid();
+  else await makeA4();
 }
-
-
-// ============================
-// IMAGE LOADER
-// ============================
-
-function loadImage(src) {
-
-    return new Promise(
-        resolve => {
-
-            const img =
-                new Image();
-
-            img.onload =
-                () => resolve(img);
-
-            img.src = src;
-        }
-    );
+async function makeStrip(w,unused){
+  const header=110,footer=65,pad=24,ph=400, h=header+footer+pad+(photos.length*(ph+pad));
+  $('canvas').width=w;$('canvas').height=h;const c=$('canvas').getContext('2d');bg(c,w,h);await drawLogo(c,w,12,80);
+  for(let i=0;i<photos.length;i++){const img=await load(photos[i]);cover(c,img,pad,header+pad+i*(ph+pad),w-pad*2,ph)}
+  drawDecor(c,w,h)
 }
-
-
-// ============================
-// DOWNLOAD
-// ============================
-
-function downloadImage() {
-
-    if (photos.length === 0) {
-
-        alert(
-            "Please take some photos first."
-        );
-
-        return;
-    }
-
-    generatePreview();
-
-    setTimeout(() => {
-
-        const link =
-            document.createElement("a");
-
-        link.download =
-            "Eli-PrintHub-Photobooth.png";
-
-        link.href =
-            previewCanvas.toDataURL(
-                "image/png"
-            );
-
-        link.click();
-
-    }, 300);
+async function makeGrid(){
+  const w=900,h=900,g=18;$('canvas').width=w;$('canvas').height=h;const c=$('canvas').getContext('2d');bg(c,w,h);await drawLogo(c,w,12,70);
+  const n=Math.min(photos.length,6),cols=2,rows=Math.ceil(n/cols),pw=(w-g*3)/2,ph=(h-105-g*(rows+1))/rows;
+  for(let i=0;i<n;i++){const img=await load(photos[i]),x=g+(i%2)*(pw+g),y=90+g+Math.floor(i/2)*(ph+g);cover(c,img,x,y,pw,ph)}drawDecor(c,w,h)
 }
-
-
-// ============================
-// PRINT
-// ============================
-
-function printImage() {
-
-    if (photos.length === 0) {
-
-        alert(
-            "Please take some photos first."
-        );
-
-        return;
-    }
-
-    generatePreview();
-
-    setTimeout(() => {
-
-        const image =
-            previewCanvas.toDataURL(
-                "image/png"
-            );
-
-        const printWindow =
-            window.open(
-                "",
-                "_blank"
-            );
-
-        printWindow.document.write(`
-            <!DOCTYPE html>
-
-            <html>
-
-            <head>
-
-                <title>
-                    Eli PrintHub Photobooth
-                </title>
-
-                <style>
-
-                    @page {
-                        margin: 0;
-                    }
-
-                    html,
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        background: white;
-                        text-align: center;
-                    }
-
-                    img {
-                        width: 2in;
-                        height: auto;
-                        display: block;
-                        margin: auto;
-                    }
-
-                </style>
-
-            </head>
-
-            <body>
-
-                <img src="${image}">
-
-                <script>
-
-                    window.onload = function() {
-
-                        setTimeout(
-                            function() {
-
-                                window.print();
-
-                            },
-                            500
-                        );
-
-                    };
-
-                <\/script>
-
-            </body>
-
-            </html>
-        `);
-
-        printWindow.document.close();
-
-    }, 300);
+async function makeA4(){
+  const w=1240,h=1754;$('canvas').width=w;$('canvas').height=h;const c=$('canvas').getContext('2d');bg(c,w,h);await drawLogo(c,w,18,80);
+  const stripW=520,stripH=1550,gap=35,left=(w-(stripW*2+gap))/2;
+  for(let s=0;s<3;s++){const x=s===0?left:s===1?left+stripW+gap:left+(stripW+gap)/2;const y=130;if(s<2)await miniStrip(c,x,y,stripW,stripH);else await miniStrip(c,left+(stripW+gap)/2,y,stripW,stripH)}
 }
-
-
-// ============================
-// WAIT
-// ============================
-
-function wait(ms) {
-
-    return new Promise(
-        resolve =>
-            setTimeout(
-                resolve,
-                ms
-            )
-    );
+async function miniStrip(c,x,y,w,h){
+  c.save();c.translate(x,y);c.fillStyle='#fff';c.fillRect(0,0,w,h);
+  const pad=18,head=65,ph=(h-head-pad*2-(photos.length-1)*pad)/photos.length;
+  for(let i=0;i<photos.length;i++){const img=await load(photos[i]);cover(c,img,pad,head+pad+i*(ph+pad),w-pad*2,ph)}
+  c.textAlign='center';c.font='bold 28px Arial';c.fillStyle='#333';c.fillText('eli.print',w/2,40);c.restore();
 }
+async function downloadImage(){
+  if(!photos.length){alert('Please take photos first.');return}
+  await generatePreview();const a=document.createElement('a');a.download='eli.print-photobooth.png';a.href=$('canvas').toDataURL('image/png');a.click()
+}
+async function printImage(){
+  if(!photos.length){alert('Please take photos first.');return}
+  await generatePreview();const data=$('canvas').toDataURL('image/png');const win=window.open('','_blank');if(!win){alert('Please allow pop-ups for printing.');return}
+  win.document.write(`<html><head><title>eli.print Photobooth</title><style>@page{margin:0}body{margin:0;text-align:center}img{max-width:100%;height:auto}</style></head><body><img src="${data}"><script>window.onload=()=>setTimeout(()=>window.print(),500)<\/script></body></html>`);win.document.close()
+}
+function resetAll(){if(!confirm('Start over and remove all photos and decorations?'))return;photos=[];texts=[];selectedStickers.clear();document.querySelectorAll('.sticker').forEach(x=>x.classList.remove('active'));renderShots();renderEmpty()}
+$('takeCount').addEventListener('change',()=>{if(photos.length>+$('takeCount').value)photos=photos.slice(0,+$('takeCount').value);renderShots();generatePreview()});
+$('layout').addEventListener('change',generatePreview);$('stickerPosition').addEventListener('change',generatePreview);
+$('font').addEventListener('change',generatePreview);$('fontSize').addEventListener('change',generatePreview);$('textColor').addEventListener('change',generatePreview);$('textPosition').addEventListener('change',generatePreview);
 
-
-// ============================
-// TAKE COUNT CHANGE
-// ============================
-
-document
-.getElementById("takeCount")
-.addEventListener(
-    "change",
-    () => {
-
-        const max =
-            parseInt(
-                document.getElementById(
-                    "takeCount"
-                ).value
-            );
-
-        if (photos.length > max) {
-
-            photos =
-                photos.slice(
-                    0,
-                    max
-                );
-        }
-
-        updatePhotoGrid();
-
-        updateStatus();
-
-        generatePreview();
-    }
-);
-
-
-// ============================
-// INITIALIZE
-// ============================
-
-updatePhotoGrid();
-
-updateStatus();
-
-startCamera();
-
-generatePreview();
-
+initUI();camera();renderEmpty();
 </script>
-
 </body>
 </html>
-```
