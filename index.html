@@ -484,14 +484,29 @@ footer {
          CUSTOMER CANNOT CHANGE THIS THROUGH THE WEBSITE
          ===================================================== -->
 
-    <div class="logo-area">
-      <div class="logo-mark">E</div>
+<div class="logo-area">
 
-      <div>
-        <div class="logo-text">Eli PrintHub</div>
-        <div class="logo-sub">Print • Create • Celebrate</div>
-      </div>
-    </div>
+  <img
+    src="EliPrintHubLogo.png"
+    class="eli-logo"
+    alt="Eli PrintHub Logo"
+    draggable="false"
+  >
+
+  <div>
+    <div class="logo-text">Eli PrintHub</div>
+    <div class="logo-sub">Print • Create • Celebrate</div>
+  </div>
+
+</div>
+    .eli-logo {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
 
     <div class="header-buttons">
       <button class="small-btn" onclick="scrollToPreview()">Preview</button>
@@ -1627,7 +1642,15 @@ function printDesign() {
         }
 
         html,
-        body {
+        .eli-logo {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+body {
           margin: 0;
           padding: 0;
           background: white;
