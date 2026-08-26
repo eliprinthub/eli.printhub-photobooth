@@ -2,285 +2,1773 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#d85b91">
-<title>eli.print • DIY Photobooth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Eli PrintHub Photobooth</title>
+
 <style>
-:root{--pink:#d85b91;--pink2:#f7d5e3;--ink:#2f2930;--muted:#777;--card:#fff;--bg:#faf6f8}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
-button,input,select{font:inherit}button{border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer}
-button:disabled{opacity:.45;cursor:not-allowed}.primary{background:var(--pink);color:#fff}.secondary{background:#eee;color:#333}.success{background:#48a868;color:#fff}.danger{background:#df4e55;color:#fff}
-header{background:#fff;border-bottom:1px solid #eee;position:sticky;top:0;z-index:20}
-.header-inner{max-width:1100px;margin:auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:15px}
-.brand{display:flex;align-items:center;gap:10px}.brand img{max-height:52px;max-width:180px;object-fit:contain}.brand-name{font-weight:900;font-size:27px}.brand-name span{color:var(--pink)}
-.container{max-width:1100px;margin:auto;padding:18px}.card{background:var(--card);border-radius:20px;padding:20px;margin-bottom:18px;box-shadow:0 5px 24px #0000000d}
-h2{margin:0 0 14px}.muted{color:var(--muted);font-size:13px}.notice{background:#fff5d9;padding:12px;border-radius:12px;font-size:13px;margin-bottom:14px}
-.grid{display:grid;gap:14px}.settings{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}.field{display:flex;flex-direction:column;gap:7px}.field label{font-size:13px;font-weight:800}.field input,.field select{padding:11px;border:1px solid #ddd;border-radius:10px;background:#fff}
-.camera-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.camera{position:relative;background:#111;border-radius:18px;overflow:hidden;min-height:390px}.camera video{width:100%;height:100%;min-height:390px;object-fit:cover;transform:scaleX(-1)}.camera-actions{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:8px}.camera-actions button{background:#fff}.count{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#fff;font-size:100px;font-weight:900;background:#0002}
-.preview-wrap{background:#eee;border-radius:18px;min-height:420px;padding:12px;display:flex;align-items:flex-start;justify-content:center}.preview-wrap canvas{max-width:100%;max-height:620px;background:#fff;box-shadow:0 5px 18px #0002}
-.status{text-align:center;font-weight:800;margin-top:10px}.shots{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.shot{aspect-ratio:1;background:#f1f1f1;border:2px dashed #ccc;border-radius:10px;overflow:hidden;display:grid;place-items:center;color:#999;font-size:12px}.shot img{width:100%;height:100%;object-fit:cover}
-.template-grid,.sticker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}.template{border:3px solid transparent;border-radius:14px;overflow:hidden;background:#f5f5f5;cursor:pointer}.template.active{border-color:var(--pink)}.template .sample{height:90px;display:grid;place-items:center;font-weight:900}.template p{margin:0;padding:8px;text-align:center;font-size:12px}.pink{background:linear-gradient(135deg,#ffd3e2,#fff);color:#a52c60}.black{background:linear-gradient(135deg,#111,#555);color:#fff}.white{background:#fff;color:#222}.blue{background:linear-gradient(135deg,#d9efff,#fff);color:#377ba8}.purple{background:linear-gradient(135deg,#e8d9ff,#fff);color:#7046a7}.yellow{background:linear-gradient(135deg,#fff0a9,#fff);color:#8e7200}.mint{background:linear-gradient(135deg,#d9fff2,#fff);color:#247b61}.red{background:linear-gradient(135deg,#ffe0e0,#fff);color:#a42e37}
-.sticker{border:2px solid #ddd;border-radius:12px;background:#fff;padding:12px;text-align:center;font-size:30px;cursor:pointer}.sticker.active{border-color:var(--pink);background:#fff0f6}
-.toolbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.toolbar-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.text-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.text-chip{background:#f3e7ed;border-radius:20px;padding:8px 12px;font-size:13px;cursor:pointer}.text-chip.active{background:var(--pink);color:#fff}
-.logo-box{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.logo-preview{width:170px;height:90px;border:2px dashed #ccc;border-radius:12px;display:grid;place-items:center;overflow:hidden;background:#fafafa}.logo-preview img{max-width:95%;max-height:95%;object-fit:contain}.hidden{display:none}
-.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.small{font-size:12px}.price-note{display:grid;grid-template-columns:1fr 1fr;gap:10px}.price-note div{padding:12px;background:#faf0f5;border-radius:12px}
-footer{text-align:center;padding:28px;color:#888}
-@media(max-width:800px){.camera-grid{grid-template-columns:1fr}.camera,.camera video{min-height:320px}.shots{grid-template-columns:repeat(3,1fr)}.header-inner{padding:10px 12px}.brand-name{font-size:22px}}
-@media(max-width:500px){.container{padding:10px}.card{padding:15px}.shots{grid-template-columns:repeat(2,1fr)}.count{font-size:70px}}
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #ff6fae;
+  --secondary: #fff0f6;
+  --dark: #333;
+  --light: #fff;
+  --border: #eadbe3;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #fff7fb, #ffeef6);
+  color: var(--dark);
+}
+
+header {
+  background: white;
+  border-bottom: 2px solid #f4dce8;
+  padding: 14px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* LOCKED BRANDING */
+.logo-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff6fae, #ff9bc8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 23px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(255,111,174,.3);
+  user-select: none;
+}
+
+.logo-text {
+  font-weight: 800;
+  font-size: 21px;
+  color: #333;
+  user-select: none;
+}
+
+.logo-sub {
+  font-size: 11px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.small-btn {
+  padding: 9px 14px;
+  border-radius: 10px;
+  background: #fff0f6;
+  color: #d84d89;
+}
+
+.small-btn:hover {
+  background: #ffdbe9;
+}
+
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 25px 15px 50px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(28px, 5vw, 44px);
+}
+
+.hero p {
+  color: #777;
+  margin: 8px 0 0;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 22px;
+}
+
+.panel {
+  background: white;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 8px 30px rgba(90,40,65,.08);
+  border: 1px solid #f2dfe8;
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 19px;
+}
+
+.section {
+  margin-bottom: 22px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 9px;
+}
+
+.camera-box {
+  background: #111;
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+}
+
+video {
+  width: 100%;
+  display: block;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  background: #111;
+}
+
+.camera-message {
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-size: 13px;
+}
+
+.camera-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #ff6fae, #ff4d96);
+  color: white;
+  padding: 13px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(255,78,150,.25);
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+}
+
+.secondary-btn {
+  background: #f5f5f5;
+  color: #555;
+  padding: 13px;
+  border-radius: 12px;
+}
+
+.take-count {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.take-count button {
+  background: #fff1f6;
+  padding: 9px 4px;
+  border-radius: 9px;
+  color: #d64c88;
+}
+
+.take-count button.active {
+  background: #ff6fae;
+  color: white;
+}
+
+select,
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  font-family: inherit;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--primary);
+}
+
+.template-grid,
+.sticker-grid,
+.text-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+}
+
+.option {
+  padding: 10px 5px;
+  border: 1px solid #ecdde5;
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.option.active {
+  border-color: #ff6fae;
+  background: #fff0f6;
+  color: #d84d89;
+}
+
+.color-row {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.color-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 0 1px #ddd;
+}
+
+.color-btn.active {
+  box-shadow: 0 0 0 2px #ff6fae;
+}
+
+.photo-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.slot {
+  background: #fafafa;
+  border: 1px dashed #ddd;
+  border-radius: 10px;
+  min-height: 80px;
+  overflow: hidden;
+  position: relative;
+}
+
+.slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slot span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.preview-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.canvas-wrapper {
+  background: #ddd;
+  padding: 18px;
+  border-radius: 18px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+}
+
+#previewCanvas {
+  background: white;
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 8px 25px rgba(0,0,0,.15);
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.action-buttons button {
+  padding: 13px 8px;
+  border-radius: 11px;
+}
+
+.download {
+  background: #333;
+  color: white;
+}
+
+.print {
+  background: #ff6fae;
+  color: white;
+}
+
+.reset {
+  background: #eee;
+}
+
+.upload-label {
+  display: block;
+  background: #fff0f6;
+  color: #d84d89;
+  text-align: center;
+  padding: 11px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#photoUpload {
+  display: none;
+}
+
+.custom-text-area {
+  display: flex;
+  gap: 7px;
+}
+
+.custom-text-area input {
+  flex: 1;
+}
+
+.custom-text-area button {
+  background: #ff6fae;
+  color: white;
+  padding: 0 15px;
+  border-radius: 10px;
+}
+
+.text-item {
+  position: absolute;
+  cursor: move;
+  user-select: none;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0,0,0,.2);
+}
+
+.sticker-item {
+  position: absolute;
+  cursor: move;
+  user-select: none;
+}
+
+.help-box {
+  background: #fff8fb;
+  border: 1px solid #f4dce8;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #777;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #999;
+  font-size: 12px;
+}
+
+@media(max-width: 850px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 15px;
+  }
+}
+
+@media(max-width: 500px) {
+  .header-inner {
+    align-items: flex-start;
+  }
+
+  .logo-text {
+    font-size: 17px;
+  }
+
+  .logo-mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .header-buttons {
+    display: none;
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #previewCanvas,
+  #previewCanvas * {
+    visibility: visible;
+  }
+
+  #previewCanvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: none;
+  }
+}
 </style>
 </head>
+
 <body>
-<header><div class="header-inner">
-  <div class="brand"><div id="brandLogo"></div><div class="brand-name">eli<span>.print</span></div></div>
-  <button class="secondary small" onclick="document.getElementById('logoInput').click()">Upload Logo</button>
-</div></header>
 
-<main class="container">
-<section class="card">
-<h2>📸 DIY Photobooth</h2>
-<div class="notice">Create your memories, then choose <b>Download Soft Copy</b> or <b>Print</b>. Photos stay in this browser and are not uploaded to a server by this page.</div>
-<div class="grid settings">
-<div class="field"><label>Takes</label><select id="takeCount"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option></select></div>
-<div class="field"><label>Countdown</label><select id="countdown"><option>3</option><option selected>5</option><option>10</option></select></div>
-<div class="field"><label>Output</label><select id="layout"><option value="strip">2 × 6 Strip</option><option value="4x6">4 × 6 Photo</option><option value="a4">A4 — 3 Strips</option><option value="grid">Square Collage</option></select></div>
-</div>
-</section>
+<header>
+  <div class="header-inner">
 
-<section class="card">
-<h2>🖼️ Your Logo</h2>
-<div class="logo-box">
-<div class="logo-preview" id="logoPreview">No logo</div>
-<div>
-<input id="logoInput" class="hidden" type="file" accept="image/png,image/jpeg,image/webp">
-<button class="primary" onclick="logoInput.click()">📤 Upload Your Logo</button>
-<button class="danger" onclick="removeLogo()">Remove</button>
-<p class="muted">PNG with transparent background is recommended. Your logo appears in the header and final output.</p>
-</div>
-</div>
-</section>
+    <!-- =====================================================
+         LOCKED ELI PRINTHUB BRANDING
+         CUSTOMER CANNOT CHANGE THIS THROUGH THE WEBSITE
+         ===================================================== -->
 
-<section class="card">
-<h2>📷 Take Photos</h2>
-<div class="camera-grid">
-<div>
-<div class="camera"><video id="video" autoplay playsinline></video><div id="count" class="count">5</div><div class="camera-actions"><button onclick="switchCamera()">🔄 Flip</button><button class="primary" onclick="startSession()">📸 Start</button></div></div>
-<div id="status" class="status">Ready — 0 photos</div>
-</div>
-<div class="preview-wrap"><canvas id="canvas"></canvas></div>
-</div>
-</section>
+    <div class="logo-area">
+      <div class="logo-mark">E</div>
 
-<section class="card"><h2>🖼️ Your Photos</h2><div id="shots" class="shots"></div><div class="actions" style="margin-top:12px"><button class="secondary" onclick="retakeLast()">↩ Retake Last</button><button class="danger" onclick="clearPhotos()">🗑 Clear All</button></div></section>
+      <div>
+        <div class="logo-text">Eli PrintHub</div>
+        <div class="logo-sub">Print • Create • Celebrate</div>
+      </div>
+    </div>
 
-<section class="card">
-<h2>🎨 Frame / Template</h2>
-<div class="template-grid" id="templates"></div>
-</section>
+    <div class="header-buttons">
+      <button class="small-btn" onclick="scrollToPreview()">Preview</button>
+      <button class="small-btn" onclick="downloadDesign()">Download</button>
+    </div>
 
-<section class="card">
-<h2>✍️ Text Templates</h2>
-<div class="text-list" id="textTemplates"></div>
-<div class="toolbar" style="margin-top:14px">
-<div class="field"><label>Custom text</label><input id="customText" placeholder="Type your name or message"></div>
-<div class="field"><label>Font</label><select id="font"><option value="Arial">Clean</option><option value="Georgia">Elegant</option><option value="Trebuchet MS">Cute</option><option value="Impact">Bold</option><option value="cursive">Handwritten</option></select></div>
-<div class="field"><label>Size</label><select id="fontSize"><option value="24">Small</option><option value="34" selected>Medium</option><option value="48">Large</option></select></div>
-<div class="field"><label>Color</label><input id="textColor" type="color" value="#333333"></div>
-<div class="field"><label>Position</label><select id="textPosition"><option value="top">Top</option><option value="bottom" selected>Bottom</option><option value="center">Center</option></select></div>
-</div>
-<div class="toolbar-actions"><button class="primary" onclick="addText()">➕ Add Text</button><button class="secondary" onclick="clearTexts()">Clear Text</button></div>
-<p class="muted">Text is placed on the final design. Add more than one text item if you want.</p>
-</section>
+  </div>
+</header>
 
-<section class="card">
-<h2>✨ Add Hearts & Stickers</h2>
-<div class="sticker-grid" id="stickers"></div>
-<div class="toolbar" style="margin-top:14px">
-<div class="field"><label>Sticker position</label><select id="stickerPosition"><option value="top">Top</option><option value="bottom" selected>Bottom</option><option value="left">Left</option><option value="right">Right</option><option value="center">Center</option></select></div>
-</div>
-<p class="muted">Click a sticker to add it. Click it again to remove it from the selected sticker set.</p>
-</section>
 
-<section class="card">
-<h2>💾 Finish</h2>
-<div class="actions">
-<button class="primary" onclick="generatePreview()">🖼 Generate Preview</button>
-<button class="success" onclick="downloadImage()">⬇ Download Soft Copy</button>
-<button class="secondary" onclick="printImage()">🖨 Print</button>
-<button class="danger" onclick="resetAll()">↻ Start Over</button>
-</div>
-<div class="price-note" style="margin-top:16px">
-<div><b>Soft Copy</b><br><span class="muted">Download your finished design to your phone or computer.</span></div>
-<div><b>Printed Copy</b><br><span class="muted">Use Print for your preferred printer/paper setup.</span></div>
-</div>
-</section>
+<main>
+
+  <div class="hero">
+    <h1>✨ Eli PrintHub Photobooth</h1>
+    <p>Create your own cute photobooth design!</p>
+  </div>
+
+
+  <div class="app">
+
+    <!-- =====================================================
+         LEFT CONTROL PANEL
+         ===================================================== -->
+
+    <div class="panel">
+
+      <h2>📸 Create Your Design</h2>
+
+
+      <!-- CAMERA -->
+      <div class="section">
+
+        <div class="section-title">Camera</div>
+
+        <div class="camera-box">
+
+          <video id="video" autoplay playsinline></video>
+
+          <div class="camera-message" id="cameraMessage">
+            Camera ready
+          </div>
+
+        </div>
+
+        <div class="camera-buttons">
+
+          <button class="primary-btn" onclick="startCamera()">
+            📷 Start Camera
+          </button>
+
+          <button class="secondary-btn" onclick="takePhoto()">
+            📸 Take Photo
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- NUMBER OF TAKES -->
+      <div class="section">
+
+        <div class="section-title">
+          Number of Takes
+        </div>
+
+        <div class="take-count">
+
+          <button onclick="setTakeCount(2)" id="take2">
+            2
+          </button>
+
+          <button onclick="setTakeCount(3)" id="take3">
+            3
+          </button>
+
+          <button onclick="setTakeCount(4)" id="take4">
+            4
+          </button>
+
+          <button onclick="setTakeCount(5)" id="take5">
+            5
+          </button>
+
+          <button onclick="setTakeCount(6)" id="take6">
+            6
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- UPLOAD -->
+      <div class="section">
+
+        <div class="section-title">
+          Upload Photos
+        </div>
+
+        <label class="upload-label" for="photoUpload">
+          📁 Upload Your Photos
+        </label>
+
+        <input
+          type="file"
+          id="photoUpload"
+          accept="image/*"
+          multiple
+          onchange="handleUpload(event)"
+        >
+
+      </div>
+
+
+      <!-- TEMPLATE -->
+      <div class="section">
+
+        <div class="section-title">
+          Choose Template
+        </div>
+
+        <div class="template-grid">
+
+          <div class="option active"
+               onclick="setTemplate('classic', this)">
+            💗 Classic
+          </div>
+
+          <div class="option"
+               onclick="setTemplate('cute', this)">
+            🧸 Cute
+          </div>
+
+          <div class="option"
+               onclick="setTemplate('minimal', this)">
+            🤍 Minimal
+          </div>
+
+          <div class="option"
+               onclick="setTemplate('birthday', this)">
+            🎂 Birthday
+          </div>
+
+          <div class="option"
+               onclick="setTemplate('besties', this)">
+            💕 Besties
+          </div>
+
+          <div class="option"
+               onclick="setTemplate('christmas', this)">
+            🎄 Christmas
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- BACKGROUND -->
+      <div class="section">
+
+        <div class="section-title">
+          Background
+        </div>
+
+        <div class="color-row">
+
+          <button
+            class="color-btn active"
+            style="background:#fff0f6"
+            onclick="setBackground('#fff0f6',this)">
+          </button>
+
+          <button
+            class="color-btn"
+            style="background:#ffffff"
+            onclick="setBackground('#ffffff',this)">
+          </button>
+
+          <button
+            class="color-btn"
+            style="background:#ffe4ec"
+            onclick="setBackground('#ffe4ec',this)">
+          </button>
+
+          <button
+            class="color-btn"
+            style="background:#eaf7ff"
+            onclick="setBackground('#eaf7ff',this)">
+          </button>
+
+          <button
+            class="color-btn"
+            style="background:#fff7d6"
+            onclick="setBackground('#fff7d6',this)">
+          </button>
+
+          <button
+            class="color-btn"
+            style="background:#eee8ff"
+            onclick="setBackground('#eee8ff',this)">
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- TEXT -->
+      <div class="section">
+
+        <div class="section-title">
+          Text Templates
+        </div>
+
+        <div class="text-grid">
+
+          <div class="option"
+               onclick="addText('♡ Custom Text ♡')">
+            ♡ Custom Text ♡
+          </div>
+
+          <div class="option"
+               onclick="addText('Happy Birthday! 🎂')">
+            Happy Birthday! 🎂
+          </div>
+
+          <div class="option"
+               onclick="addText('Besties Forever 💕')">
+            Besties Forever 💕
+          </div>
+
+          <div class="option"
+               onclick="addText('Good Vibes ✨')">
+            Good Vibes ✨
+          </div>
+
+          <div class="option"
+               onclick="addText('Smile! 📸')">
+            Smile! 📸
+          </div>
+
+          <div class="option"
+               onclick="addText('Memories 💗')">
+            Memories 💗
+          </div>
+
+        </div>
+
+        <br>
+
+        <div class="custom-text-area">
+
+          <input
+            type="text"
+            id="customText"
+            placeholder="Type your own text..."
+          >
+
+          <button onclick="addCustomText()">
+            Add
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- STICKERS -->
+      <div class="section">
+
+        <div class="section-title">
+          Stickers
+        </div>
+
+        <div class="sticker-grid">
+
+          <div class="option" onclick="addSticker('💗')">
+            💗
+          </div>
+
+          <div class="option" onclick="addSticker('💕')">
+            💕
+          </div>
+
+          <div class="option" onclick="addSticker('✨')">
+            ✨
+          </div>
+
+          <div class="option" onclick="addSticker('⭐')">
+            ⭐
+          </div>
+
+          <div class="option" onclick="addSticker('🌸')">
+            🌸
+          </div>
+
+          <div class="option" onclick="addSticker('🎀')">
+            🎀
+          </div>
+
+          <div class="option" onclick="addSticker('🧸')">
+            🧸
+          </div>
+
+          <div class="option" onclick="addSticker('🍓')">
+            🍓
+          </div>
+
+          <div class="option" onclick="addSticker('☁️')">
+            ☁️
+          </div>
+
+          <div class="option" onclick="addSticker('🎂')">
+            🎂
+          </div>
+
+          <div class="option" onclick="addSticker('🎉')">
+            🎉
+          </div>
+
+          <div class="option" onclick="addSticker('♡')">
+            ♡
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="help-box">
+
+        💡 <b>Tip:</b>
+        Take or upload your photos, choose a template,
+        then add your favorite text and stickers.
+
+        <br><br>
+
+        Your customers can download the finished design
+        as a digital copy or print it.
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         RIGHT PREVIEW PANEL
+         ===================================================== -->
+
+    <div class="panel preview-area" id="previewSection">
+
+      <h2>🖼️ Preview</h2>
+
+      <div class="canvas-wrapper">
+
+        <canvas
+          id="previewCanvas"
+          width="1200"
+          height="1800">
+        </canvas>
+
+      </div>
+
+
+      <div class="action-buttons">
+
+        <button
+          class="download"
+          onclick="downloadDesign()">
+          ⬇️ Download
+        </button>
+
+        <button
+          class="print"
+          onclick="printDesign()">
+          🖨️ Print
+        </button>
+
+        <button
+          class="reset"
+          onclick="resetDesign()">
+          🔄 Reset
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </main>
-<footer>© 2026 <b>eli.print</b> • Personalized Printing & Photobooth</footer>
+
+
+<footer>
+
+  <strong>Eli PrintHub</strong>
+  <br>
+  Print • Create • Celebrate
+  <br><br>
+  © 2026 Eli PrintHub. All Rights Reserved.
+
+</footer>
+
 
 <script>
-const $=id=>document.getElementById(id);
-let stream=null,facing='user',photos=[],logo=null,template='pink',texts=[],selectedStickers=new Set();
 
-const templateData=[
-['pink','Sweet Pink','♡ PINK ♡'],['black','Classic Black','CLASSIC'],['white','Clean White','SIMPLE'],
-['blue','Baby Blue','✦ BLUE ✦'],['purple','Lovely Purple','✨ PURPLE ✨'],['yellow','Sunny Yellow','☀ HAPPY ☀'],
-['mint','Fresh Mint','🌿 MINT 🌿'],['red','Soft Red','♥ LOVE ♥']
-];
-const textData=['No Text','♡ Custom Text ♡','Happy Birthday! 🎂','Besties Forever 💕','Sweet Memories ✨','Good Vibes Only 🌸','Today Was Fun! 🎀','Thank You! ♡','Custom Name + Date'];
-const stickerData=['♡','♥','❤','💖','💕','★','☆','✨','🌸','🌈','☀️','🎀','🥰','😎','🎂','🎓','💐','🎄','❄️','⭐'];
+/* ============================================================
+   ELI PRINTHUB PHOTOBOOTH
+   ============================================================ */
 
-function initUI(){
-  $('templates').innerHTML=templateData.map((t,i)=>`<div class="template ${i===0?'active':''}" data-t="${t[0]}" onclick="chooseTemplate('${t[0]}',this)"><div class="sample ${t[0]}">${t[2]}</div><p>${t[1]}</p></div>`).join('');
-  $('textTemplates').innerHTML=textData.map((t,i)=>`<span class="text-chip" onclick="chooseText(${i},this)">${t}</span>`).join('');
-  $('stickers').innerHTML=stickerData.map(s=>`<div class="sticker" data-s="${s}" onclick="toggleSticker(this,'${escapeAttr(s)}')">${s}</div>`).join('');
-  renderLogo();
-  renderShots();
-  renderEmpty();
-}
-function escapeAttr(s){return s.replaceAll('&','&amp;').replaceAll("'","&#39;").replaceAll('"','&quot;')}
-function chooseTemplate(t,el){template=t;document.querySelectorAll('.template').forEach(x=>x.classList.remove('active'));el.classList.add('active');generatePreview()}
-function chooseText(i,el){
-  document.querySelectorAll('.text-chip').forEach(x=>x.classList.remove('active'));el.classList.add('active');
-  const val=textData[i];
-  if(val==='No Text'){texts=[];renderShots();generatePreview();return}
-  if(val==='♡ Custom Text ♡'){$('customText').focus();return}
-  if(val==='Custom Name + Date'){$('customText').value='Name • '+new Date().toLocaleDateString();return}
-  $('customText').value=val;addText();
-}
-function addText(){
-  const value=$('customText').value.trim(); if(!value){alert('Please type your text first.');return}
-  texts.push({value,font:$('font').value,size:+$('fontSize').value,color:$('textColor').value,position:$('textPosition').value});
-  generatePreview();
-}
-function clearTexts(){texts=[];generatePreview()}
-function toggleSticker(el,s){
-  if(selectedStickers.has(s)){selectedStickers.delete(s);el.classList.remove('active')}
-  else{selectedStickers.add(s);el.classList.add('active')}
-  generatePreview();
-}
-function renderLogo(){
-  const saved=localStorage.getItem('eliPrintLogo');
-  if(saved)logo=saved;
-  $('logoPreview').innerHTML=logo?`<img src="${logo}">`:'No logo';
-  $('brandLogo').innerHTML=logo?`<img src="${logo}" style="max-height:52px;max-width:180px">`:'';
-}
-$('logoInput').addEventListener('change',e=>{
-  const f=e.target.files[0];if(!f)return;
-  if(f.size>5*1024*1024){alert('Please use a logo smaller than 5 MB.');return}
-  const r=new FileReader();r.onload=()=>{logo=r.result;try{localStorage.setItem('eliPrintLogo',logo)}catch(e){}renderLogo();generatePreview()};r.readAsDataURL(f);
-});
-function removeLogo(){logo=null;localStorage.removeItem('eliPrintLogo');$('logoInput').value='';renderLogo();generatePreview()}
+const video = document.getElementById("video");
+const canvas = document.getElementById("previewCanvas");
+const ctx = canvas.getContext("2d");
 
-async function camera(){
-  try{
-    if(stream)stream.getTracks().forEach(t=>t.stop());
-    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing,width:{ideal:1280},height:{ideal:720}},audio:false});
-    $('video').srcObject=stream;
-  }catch(e){alert('Camera access is unavailable. Please allow camera permission and use HTTPS/GitHub Pages.')}
-}
-async function switchCamera(){facing=facing==='user'?'environment':'user';await camera()}
-function wait(ms){return new Promise(r=>setTimeout(r,ms))}
-function countdown(){
-  return new Promise(resolve=>{
-    let n=+$('countdown').value;$('count').style.display='flex';$('count').textContent=n;
-    const t=setInterval(()=>{n--;if(n<=0){clearInterval(t);$('count').style.display='none';resolve()}else $('count').textContent=n},1000);
-  })
-}
-async function startSession(){
-  if(!stream)await camera();
-  photos=[];renderShots();
-  const total=+$('takeCount').value;
-  for(let i=0;i<total;i++){await countdown();capture();await wait(700)}
-  generatePreview()
-}
-function capture(){
-  if(photos.length>=6)return;
-  const c=document.createElement('canvas');c.width=1280;c.height=720;const x=c.getContext('2d');
-  if(facing==='user'){x.translate(c.width,0);x.scale(-1,1)}
-  x.drawImage($('video'),0,0,c.width,c.height);photos.push(c.toDataURL('image/jpeg',.95));renderShots();$('status').textContent=`Ready — ${photos.length} photos`;
-}
-function renderShots(){
-  const n=+$('takeCount').value;$('shots').innerHTML='';
-  for(let i=0;i<n;i++)$('shots').innerHTML+=photos[i]?`<div class="shot"><img src="${photos[i]}"></div>`:`<div class="shot">Take ${i+1}</div>`;
-  $('status').textContent=`Ready — ${photos.length} photo${photos.length===1?'':'s'}`;
-}
-function retakeLast(){if(photos.length){photos.pop();renderShots();generatePreview()}}
-function clearPhotos(){photos=[];renderShots();renderEmpty()}
-function renderEmpty(){const c=$('canvas');c.width=300;c.height=450;const x=c.getContext('2d');x.fillStyle='#eee';x.fillRect(0,0,300,450);x.fillStyle='#888';x.textAlign='center';x.font='16px Arial';x.fillText('Take photos to preview',150,225)}
+let stream = null;
 
-function bg(ctx,w,h){
-  const maps={pink:['#ffd5e5','#fff'],black:['#111','#444'],white:['#fff','#fff'],blue:['#d9efff','#fff'],purple:['#e8d9ff','#fff'],yellow:['#fff0a9','#fff'],mint:['#d9fff2','#fff'],red:['#ffe0e0','#fff']};
-  const [a,b]=maps[template]||maps.pink,g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,a);g.addColorStop(1,b);ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+let photos = [];
+
+let takeCount = 2;
+
+let backgroundColor = "#fff0f6";
+
+let template = "classic";
+
+let textItems = [];
+
+let stickerItems = [];
+
+
+/* ============================================================
+   CAMERA
+   ============================================================ */
+
+async function startCamera() {
+
+  try {
+
+    if (stream) {
+
+      stream.getTracks().forEach(track => track.stop());
+
+    }
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: "user",
+        width: {
+          ideal: 1280
+        },
+        height: {
+          ideal: 720
+        }
+      },
+      audio: false
+    });
+
+    video.srcObject = stream;
+
+    document.getElementById("cameraMessage").textContent =
+      "Camera is ready! 📸";
+
+  } catch(error) {
+
+    console.error(error);
+
+    document.getElementById("cameraMessage").textContent =
+      "Camera unavailable. Please allow camera access or upload photos.";
+
+  }
+
 }
-function load(src){return new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.src=src})}
-function cover(ctx,img,x,y,w,h){const ir=img.width/img.height,br=w/h;let sw=img.width,sh=img.height,sx=0,sy=0;if(ir>br){sw=img.height*br;sx=(img.width-sw)/2}else{sh=img.width/br;sy=(img.height-sh)/2}ctx.drawImage(img,sx,sy,sw,sh,x,y,w,h)}
-async function drawLogo(ctx,w,y,maxH){
-  if(!logo){ctx.textAlign='center';ctx.font='900 30px Arial';ctx.fillStyle=template==='black'?'#fff':'#333';ctx.fillText('eli.print',w/2,y+35);return}
-  const img=await load(logo),maxW=w*.55,s=Math.min(maxW/img.width,maxH/img.height),lw=img.width*s,lh=img.height*s;ctx.drawImage(img,(w-lw)/2,y,lw,lh)
+
+
+/* ============================================================
+   TAKE PHOTO
+   ============================================================ */
+
+function takePhoto() {
+
+  if (!video.srcObject) {
+
+    alert("Please start the camera first.");
+
+    return;
+
+  }
+
+  if (photos.length >= takeCount) {
+
+    alert("You already have " + takeCount + " photos.");
+
+    return;
+
+  }
+
+  const photoCanvas = document.createElement("canvas");
+
+  photoCanvas.width = video.videoWidth || 1280;
+
+  photoCanvas.height = video.videoHeight || 720;
+
+  const photoCtx = photoCanvas.getContext("2d");
+
+  photoCtx.translate(photoCanvas.width, 0);
+
+  photoCtx.scale(-1, 1);
+
+  photoCtx.drawImage(
+    video,
+    0,
+    0,
+    photoCanvas.width,
+    photoCanvas.height
+  );
+
+  const image = new Image();
+
+  image.onload = function() {
+
+    photos.push(image);
+
+    updateSlots();
+
+    drawPreview();
+
+  };
+
+  image.src = photoCanvas.toDataURL("image/jpeg", .95);
+
 }
-function drawDecor(ctx,w,h){
-  const dark=template==='black';ctx.textAlign='center';
-  texts.forEach(t=>{
-    ctx.font=`${t.size}px ${t.font}`;ctx.fillStyle=t.color;
-    let y=t.position==='top'?72:t.position==='center'?h/2:t.position==='bottom'?h-35:h/2;
-    ctx.fillText(t.value,w/2,y);
+
+
+/* ============================================================
+   NUMBER OF TAKES
+   ============================================================ */
+
+function setTakeCount(count) {
+
+  takeCount = count;
+
+  document.querySelectorAll(".take-count button")
+    .forEach(button => button.classList.remove("active"));
+
+  document.getElementById("take" + count)
+    .classList.add("active");
+
+  if (photos.length > takeCount) {
+
+    photos = photos.slice(0, takeCount);
+
+  }
+
+  updateSlots();
+
+  drawPreview();
+
+}
+
+
+/* ============================================================
+   UPLOAD
+   ============================================================ */
+
+function handleUpload(event) {
+
+  const files = Array.from(event.target.files);
+
+  const remaining = takeCount - photos.length;
+
+  files.slice(0, remaining).forEach(file => {
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+      const image = new Image();
+
+      image.onload = function() {
+
+        photos.push(image);
+
+        updateSlots();
+
+        drawPreview();
+
+      };
+
+      image.src = e.target.result;
+
+    };
+
+    reader.readAsDataURL(file);
+
   });
-  const arr=[...selectedStickers];ctx.font='42px Arial';
-  arr.forEach((s,i)=>{
-    const pos=$('stickerPosition').value;
-    let x=w/2,y=h/2;
-    if(pos==='top'){x=35+(i%5)*(w-70)/4;y=42}
-    if(pos==='bottom'){x=35+(i%5)*(w-70)/4;y=h-15}
-    if(pos==='left'){x=30;y=100+(i%7)*(h-150)/6}
-    if(pos==='right'){x=w-30;y=100+(i%7)*(h-150)/6}
-    ctx.fillText(s,x,y);
-  });
-  ctx.font='14px Arial';ctx.fillStyle=dark?'#fff8':'#3338';ctx.fillText('eli.print',w/2,h-8);
-}
-async function generatePreview(){
-  if(!photos.length){renderEmpty();return}
-  const mode=$('layout').value;
-  if(mode==='strip')await makeStrip(600,0);
-  else if(mode==='4x6')await makeStrip(1200,900);
-  else if(mode==='grid')await makeGrid();
-  else await makeA4();
-}
-async function makeStrip(w,unused){
-  const header=110,footer=65,pad=24,ph=400, h=header+footer+pad+(photos.length*(ph+pad));
-  $('canvas').width=w;$('canvas').height=h;const c=$('canvas').getContext('2d');bg(c,w,h);await drawLogo(c,w,12,80);
-  for(let i=0;i<photos.length;i++){const img=await load(photos[i]);cover(c,img,pad,header+pad+i*(ph+pad),w-pad*2,ph)}
-  drawDecor(c,w,h)
-}
-async function makeGrid(){
-  const w=900,h=900,g=18;$('canvas').width=w;$('canvas').height=h;const c=$('canvas').getContext('2d');bg(c,w,h);await drawLogo(c,w,12,70);
-  const n=Math.min(photos.length,6),cols=2,rows=Math.ceil(n/cols),pw=(w-g*3)/2,ph=(h-105-g*(rows+1))/rows;
-  for(let i=0;i<n;i++){const img=await load(photos[i]),x=g+(i%2)*(pw+g),y=90+g+Math.floor(i/2)*(ph+g);cover(c,img,x,y,pw,ph)}drawDecor(c,w,h)
-}
-async function makeA4(){
-  const w=1240,h=1754;$('canvas').width=w;$('canvas').height=h;const c=$('canvas').getContext('2d');bg(c,w,h);await drawLogo(c,w,18,80);
-  const stripW=520,stripH=1550,gap=35,left=(w-(stripW*2+gap))/2;
-  for(let s=0;s<3;s++){const x=s===0?left:s===1?left+stripW+gap:left+(stripW+gap)/2;const y=130;if(s<2)await miniStrip(c,x,y,stripW,stripH);else await miniStrip(c,left+(stripW+gap)/2,y,stripW,stripH)}
-}
-async function miniStrip(c,x,y,w,h){
-  c.save();c.translate(x,y);c.fillStyle='#fff';c.fillRect(0,0,w,h);
-  const pad=18,head=65,ph=(h-head-pad*2-(photos.length-1)*pad)/photos.length;
-  for(let i=0;i<photos.length;i++){const img=await load(photos[i]);cover(c,img,pad,head+pad+i*(ph+pad),w-pad*2,ph)}
-  c.textAlign='center';c.font='bold 28px Arial';c.fillStyle='#333';c.fillText('eli.print',w/2,40);c.restore();
-}
-async function downloadImage(){
-  if(!photos.length){alert('Please take photos first.');return}
-  await generatePreview();const a=document.createElement('a');a.download='eli.print-photobooth.png';a.href=$('canvas').toDataURL('image/png');a.click()
-}
-async function printImage(){
-  if(!photos.length){alert('Please take photos first.');return}
-  await generatePreview();const data=$('canvas').toDataURL('image/png');const win=window.open('','_blank');if(!win){alert('Please allow pop-ups for printing.');return}
-  win.document.write(`<html><head><title>eli.print Photobooth</title><style>@page{margin:0}body{margin:0;text-align:center}img{max-width:100%;height:auto}</style></head><body><img src="${data}"><script>window.onload=()=>setTimeout(()=>window.print(),500)<\/script></body></html>`);win.document.close()
-}
-function resetAll(){if(!confirm('Start over and remove all photos and decorations?'))return;photos=[];texts=[];selectedStickers.clear();document.querySelectorAll('.sticker').forEach(x=>x.classList.remove('active'));renderShots();renderEmpty()}
-$('takeCount').addEventListener('change',()=>{if(photos.length>+$('takeCount').value)photos=photos.slice(0,+$('takeCount').value);renderShots();generatePreview()});
-$('layout').addEventListener('change',generatePreview);$('stickerPosition').addEventListener('change',generatePreview);
-$('font').addEventListener('change',generatePreview);$('fontSize').addEventListener('change',generatePreview);$('textColor').addEventListener('change',generatePreview);$('textPosition').addEventListener('change',generatePreview);
 
-initUI();camera();renderEmpty();
+}
+
+
+/* ============================================================
+   TEMPLATE
+   ============================================================ */
+
+function setTemplate(name, element) {
+
+  template = name;
+
+  document.querySelectorAll(".template-grid .option")
+    .forEach(item => item.classList.remove("active"));
+
+  element.classList.add("active");
+
+  drawPreview();
+
+}
+
+
+/* ============================================================
+   BACKGROUND
+   ============================================================ */
+
+function setBackground(color, element) {
+
+  backgroundColor = color;
+
+  document.querySelectorAll(".color-btn")
+    .forEach(item => item.classList.remove("active"));
+
+  element.classList.add("active");
+
+  drawPreview();
+
+}
+
+
+/* ============================================================
+   TEXT
+   ============================================================ */
+
+function addText(text) {
+
+  textItems.push({
+    text: text,
+    x: 600,
+    y: 100,
+    size: 55
+  });
+
+  drawPreview();
+
+}
+
+
+function addCustomText() {
+
+  const input = document.getElementById("customText");
+
+  const value = input.value.trim();
+
+  if (!value) {
+
+    return;
+
+  }
+
+  addText(value);
+
+  input.value = "";
+
+}
+
+
+/* ============================================================
+   STICKERS
+   ============================================================ */
+
+function addSticker(sticker) {
+
+  stickerItems.push({
+    text: sticker,
+    x: 100 + Math.random() * 1000,
+    y: 200 + Math.random() * 1200,
+    size: 70
+  });
+
+  drawPreview();
+
+}
+
+
+/* ============================================================
+   DRAW PREVIEW
+   ============================================================ */
+
+function drawPreview() {
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  ctx.fillStyle = backgroundColor;
+
+  ctx.fillRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  /* TEMPLATE STYLE */
+
+  if (template === "cute") {
+
+    ctx.fillStyle = "#fff7fb";
+
+    ctx.fillRect(
+      50,
+      50,
+      canvas.width - 100,
+      canvas.height - 100
+    );
+
+    ctx.strokeStyle = "#ff9fc7";
+
+    ctx.lineWidth = 8;
+
+    ctx.strokeRect(
+      50,
+      50,
+      canvas.width - 100,
+      canvas.height - 100
+    );
+
+  }
+
+
+  if (template === "minimal") {
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.fillRect(
+      60,
+      60,
+      canvas.width - 120,
+      canvas.height - 120
+    );
+
+  }
+
+
+  if (template === "birthday") {
+
+    ctx.fillStyle = "#fff3f7";
+
+    ctx.fillRect(
+      35,
+      35,
+      canvas.width - 70,
+      canvas.height - 70
+    );
+
+  }
+
+
+  if (template === "besties") {
+
+    ctx.fillStyle = "#fff0f8";
+
+    ctx.fillRect(
+      35,
+      35,
+      canvas.width - 70,
+      canvas.height - 70
+    );
+
+  }
+
+
+  if (template === "christmas") {
+
+    ctx.fillStyle = "#f4fff7";
+
+    ctx.fillRect(
+      35,
+      35,
+      canvas.width - 70,
+      canvas.height - 70
+    );
+
+  }
+
+
+  /* PHOTOS */
+
+  drawPhotos();
+
+
+  /* TEMPLATE HEADER */
+
+  ctx.textAlign = "center";
+
+  ctx.font = "bold 55px Arial";
+
+  ctx.fillStyle = "#333";
+
+  if (template === "birthday") {
+
+    ctx.fillText(
+      "Happy Birthday! 🎂",
+      canvas.width / 2,
+      85
+    );
+
+  } else if (template === "besties") {
+
+    ctx.fillText(
+      "Besties Forever 💕",
+      canvas.width / 2,
+      85
+    );
+
+  } else if (template === "christmas") {
+
+    ctx.fillText(
+      "Merry Christmas! 🎄",
+      canvas.width / 2,
+      85
+    );
+
+  } else {
+
+    ctx.fillText(
+      "Eli PrintHub",
+      canvas.width / 2,
+      85
+    );
+
+  }
+
+
+  /* TEXT ITEMS */
+
+  textItems.forEach(item => {
+
+    ctx.font = `bold ${item.size}px Arial`;
+
+    ctx.fillStyle = "#333";
+
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+      item.text,
+      item.x,
+      item.y
+    );
+
+  });
+
+
+  /* STICKERS */
+
+  stickerItems.forEach(item => {
+
+    ctx.font = `${item.size}px Arial`;
+
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+      item.text,
+      item.x,
+      item.y
+    );
+
+  });
+
+
+  /* LOCKED BRANDING */
+
+  ctx.font = "bold 38px Arial";
+
+  ctx.fillStyle = "#333";
+
+  ctx.textAlign = "center";
+
+  ctx.fillText(
+    "Eli PrintHub",
+    canvas.width / 2,
+    canvas.height - 55
+  );
+
+}
+
+
+/* ============================================================
+   DRAW PHOTOS
+   ============================================================ */
+
+function drawPhotos() {
+
+  const count = Math.max(
+    photos.length,
+    takeCount
+  );
+
+  const padding = 90;
+
+  const top = 130;
+
+  const bottom = 120;
+
+  const availableHeight =
+    canvas.height - top - bottom;
+
+  const gap = 20;
+
+  const photoHeight =
+    (availableHeight - (count - 1) * gap) / count;
+
+  for (let i = 0; i < photos.length; i++) {
+
+    const img = photos[i];
+
+    const y =
+      top + i * (photoHeight + gap);
+
+    drawImageCover(
+      img,
+      padding,
+      y,
+      canvas.width - padding * 2,
+      photoHeight
+    );
+
+  }
+
+
+  /* EMPTY PHOTO SLOTS */
+
+  if (photos.length < count) {
+
+    for (
+      let i = photos.length;
+      i < count;
+      i++
+    ) {
+
+      const y =
+        top + i * (photoHeight + gap);
+
+      ctx.fillStyle = "rgba(255,255,255,.65)";
+
+      ctx.fillRect(
+        padding,
+        y,
+        canvas.width - padding * 2,
+        photoHeight
+      );
+
+      ctx.strokeStyle = "#ddd";
+
+      ctx.setLineDash([12, 10]);
+
+      ctx.strokeRect(
+        padding,
+        y,
+        canvas.width - padding * 2,
+        photoHeight
+      );
+
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = "#aaa";
+
+      ctx.font = "28px Arial";
+
+      ctx.textAlign = "center";
+
+      ctx.fillText(
+        "Photo " + (i + 1),
+        canvas.width / 2,
+        y + photoHeight / 2
+      );
+
+    }
+
+  }
+
+}
+
+
+/* ============================================================
+   COVER IMAGE
+   ============================================================ */
+
+function drawImageCover(
+  img,
+  x,
+  y,
+  width,
+  height
+) {
+
+  const imageRatio =
+    img.width / img.height;
+
+  const boxRatio =
+    width / height;
+
+  let sourceWidth =
+    img.width;
+
+  let sourceHeight =
+    img.height;
+
+  let sourceX = 0;
+
+  let sourceY = 0;
+
+  if (imageRatio > boxRatio) {
+
+    sourceWidth =
+      img.height * boxRatio;
+
+    sourceX =
+      (img.width - sourceWidth) / 2;
+
+  } else {
+
+    sourceHeight =
+      img.width / boxRatio;
+
+    sourceY =
+      (img.height - sourceHeight) / 2;
+
+  }
+
+  ctx.save();
+
+  ctx.beginPath();
+
+  ctx.roundRect(
+    x,
+    y,
+    width,
+    height,
+    22
+  );
+
+  ctx.clip();
+
+  ctx.drawImage(
+    img,
+    sourceX,
+    sourceY,
+    sourceWidth,
+    sourceHeight,
+    x,
+    y,
+    width,
+    height
+  );
+
+  ctx.restore();
+
+}
+
+
+/* ============================================================
+   UPDATE PHOTO SLOTS
+   ============================================================ */
+
+function updateSlots() {
+
+  /* Reserved for future visual slot display */
+
+}
+
+
+/* ============================================================
+   DOWNLOAD
+   ============================================================ */
+
+function downloadDesign() {
+
+  drawPreview();
+
+  const link =
+    document.createElement("a");
+
+  link.download =
+    "Eli-PrintHub-Photobooth.png";
+
+  link.href =
+    canvas.toDataURL(
+      "image/png"
+    );
+
+  link.click();
+
+}
+
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+
+function printDesign() {
+
+  drawPreview();
+
+  const image =
+    canvas.toDataURL("image/png");
+
+  const printWindow =
+    window.open("", "_blank");
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Eli PrintHub Print</title>
+
+      <style>
+
+        @page {
+          size: auto;
+          margin: 0;
+        }
+
+        html,
+        body {
+          margin: 0;
+          padding: 0;
+          background: white;
+          text-align: center;
+        }
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+      </style>
+
+    </head>
+
+    <body>
+
+      <img src="${image}">
+
+      <script>
+
+        window.onload = function() {
+
+          window.print();
+
+        };
+
+      <\/script>
+
+    </body>
+
+    </html>
+  `);
+
+  printWindow.document.close();
+
+}
+
+
+/* ============================================================
+   RESET
+   ============================================================ */
+
+function resetDesign() {
+
+  if (!confirm(
+    "Reset your photobooth design?"
+  )) {
+
+    return;
+
+  }
+
+  photos = [];
+
+  textItems = [];
+
+  stickerItems = [];
+
+  backgroundColor =
+    "#fff0f6";
+
+  template =
+    "classic";
+
+  takeCount =
+    2;
+
+  document.querySelectorAll(
+    ".template-grid .option"
+  ).forEach(
+    item => item.classList.remove("active")
+  );
+
+  document.querySelector(
+    ".template-grid .option"
+  ).classList.add("active");
+
+  document.querySelectorAll(
+    ".color-btn"
+  ).forEach(
+    item => item.classList.remove("active")
+  );
+
+  document.querySelector(
+    ".color-btn"
+  ).classList.add("active");
+
+  document.querySelectorAll(
+    ".take-count button"
+  ).forEach(
+    item => item.classList.remove("active")
+  );
+
+  document.getElementById(
+    "take2"
+  ).classList.add("active");
+
+  drawPreview();
+
+}
+
+
+/* ============================================================
+   SCROLL TO PREVIEW
+   ============================================================ */
+
+function scrollToPreview() {
+
+  document.getElementById(
+    "previewSection"
+  ).scrollIntoView({
+    behavior: "smooth"
+  });
+
+}
+
+
+/* ============================================================
+   INITIALIZE
+   ============================================================ */
+
+document.getElementById(
+  "take2"
+).classList.add("active");
+
+drawPreview();
+
+
+/* ============================================================
+   IMPORTANT BRANDING NOTE
+
+   There is intentionally NO:
+   - logo upload button
+   - logo replacement button
+   - logo customization control
+
+   Eli PrintHub branding is hard-coded into the page.
+   ============================================================ */
+
 </script>
+
 </body>
 </html>
