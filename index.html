@@ -29,7 +29,7 @@ body {
 header {
   background: white;
   border-bottom: 2px solid #f4dce8;
-  padding: 14px 20px;
+  padding: 10px 20px;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -48,37 +48,40 @@ header {
 .logo-area {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 9px;
 }
 
-/* LOCKED BRANDING */
-.logo-mark {
+/* ==========================================================
+   LOCKED ELI PRINTHUB LOGO
+   ========================================================== */
+
+.eli-logo {
   width: 48px;
   height: 48px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #ff6fae, #ff9bc8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 23px;
-  font-weight: bold;
-  box-shadow: 0 4px 12px rgba(255,111,174,.3);
+  object-fit: contain;
+  display: block;
   user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 .logo-text {
   font-weight: 800;
-  font-size: 21px;
+  font-size: 19px;
   color: #333;
   user-select: none;
 }
 
 .logo-sub {
-  font-size: 11px;
+  font-size: 10px;
   color: #999;
   margin-top: 2px;
+  user-select: none;
 }
+
+/* ==========================================================
+   HEADER BUTTONS
+   ========================================================== */
 
 .header-buttons {
   display: flex;
@@ -101,6 +104,10 @@ button {
 .small-btn:hover {
   background: #ffdbe9;
 }
+
+/* ==========================================================
+   MAIN
+   ========================================================== */
 
 main {
   max-width: 1200px;
@@ -154,6 +161,10 @@ main {
   margin-bottom: 9px;
 }
 
+/* ==========================================================
+   CAMERA
+   ========================================================== */
+
 .camera-box {
   background: #111;
   border-radius: 18px;
@@ -202,6 +213,10 @@ video {
   border-radius: 12px;
 }
 
+/* ==========================================================
+   TAKES
+   ========================================================== */
+
 .take-count {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -220,6 +235,10 @@ video {
   color: white;
 }
 
+/* ==========================================================
+   INPUTS
+   ========================================================== */
+
 select,
 input[type="text"],
 textarea {
@@ -236,6 +255,10 @@ textarea:focus,
 select:focus {
   border-color: var(--primary);
 }
+
+/* ==========================================================
+   OPTIONS
+   ========================================================== */
 
 .template-grid,
 .sticker-grid,
@@ -255,11 +278,19 @@ select:focus {
   cursor: pointer;
 }
 
+.option:hover {
+  background: #fff8fb;
+}
+
 .option.active {
   border-color: #ff6fae;
   background: #fff0f6;
   color: #d84d89;
 }
+
+/* ==========================================================
+   COLORS
+   ========================================================== */
 
 .color-row {
   display: flex;
@@ -278,6 +309,10 @@ select:focus {
 .color-btn.active {
   box-shadow: 0 0 0 2px #ff6fae;
 }
+
+/* ==========================================================
+   PHOTO SLOTS
+   ========================================================== */
 
 .photo-slots {
   display: grid;
@@ -310,6 +345,10 @@ select:focus {
   font-size: 12px;
 }
 
+/* ==========================================================
+   PREVIEW
+   ========================================================== */
+
 .preview-area {
   display: flex;
   flex-direction: column;
@@ -332,6 +371,10 @@ select:focus {
   height: auto;
   box-shadow: 0 8px 25px rgba(0,0,0,.15);
 }
+
+/* ==========================================================
+   ACTION BUTTONS
+   ========================================================== */
 
 .action-buttons {
   display: grid;
@@ -360,6 +403,10 @@ select:focus {
   background: #eee;
 }
 
+/* ==========================================================
+   UPLOAD
+   ========================================================== */
+
 .upload-label {
   display: block;
   background: #fff0f6;
@@ -374,6 +421,10 @@ select:focus {
 #photoUpload {
   display: none;
 }
+
+/* ==========================================================
+   CUSTOM TEXT
+   ========================================================== */
 
 .custom-text-area {
   display: flex;
@@ -391,19 +442,9 @@ select:focus {
   border-radius: 10px;
 }
 
-.text-item {
-  position: absolute;
-  cursor: move;
-  user-select: none;
-  font-weight: bold;
-  text-shadow: 1px 1px 3px rgba(0,0,0,.2);
-}
-
-.sticker-item {
-  position: absolute;
-  cursor: move;
-  user-select: none;
-}
+/* ==========================================================
+   HELP
+   ========================================================== */
 
 .help-box {
   background: #fff8fb;
@@ -414,6 +455,10 @@ select:focus {
   color: #777;
 }
 
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+
 footer {
   text-align: center;
   padding: 25px;
@@ -421,7 +466,12 @@ footer {
   font-size: 12px;
 }
 
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
 @media(max-width: 850px) {
+
   .app {
     grid-template-columns: 1fr;
   }
@@ -429,20 +479,26 @@ footer {
   .panel {
     padding: 15px;
   }
+
 }
 
 @media(max-width: 500px) {
+
   .header-inner {
     align-items: flex-start;
+  }
+
+  .eli-logo {
+    width: 42px;
+    height: 42px;
   }
 
   .logo-text {
     font-size: 17px;
   }
 
-  .logo-mark {
-    width: 40px;
-    height: 40px;
+  .logo-sub {
+    font-size: 9px;
   }
 
   .header-buttons {
@@ -452,100 +508,135 @@ footer {
   .action-buttons {
     grid-template-columns: 1fr;
   }
+
 }
 
+/* ==========================================================
+   PRINT
+   ========================================================== */
+
 @media print {
+
   body * {
     visibility: hidden;
   }
 
-  #previewCanvas,
-  #previewCanvas * {
-    visibility: visible;
-  }
-
   #previewCanvas {
+    visibility: visible;
     position: absolute;
     left: 0;
     top: 0;
     max-width: none;
   }
+
 }
 </style>
 </head>
 
+
 <body>
 
+<!-- ==========================================================
+     HEADER
+     SMALL LOCKED LOGO + NAME
+     ========================================================== -->
+
 <header>
+
   <div class="header-inner">
 
-    <!-- =====================================================
-         LOCKED ELI PRINTHUB BRANDING
-         CUSTOMER CANNOT CHANGE THIS THROUGH THE WEBSITE
-         ===================================================== -->
+    <div class="logo-area">
 
-<div class="logo-area">
+      <img
+        src="EliPrintHubLogo.png"
+        class="eli-logo"
+        alt="Eli PrintHub Logo"
+        draggable="false"
+      >
 
-  <img
-    src="EliPrintHubLogo.png"
-    class="eli-logo"
-    alt="Eli PrintHub Logo"
-    draggable="false"
-  >
+      <div>
 
-  <div>
-    <div class="logo-text">Eli PrintHub</div>
-    <div class="logo-sub">Print • Create • Celebrate</div>
-  </div>
+        <div class="logo-text">
+          Eli PrintHub
+        </div>
 
-</div>
-    .eli-logo {
-  width: 65px;
-  height: 65px;
-  object-fit: contain;
-  display: block;
-  user-select: none;
-  pointer-events: none;
-}
+        <div class="logo-sub">
+          Print • Create • Celebrate
+        </div>
+
+      </div>
+
+    </div>
 
     <div class="header-buttons">
-      <button class="small-btn" onclick="scrollToPreview()">Preview</button>
-      <button class="small-btn" onclick="downloadDesign()">Download</button>
+
+      <button
+        class="small-btn"
+        onclick="scrollToPreview()">
+        Preview
+      </button>
+
+      <button
+        class="small-btn"
+        onclick="downloadDesign()">
+        Download
+      </button>
+
     </div>
 
   </div>
+
 </header>
 
 
 <main>
 
   <div class="hero">
-    <h1>✨ Eli PrintHub Photobooth</h1>
-    <p>Create your own cute photobooth design!</p>
+
+    <h1>
+      ✨ Eli PrintHub Photobooth
+    </h1>
+
+    <p>
+      Create your own cute photobooth design!
+    </p>
+
   </div>
 
 
   <div class="app">
 
-    <!-- =====================================================
+
+    <!-- ======================================================
          LEFT CONTROL PANEL
-         ===================================================== -->
+         ====================================================== -->
 
     <div class="panel">
 
-      <h2>📸 Create Your Design</h2>
+      <h2>
+        📸 Create Your Design
+      </h2>
 
 
       <!-- CAMERA -->
+
       <div class="section">
 
-        <div class="section-title">Camera</div>
+        <div class="section-title">
+          Camera
+        </div>
 
         <div class="camera-box">
 
-          <video id="video" autoplay playsinline></video>
+          <video
+            id="video"
+            autoplay
+            playsinline>
+          </video>
 
-          <div class="camera-message" id="cameraMessage">
+          <div
+            class="camera-message"
+            id="cameraMessage">
             Camera ready
           </div>
 
@@ -553,11 +644,15 @@ footer {
 
         <div class="camera-buttons">
 
-          <button class="primary-btn" onclick="startCamera()">
+          <button
+            class="primary-btn"
+            onclick="startCamera()">
             📷 Start Camera
           </button>
 
-          <button class="secondary-btn" onclick="takePhoto()">
+          <button
+            class="secondary-btn"
+            onclick="takePhoto()">
             📸 Take Photo
           </button>
 
@@ -567,6 +662,7 @@ footer {
 
 
       <!-- NUMBER OF TAKES -->
+
       <div class="section">
 
         <div class="section-title">
@@ -575,23 +671,33 @@ footer {
 
         <div class="take-count">
 
-          <button onclick="setTakeCount(2)" id="take2">
+          <button
+            onclick="setTakeCount(2)"
+            id="take2">
             2
           </button>
 
-          <button onclick="setTakeCount(3)" id="take3">
+          <button
+            onclick="setTakeCount(3)"
+            id="take3">
             3
           </button>
 
-          <button onclick="setTakeCount(4)" id="take4">
+          <button
+            onclick="setTakeCount(4)"
+            id="take4">
             4
           </button>
 
-          <button onclick="setTakeCount(5)" id="take5">
+          <button
+            onclick="setTakeCount(5)"
+            id="take5">
             5
           </button>
 
-          <button onclick="setTakeCount(6)" id="take6">
+          <button
+            onclick="setTakeCount(6)"
+            id="take6">
             6
           </button>
 
@@ -601,13 +707,16 @@ footer {
 
 
       <!-- UPLOAD -->
+
       <div class="section">
 
         <div class="section-title">
           Upload Photos
         </div>
 
-        <label class="upload-label" for="photoUpload">
+        <label
+          class="upload-label"
+          for="photoUpload">
           📁 Upload Your Photos
         </label>
 
@@ -616,13 +725,13 @@ footer {
           id="photoUpload"
           accept="image/*"
           multiple
-          onchange="handleUpload(event)"
-        >
+          onchange="handleUpload(event)">
 
       </div>
 
 
       <!-- TEMPLATE -->
+
       <div class="section">
 
         <div class="section-title">
@@ -631,33 +740,39 @@ footer {
 
         <div class="template-grid">
 
-          <div class="option active"
-               onclick="setTemplate('classic', this)">
+          <div
+            class="option active"
+            onclick="setTemplate('classic', this)">
             💗 Classic
           </div>
 
-          <div class="option"
-               onclick="setTemplate('cute', this)">
+          <div
+            class="option"
+            onclick="setTemplate('cute', this)">
             🧸 Cute
           </div>
 
-          <div class="option"
-               onclick="setTemplate('minimal', this)">
+          <div
+            class="option"
+            onclick="setTemplate('minimal', this)">
             🤍 Minimal
           </div>
 
-          <div class="option"
-               onclick="setTemplate('birthday', this)">
+          <div
+            class="option"
+            onclick="setTemplate('birthday', this)">
             🎂 Birthday
           </div>
 
-          <div class="option"
-               onclick="setTemplate('besties', this)">
+          <div
+            class="option"
+            onclick="setTemplate('besties', this)">
             💕 Besties
           </div>
 
-          <div class="option"
-               onclick="setTemplate('christmas', this)">
+          <div
+            class="option"
+            onclick="setTemplate('christmas', this)">
             🎄 Christmas
           </div>
 
@@ -667,6 +782,7 @@ footer {
 
 
       <!-- BACKGROUND -->
+
       <div class="section">
 
         <div class="section-title">
@@ -717,6 +833,7 @@ footer {
 
 
       <!-- TEXT -->
+
       <div class="section">
 
         <div class="section-title">
@@ -725,33 +842,39 @@ footer {
 
         <div class="text-grid">
 
-          <div class="option"
-               onclick="addText('♡ Custom Text ♡')">
+          <div
+            class="option"
+            onclick="addText('♡ Custom Text ♡')">
             ♡ Custom Text ♡
           </div>
 
-          <div class="option"
-               onclick="addText('Happy Birthday! 🎂')">
+          <div
+            class="option"
+            onclick="addText('Happy Birthday! 🎂')">
             Happy Birthday! 🎂
           </div>
 
-          <div class="option"
-               onclick="addText('Besties Forever 💕')">
+          <div
+            class="option"
+            onclick="addText('Besties Forever 💕')">
             Besties Forever 💕
           </div>
 
-          <div class="option"
-               onclick="addText('Good Vibes ✨')">
+          <div
+            class="option"
+            onclick="addText('Good Vibes ✨')">
             Good Vibes ✨
           </div>
 
-          <div class="option"
-               onclick="addText('Smile! 📸')">
+          <div
+            class="option"
+            onclick="addText('Smile! 📸')">
             Smile! 📸
           </div>
 
-          <div class="option"
-               onclick="addText('Memories 💗')">
+          <div
+            class="option"
+            onclick="addText('Memories 💗')">
             Memories 💗
           </div>
 
@@ -764,10 +887,10 @@ footer {
           <input
             type="text"
             id="customText"
-            placeholder="Type your own text..."
-          >
+            placeholder="Type your own text...">
 
-          <button onclick="addCustomText()">
+          <button
+            onclick="addCustomText()">
             Add
           </button>
 
@@ -777,6 +900,7 @@ footer {
 
 
       <!-- STICKERS -->
+
       <div class="section">
 
         <div class="section-title">
@@ -785,51 +909,75 @@ footer {
 
         <div class="sticker-grid">
 
-          <div class="option" onclick="addSticker('💗')">
+          <div
+            class="option"
+            onclick="addSticker('💗')">
             💗
           </div>
 
-          <div class="option" onclick="addSticker('💕')">
+          <div
+            class="option"
+            onclick="addSticker('💕')">
             💕
           </div>
 
-          <div class="option" onclick="addSticker('✨')">
+          <div
+            class="option"
+            onclick="addSticker('✨')">
             ✨
           </div>
 
-          <div class="option" onclick="addSticker('⭐')">
+          <div
+            class="option"
+            onclick="addSticker('⭐')">
             ⭐
           </div>
 
-          <div class="option" onclick="addSticker('🌸')">
+          <div
+            class="option"
+            onclick="addSticker('🌸')">
             🌸
           </div>
 
-          <div class="option" onclick="addSticker('🎀')">
+          <div
+            class="option"
+            onclick="addSticker('🎀')">
             🎀
           </div>
 
-          <div class="option" onclick="addSticker('🧸')">
+          <div
+            class="option"
+            onclick="addSticker('🧸')">
             🧸
           </div>
 
-          <div class="option" onclick="addSticker('🍓')">
+          <div
+            class="option"
+            onclick="addSticker('🍓')">
             🍓
           </div>
 
-          <div class="option" onclick="addSticker('☁️')">
+          <div
+            class="option"
+            onclick="addSticker('☁️')">
             ☁️
           </div>
 
-          <div class="option" onclick="addSticker('🎂')">
+          <div
+            class="option"
+            onclick="addSticker('🎂')">
             🎂
           </div>
 
-          <div class="option" onclick="addSticker('🎉')">
+          <div
+            class="option"
+            onclick="addSticker('🎉')">
             🎉
           </div>
 
-          <div class="option" onclick="addSticker('♡')">
+          <div
+            class="option"
+            onclick="addSticker('♡')">
             ♡
           </div>
 
@@ -854,13 +1002,17 @@ footer {
     </div>
 
 
-    <!-- =====================================================
-         RIGHT PREVIEW PANEL
-         ===================================================== -->
+    <!-- ======================================================
+         RIGHT PREVIEW
+         ====================================================== -->
 
-    <div class="panel preview-area" id="previewSection">
+    <div
+      class="panel preview-area"
+      id="previewSection">
 
-      <h2>🖼️ Preview</h2>
+      <h2>
+        🖼️ Preview
+      </h2>
 
       <div class="canvas-wrapper">
 
@@ -905,9 +1057,13 @@ footer {
 <footer>
 
   <strong>Eli PrintHub</strong>
+
   <br>
+
   Print • Create • Celebrate
+
   <br><br>
+
   © 2026 Eli PrintHub. All Rights Reserved.
 
 </footer>
@@ -919,9 +1075,34 @@ footer {
    ELI PRINTHUB PHOTOBOOTH
    ============================================================ */
 
-const video = document.getElementById("video");
-const canvas = document.getElementById("previewCanvas");
-const ctx = canvas.getContext("2d");
+const video =
+  document.getElementById("video");
+
+const canvas =
+  document.getElementById("previewCanvas");
+
+const ctx =
+  canvas.getContext("2d");
+
+
+/* ============================================================
+   LOCKED BRAND LOGO
+   ============================================================ */
+
+const brandLogo = new Image();
+
+brandLogo.src = "EliPrintHubLogo.png";
+
+brandLogo.onload = function() {
+
+  drawPreview();
+
+};
+
+
+/* ============================================================
+   VARIABLES
+   ============================================================ */
 
 let stream = null;
 
@@ -948,33 +1129,49 @@ async function startCamera() {
 
     if (stream) {
 
-      stream.getTracks().forEach(track => track.stop());
+      stream
+        .getTracks()
+        .forEach(track => track.stop());
 
     }
 
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: "user",
-        width: {
-          ideal: 1280
+    stream =
+      await navigator.mediaDevices.getUserMedia({
+
+        video: {
+
+          facingMode: "user",
+
+          width: {
+            ideal: 1280
+          },
+
+          height: {
+            ideal: 720
+          }
+
         },
-        height: {
-          ideal: 720
-        }
-      },
-      audio: false
-    });
+
+        audio: false
+
+      });
 
     video.srcObject = stream;
 
-    document.getElementById("cameraMessage").textContent =
+    document.getElementById(
+      "cameraMessage"
+    ).textContent =
       "Camera is ready! 📸";
 
-  } catch(error) {
+  }
+
+  catch(error) {
 
     console.error(error);
 
-    document.getElementById("cameraMessage").textContent =
+    document.getElementById(
+      "cameraMessage"
+    ).textContent =
       "Camera unavailable. Please allow camera access or upload photos.";
 
   }
@@ -990,7 +1187,9 @@ function takePhoto() {
 
   if (!video.srcObject) {
 
-    alert("Please start the camera first.");
+    alert(
+      "Please start the camera first."
+    );
 
     return;
 
@@ -998,21 +1197,32 @@ function takePhoto() {
 
   if (photos.length >= takeCount) {
 
-    alert("You already have " + takeCount + " photos.");
+    alert(
+      "You already have " +
+      takeCount +
+      " photos."
+    );
 
     return;
 
   }
 
-  const photoCanvas = document.createElement("canvas");
+  const photoCanvas =
+    document.createElement("canvas");
 
-  photoCanvas.width = video.videoWidth || 1280;
+  photoCanvas.width =
+    video.videoWidth || 1280;
 
-  photoCanvas.height = video.videoHeight || 720;
+  photoCanvas.height =
+    video.videoHeight || 720;
 
-  const photoCtx = photoCanvas.getContext("2d");
+  const photoCtx =
+    photoCanvas.getContext("2d");
 
-  photoCtx.translate(photoCanvas.width, 0);
+  photoCtx.translate(
+    photoCanvas.width,
+    0
+  );
 
   photoCtx.scale(-1, 1);
 
@@ -1024,7 +1234,8 @@ function takePhoto() {
     photoCanvas.height
   );
 
-  const image = new Image();
+  const image =
+    new Image();
 
   image.onload = function() {
 
@@ -1036,7 +1247,11 @@ function takePhoto() {
 
   };
 
-  image.src = photoCanvas.toDataURL("image/jpeg", .95);
+  image.src =
+    photoCanvas.toDataURL(
+      "image/jpeg",
+      .95
+    );
 
 }
 
@@ -1049,15 +1264,30 @@ function setTakeCount(count) {
 
   takeCount = count;
 
-  document.querySelectorAll(".take-count button")
-    .forEach(button => button.classList.remove("active"));
+  document
+    .querySelectorAll(
+      ".take-count button"
+    )
+    .forEach(
+      button =>
+        button.classList.remove("active")
+    );
 
-  document.getElementById("take" + count)
+  document
+    .getElementById(
+      "take" + count
+    )
     .classList.add("active");
 
-  if (photos.length > takeCount) {
+  if (
+    photos.length > takeCount
+  ) {
 
-    photos = photos.slice(0, takeCount);
+    photos =
+      photos.slice(
+        0,
+        takeCount
+      );
 
   }
 
@@ -1074,35 +1304,50 @@ function setTakeCount(count) {
 
 function handleUpload(event) {
 
-  const files = Array.from(event.target.files);
+  const files =
+    Array.from(
+      event.target.files
+    );
 
-  const remaining = takeCount - photos.length;
+  const remaining =
+    takeCount -
+    photos.length;
 
-  files.slice(0, remaining).forEach(file => {
+  files
+    .slice(
+      0,
+      remaining
+    )
+    .forEach(file => {
 
-    const reader = new FileReader();
+      const reader =
+        new FileReader();
 
-    reader.onload = function(e) {
+      reader.onload =
+        function(e) {
 
-      const image = new Image();
+          const image =
+            new Image();
 
-      image.onload = function() {
+          image.onload =
+            function() {
 
-        photos.push(image);
+              photos.push(image);
 
-        updateSlots();
+              updateSlots();
 
-        drawPreview();
+              drawPreview();
 
-      };
+            };
 
-      image.src = e.target.result;
+          image.src =
+            e.target.result;
 
-    };
+        };
 
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
 
-  });
+    });
 
 }
 
@@ -1111,14 +1356,27 @@ function handleUpload(event) {
    TEMPLATE
    ============================================================ */
 
-function setTemplate(name, element) {
+function setTemplate(
+  name,
+  element
+) {
 
   template = name;
 
-  document.querySelectorAll(".template-grid .option")
-    .forEach(item => item.classList.remove("active"));
+  document
+    .querySelectorAll(
+      ".template-grid .option"
+    )
+    .forEach(
+      item =>
+        item.classList.remove(
+          "active"
+        )
+    );
 
-  element.classList.add("active");
+  element.classList.add(
+    "active"
+  );
 
   drawPreview();
 
@@ -1129,14 +1387,28 @@ function setTemplate(name, element) {
    BACKGROUND
    ============================================================ */
 
-function setBackground(color, element) {
+function setBackground(
+  color,
+  element
+) {
 
-  backgroundColor = color;
+  backgroundColor =
+    color;
 
-  document.querySelectorAll(".color-btn")
-    .forEach(item => item.classList.remove("active"));
+  document
+    .querySelectorAll(
+      ".color-btn"
+    )
+    .forEach(
+      item =>
+        item.classList.remove(
+          "active"
+        )
+    );
 
-  element.classList.add("active");
+  element.classList.add(
+    "active"
+  );
 
   drawPreview();
 
@@ -1150,10 +1422,15 @@ function setBackground(color, element) {
 function addText(text) {
 
   textItems.push({
+
     text: text,
+
     x: 600,
+
     y: 100,
+
     size: 55
+
   });
 
   drawPreview();
@@ -1163,9 +1440,13 @@ function addText(text) {
 
 function addCustomText() {
 
-  const input = document.getElementById("customText");
+  const input =
+    document.getElementById(
+      "customText"
+    );
 
-  const value = input.value.trim();
+  const value =
+    input.value.trim();
 
   if (!value) {
 
@@ -1184,13 +1465,26 @@ function addCustomText() {
    STICKERS
    ============================================================ */
 
-function addSticker(sticker) {
+function addSticker(
+  sticker
+) {
 
   stickerItems.push({
+
     text: sticker,
-    x: 100 + Math.random() * 1000,
-    y: 200 + Math.random() * 1200,
+
+    x:
+      100 +
+      Math.random() *
+      1000,
+
+    y:
+      200 +
+      Math.random() *
+      1200,
+
     size: 70
+
   });
 
   drawPreview();
@@ -1211,7 +1505,8 @@ function drawPreview() {
     canvas.height
   );
 
-  ctx.fillStyle = backgroundColor;
+  ctx.fillStyle =
+    backgroundColor;
 
   ctx.fillRect(
     0,
@@ -1221,11 +1516,14 @@ function drawPreview() {
   );
 
 
-  /* TEMPLATE STYLE */
+  /* ==========================================================
+     TEMPLATE BACKGROUNDS
+     ========================================================== */
 
   if (template === "cute") {
 
-    ctx.fillStyle = "#fff7fb";
+    ctx.fillStyle =
+      "#fff7fb";
 
     ctx.fillRect(
       50,
@@ -1234,7 +1532,8 @@ function drawPreview() {
       canvas.height - 100
     );
 
-    ctx.strokeStyle = "#ff9fc7";
+    ctx.strokeStyle =
+      "#ff9fc7";
 
     ctx.lineWidth = 8;
 
@@ -1250,7 +1549,8 @@ function drawPreview() {
 
   if (template === "minimal") {
 
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle =
+      "#ffffff";
 
     ctx.fillRect(
       60,
@@ -1264,7 +1564,8 @@ function drawPreview() {
 
   if (template === "birthday") {
 
-    ctx.fillStyle = "#fff3f7";
+    ctx.fillStyle =
+      "#fff3f7";
 
     ctx.fillRect(
       35,
@@ -1278,7 +1579,8 @@ function drawPreview() {
 
   if (template === "besties") {
 
-    ctx.fillStyle = "#fff0f8";
+    ctx.fillStyle =
+      "#fff0f8";
 
     ctx.fillRect(
       35,
@@ -1292,7 +1594,8 @@ function drawPreview() {
 
   if (template === "christmas") {
 
-    ctx.fillStyle = "#f4fff7";
+    ctx.fillStyle =
+      "#f4fff7";
 
     ctx.fillRect(
       35,
@@ -1304,20 +1607,29 @@ function drawPreview() {
   }
 
 
-  /* PHOTOS */
+  /* ==========================================================
+     PHOTOS
+     ========================================================== */
 
   drawPhotos();
 
 
-  /* TEMPLATE HEADER */
+  /* ==========================================================
+     TEMPLATE TEXT
+     ========================================================== */
 
-  ctx.textAlign = "center";
+  ctx.textAlign =
+    "center";
 
-  ctx.font = "bold 55px Arial";
+  ctx.font =
+    "bold 55px Arial";
 
-  ctx.fillStyle = "#333";
+  ctx.fillStyle =
+    "#333";
 
-  if (template === "birthday") {
+  if (
+    template === "birthday"
+  ) {
 
     ctx.fillText(
       "Happy Birthday! 🎂",
@@ -1325,7 +1637,11 @@ function drawPreview() {
       85
     );
 
-  } else if (template === "besties") {
+  }
+
+  else if (
+    template === "besties"
+  ) {
 
     ctx.fillText(
       "Besties Forever 💕",
@@ -1333,7 +1649,11 @@ function drawPreview() {
       85
     );
 
-  } else if (template === "christmas") {
+  }
+
+  else if (
+    template === "christmas"
+  ) {
 
     ctx.fillText(
       "Merry Christmas! 🎄",
@@ -1341,66 +1661,92 @@ function drawPreview() {
       85
     );
 
-  } else {
-
-    ctx.fillText(
-      "Eli PrintHub",
-      canvas.width / 2,
-      85
-    );
-
   }
 
 
-  /* TEXT ITEMS */
+  /* ==========================================================
+     CUSTOM TEXT
+     ========================================================== */
 
-  textItems.forEach(item => {
+  textItems.forEach(
+    item => {
 
-    ctx.font = `bold ${item.size}px Arial`;
+      ctx.font =
+        `bold ${item.size}px Arial`;
 
-    ctx.fillStyle = "#333";
+      ctx.fillStyle =
+        "#333";
 
-    ctx.textAlign = "center";
+      ctx.textAlign =
+        "center";
 
-    ctx.fillText(
-      item.text,
-      item.x,
-      item.y
-    );
+      ctx.fillText(
+        item.text,
+        item.x,
+        item.y
+      );
 
-  });
-
-
-  /* STICKERS */
-
-  stickerItems.forEach(item => {
-
-    ctx.font = `${item.size}px Arial`;
-
-    ctx.textAlign = "center";
-
-    ctx.fillText(
-      item.text,
-      item.x,
-      item.y
-    );
-
-  });
-
-
-  /* LOCKED BRANDING */
-
-  ctx.font = "bold 38px Arial";
-
-  ctx.fillStyle = "#333";
-
-  ctx.textAlign = "center";
-
-  ctx.fillText(
-    "Eli PrintHub",
-    canvas.width / 2,
-    canvas.height - 55
+    }
   );
+
+
+  /* ==========================================================
+     STICKERS
+     ========================================================== */
+
+  stickerItems.forEach(
+    item => {
+
+      ctx.font =
+        `${item.size}px Arial`;
+
+      ctx.textAlign =
+        "center";
+
+      ctx.fillText(
+        item.text,
+        item.x,
+        item.y
+      );
+
+    }
+  );
+
+
+  /* ==========================================================
+     SMALL LOCKED ELI PRINTHUB BRAND LOGO
+     
+     This is intentionally small and subtle.
+     It appears only on the finished design.
+     ========================================================== */
+
+  if (
+    brandLogo.complete &&
+    brandLogo.naturalWidth > 0
+  ) {
+
+    const logoSize = 55;
+
+    const logoX = 35;
+
+    const logoY = 35;
+
+    ctx.save();
+
+    ctx.globalAlpha =
+      0.90;
+
+    ctx.drawImage(
+      brandLogo,
+      logoX,
+      logoY,
+      logoSize,
+      logoSize
+    );
+
+    ctx.restore();
+
+  }
 
 }
 
@@ -1411,10 +1757,11 @@ function drawPreview() {
 
 function drawPhotos() {
 
-  const count = Math.max(
-    photos.length,
-    takeCount
-  );
+  const count =
+    Math.max(
+      photos.length,
+      takeCount
+    );
 
   const padding = 90;
 
@@ -1423,34 +1770,52 @@ function drawPhotos() {
   const bottom = 120;
 
   const availableHeight =
-    canvas.height - top - bottom;
+    canvas.height -
+    top -
+    bottom;
 
   const gap = 20;
 
   const photoHeight =
-    (availableHeight - (count - 1) * gap) / count;
+    (
+      availableHeight -
+      (count - 1) * gap
+    ) / count;
 
-  for (let i = 0; i < photos.length; i++) {
 
-    const img = photos[i];
+  for (
+    let i = 0;
+    i < photos.length;
+    i++
+  ) {
+
+    const img =
+      photos[i];
 
     const y =
-      top + i * (photoHeight + gap);
+      top +
+      i *
+      (photoHeight + gap);
 
     drawImageCover(
       img,
       padding,
       y,
-      canvas.width - padding * 2,
+      canvas.width -
+        padding * 2,
       photoHeight
     );
 
   }
 
 
-  /* EMPTY PHOTO SLOTS */
+  /* ==========================================================
+     EMPTY PHOTO SLOTS
+     ========================================================== */
 
-  if (photos.length < count) {
+  if (
+    photos.length < count
+  ) {
 
     for (
       let i = photos.length;
@@ -1459,40 +1824,53 @@ function drawPhotos() {
     ) {
 
       const y =
-        top + i * (photoHeight + gap);
+        top +
+        i *
+        (photoHeight + gap);
 
-      ctx.fillStyle = "rgba(255,255,255,.65)";
+      ctx.fillStyle =
+        "rgba(255,255,255,.65)";
 
       ctx.fillRect(
         padding,
         y,
-        canvas.width - padding * 2,
+        canvas.width -
+          padding * 2,
         photoHeight
       );
 
-      ctx.strokeStyle = "#ddd";
+      ctx.strokeStyle =
+        "#ddd";
 
-      ctx.setLineDash([12, 10]);
+      ctx.setLineDash([
+        12,
+        10
+      ]);
 
       ctx.strokeRect(
         padding,
         y,
-        canvas.width - padding * 2,
+        canvas.width -
+          padding * 2,
         photoHeight
       );
 
       ctx.setLineDash([]);
 
-      ctx.fillStyle = "#aaa";
+      ctx.fillStyle =
+        "#aaa";
 
-      ctx.font = "28px Arial";
+      ctx.font =
+        "28px Arial";
 
-      ctx.textAlign = "center";
+      ctx.textAlign =
+        "center";
 
       ctx.fillText(
         "Photo " + (i + 1),
         canvas.width / 2,
-        y + photoHeight / 2
+        y +
+          photoHeight / 2
       );
 
     }
@@ -1515,10 +1893,12 @@ function drawImageCover(
 ) {
 
   const imageRatio =
-    img.width / img.height;
+    img.width /
+    img.height;
 
   const boxRatio =
-    width / height;
+    width /
+    height;
 
   let sourceWidth =
     img.width;
@@ -1530,23 +1910,37 @@ function drawImageCover(
 
   let sourceY = 0;
 
-  if (imageRatio > boxRatio) {
+
+  if (
+    imageRatio > boxRatio
+  ) {
 
     sourceWidth =
-      img.height * boxRatio;
+      img.height *
+      boxRatio;
 
     sourceX =
-      (img.width - sourceWidth) / 2;
-
-  } else {
-
-    sourceHeight =
-      img.width / boxRatio;
-
-    sourceY =
-      (img.height - sourceHeight) / 2;
+      (
+        img.width -
+        sourceWidth
+      ) / 2;
 
   }
+
+  else {
+
+    sourceHeight =
+      img.width /
+      boxRatio;
+
+    sourceY =
+      (
+        img.height -
+        sourceHeight
+      ) / 2;
+
+  }
+
 
   ctx.save();
 
@@ -1580,7 +1974,7 @@ function drawImageCover(
 
 
 /* ============================================================
-   UPDATE PHOTO SLOTS
+   UPDATE SLOTS
    ============================================================ */
 
 function updateSlots() {
@@ -1599,7 +1993,9 @@ function downloadDesign() {
   drawPreview();
 
   const link =
-    document.createElement("a");
+    document.createElement(
+      "a"
+    );
 
   link.download =
     "Eli-PrintHub-Photobooth.png";
@@ -1623,16 +2019,38 @@ function printDesign() {
   drawPreview();
 
   const image =
-    canvas.toDataURL("image/png");
+    canvas.toDataURL(
+      "image/png"
+    );
 
   const printWindow =
-    window.open("", "_blank");
+    window.open(
+      "",
+      "_blank"
+    );
+
+  if (!printWindow) {
+
+    alert(
+      "Please allow pop-ups to print your design."
+    );
+
+    return;
+
+  }
+
 
   printWindow.document.write(`
+
     <!DOCTYPE html>
+
     <html>
+
     <head>
-      <title>Eli PrintHub Print</title>
+
+      <title>
+        Eli PrintHub Print
+      </title>
 
       <style>
 
@@ -1642,15 +2060,7 @@ function printDesign() {
         }
 
         html,
-        .eli-logo {
-  width: 65px;
-  height: 65px;
-  object-fit: contain;
-  display: block;
-  user-select: none;
-  pointer-events: none;
-}
-body {
+        body {
           margin: 0;
           padding: 0;
           background: white;
@@ -1660,6 +2070,8 @@ body {
         img {
           max-width: 100%;
           height: auto;
+          display: block;
+          margin: 0 auto;
         }
 
       </style>
@@ -1668,7 +2080,10 @@ body {
 
     <body>
 
-      <img src="${image}">
+      <img
+        src="${image}"
+        alt="Eli PrintHub Photobooth"
+      >
 
       <script>
 
@@ -1683,6 +2098,7 @@ body {
     </body>
 
     </html>
+
   `);
 
   printWindow.document.close();
@@ -1696,9 +2112,11 @@ body {
 
 function resetDesign() {
 
-  if (!confirm(
-    "Reset your photobooth design?"
-  )) {
+  if (
+    !confirm(
+      "Reset your photobooth design?"
+    )
+  ) {
 
     return;
 
@@ -1716,38 +2134,71 @@ function resetDesign() {
   template =
     "classic";
 
-  takeCount =
-    2;
+  takeCount = 2;
 
-  document.querySelectorAll(
-    ".template-grid .option"
-  ).forEach(
-    item => item.classList.remove("active")
-  );
 
-  document.querySelector(
-    ".template-grid .option"
-  ).classList.add("active");
+  document
+    .querySelectorAll(
+      ".template-grid .option"
+    )
+    .forEach(
+      item =>
+        item.classList.remove(
+          "active"
+        )
+    );
 
-  document.querySelectorAll(
-    ".color-btn"
-  ).forEach(
-    item => item.classList.remove("active")
-  );
 
-  document.querySelector(
-    ".color-btn"
-  ).classList.add("active");
+  document
+    .querySelector(
+      ".template-grid .option"
+    )
+    .classList.add(
+      "active"
+    );
 
-  document.querySelectorAll(
-    ".take-count button"
-  ).forEach(
-    item => item.classList.remove("active")
-  );
 
-  document.getElementById(
-    "take2"
-  ).classList.add("active");
+  document
+    .querySelectorAll(
+      ".color-btn"
+    )
+    .forEach(
+      item =>
+        item.classList.remove(
+          "active"
+        )
+    );
+
+
+  document
+    .querySelector(
+      ".color-btn"
+    )
+    .classList.add(
+      "active"
+    );
+
+
+  document
+    .querySelectorAll(
+      ".take-count button"
+    )
+    .forEach(
+      item =>
+        item.classList.remove(
+          "active"
+        )
+    );
+
+
+  document
+    .getElementById(
+      "take2"
+    )
+    .classList.add(
+      "active"
+    );
+
 
   drawPreview();
 
@@ -1760,11 +2211,13 @@ function resetDesign() {
 
 function scrollToPreview() {
 
-  document.getElementById(
-    "previewSection"
-  ).scrollIntoView({
-    behavior: "smooth"
-  });
+  document
+    .getElementById(
+      "previewSection"
+    )
+    .scrollIntoView({
+      behavior: "smooth"
+    });
 
 }
 
@@ -1773,23 +2226,15 @@ function scrollToPreview() {
    INITIALIZE
    ============================================================ */
 
-document.getElementById(
-  "take2"
-).classList.add("active");
+document
+  .getElementById(
+    "take2"
+  )
+  .classList.add(
+    "active"
+  );
 
 drawPreview();
-
-
-/* ============================================================
-   IMPORTANT BRANDING NOTE
-
-   There is intentionally NO:
-   - logo upload button
-   - logo replacement button
-   - logo customization control
-
-   Eli PrintHub branding is hard-coded into the page.
-   ============================================================ */
 
 </script>
 
